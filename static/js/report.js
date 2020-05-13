@@ -57,7 +57,7 @@ function Start() {
     CreateTableFromJSON()
 }
 function GetData() {
-    var Url = "http://0.0.0.0:5000/getDruidData";
+    var Url = "http://35.228.71.166:5000/getDruidData";
     var result = {}
 
     $.ajax({
