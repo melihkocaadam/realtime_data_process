@@ -21,11 +21,14 @@ function CreateTableFromJSON() {
     }
 
     var table = document.createElement("table");
+    table.setAttribute("class", "table");
 
     var tr = table.insertRow(-1);                   // TABLE ROW.
+    tr.setAttribute("scope", "row");
 
     for (var i = 0; i < col.length; i++) {
         var th = document.createElement("th");      // TABLE HEADER.
+        th.setAttribute("scope", "col");
         th.innerHTML = col[i];
         tr.appendChild(th);
     }

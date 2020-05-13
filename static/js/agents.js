@@ -220,12 +220,8 @@ function postAgentStatus(jsonData){
         type: 'POST',
         contentType: "application/json",
         data: JSON.stringify(jsonData),
-        success: function(response){
-            console.log("Response");
-            console.log(response);
-        },
         error: function(error){
-            console.log("Error");
+            console.log("Request Error");
             console.log(error);
         }
     });
