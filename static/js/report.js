@@ -4,7 +4,7 @@ function CreateTableFromJSON(jsonData) {
     var int_str = document.getElementById("interval").value;
     var interval = 1000 * parseInt(int_str);
     if (started) {
-        setTimeout(function(){ CreateTableFromJSON() }, interval);
+        setTimeout(function(){ CreateTableFromJSON(jsonData) }, interval);
     } else {
         console.log("loop stoped");
     }
