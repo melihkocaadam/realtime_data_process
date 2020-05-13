@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Agents</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='image/favicon.ico') }}">
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/fontawesome.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/brands.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/solid.css') }}" rel="stylesheet">
+
+    <style>
+      div{
+        font-size: 1.5rem;
+      }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='js/agents.js') }}"></script>
+
+</head>
+<body>
+  <br><br>
+    <div class="container">
+
+        <div class="row p-5 justify-content-center">
+          <div class="row justify-content-center">
+            <input type="text" class="form-control rounded" id="agentName" placeholder="Enter the agent name">
+            <div class="input-group-prepend" style="padding: 5px;">
+              <button class="btn rounded btn-outline-success" type="button" id="addAgent">Add Agent</button>
+            </div>
+            <div class="input-group-prepend" style="padding: 5px;">
+              <button class="btn rounded btn-outline-danger" type="button" id="deleteAll">Delete All</button>
+            </div>
+          </div>
+        </div><br>
+
+        <div class="row justify-content-center inner_body">
+        </div>
+
+    </div>
+</body>
+</html>
