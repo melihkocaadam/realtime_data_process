@@ -59,7 +59,7 @@ function Start() {
     var agentsData = GetData("getAgentsData");
     var agentsTable = CreateTableFromJSON(agentsData);
 
-    var divContainer = document.getElementById("showData");
+    var divContainer = document.getElementById("addTables");
     divContainer.innerHTML = "";
     divContainer.appendChild(agentsTable);
     divContainer.appendChild(callsTable);
