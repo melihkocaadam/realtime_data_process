@@ -34,7 +34,7 @@ def sendAgentStatus():
     client_id="agents-webpage-producer",
     value_serializer=lambda v: json.dumps(v).encode("utf-8")
     )
-    producer.send("agentTrace", jsonData)
+    producer.send("agentsTable", jsonData)
 
     return 'JSON posted'
 
