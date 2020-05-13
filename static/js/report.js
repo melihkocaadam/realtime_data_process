@@ -1,6 +1,6 @@
 console.log("init js");
 started=true
-function CreateTableFromJSON() {
+function CreateTableFromJSON(jsonData) {
     var int_str = document.getElementById("interval").value;
     var interval = 1000 * parseInt(int_str);
     if (started) {
@@ -9,7 +9,7 @@ function CreateTableFromJSON() {
         console.log("loop stoped");
     }
 
-    myBooks = GetData()
+    myBooks = jsonData
 
     var col = [];
     for (var i = 0; i < myBooks.length; i++) {
@@ -44,10 +44,7 @@ function CreateTableFromJSON() {
         }
     }
 
-    // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
-    var divContainer = document.getElementById("showData");
-    divContainer.innerHTML = "";
-    divContainer.appendChild(table);
+    return table;
 }
 
 function Stop() {
@@ -56,11 +53,19 @@ function Stop() {
 function Start() {
     started=true
     console.log("loop started");
-    GetData()
-    CreateTableFromJSON()
+    var callsData = GetData("getCallsData");
+    var callsTable = CreateTableFromJSON(callsData);
+
+    var agentsData = GetData("getAgentsData");
+    var agentsTable = CreateTableFromJSON(agentsData);
+
+    var divContainer = document.getElementById("showData");
+    divContainer.innerHTML = "";
+    divContainer.appendChild(agentsTable);
+    divContainer.appendChild(callsTable);
 }
-function GetData() {
-    var Url = "http://35.228.71.166:5000/getDruidData";
+function GetData(endPointName) {
+    var Url = "http://35.228.71.166:5000/"+endPointName;
     var result = {}
 
     $.ajax({

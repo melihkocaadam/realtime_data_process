@@ -26,10 +26,10 @@
 </head>
 <body>
     <label for="interval">interval (sec):</label>
-    <input type="text" id="interval" name="interval" size="2" value="5">
-    <input type="button" onclick="Start()" value="Start" />
-    <input type="button" onclick="Stop()" value="Stop" />
-    <div>
+    <input type="text" class="form-control rounded" id="interval" name="interval" size="2" value="5">
+    <button class="btn rounded btn-outline-success" type="button" onclick="Start()">Start</button>
+    <button class="btn rounded btn-outline-danger" type="button" onclick="Stop()">Stop</button>
+    <div class="container">
         <p id="showData"></p>
     </div>
 </body>
