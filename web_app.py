@@ -20,10 +20,13 @@ def report():
 def agents():
     return render_template("agents.html")
 
+sequence = 0
 @app.route("/sendAgentStatus", methods=['POST'])
 def sendAgentStatus():
+    sequence += 1
     jsonData = request.get_json()
     jsonData["activityDate"] = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")
+    jsonData["sequence"] = sequence
     
     producer = KafkaProducer(
     bootstrap_servers=["0.0.0.0:9092"],
