@@ -166,7 +166,9 @@ function loginClick(agent_name){
         $("#btn-acw-"+agent_name).prop('disabled', false);
         $("#btn-aux-"+agent_name).prop('disabled', false);
         $("#btn-login-"+agent_name).text("Logout");
-        data = JSON.parse('{"agent": "'+ agent_name +'", "status": "Logout"}');
+        data = JSON.parse('{"agent": "'+ agent_name +'", "status": "Login"}');
+        postAgentStatus(data);
+        data = JSON.parse('{"agent": "'+ agent_name +'", "status": "Avail"}');
         postAgentStatus(data);
     } else {
         $('#state-'+agent_name).text("Logout");
@@ -175,9 +177,7 @@ function loginClick(agent_name){
         $("#btn-acw-"+agent_name).prop('disabled', true);
         $("#btn-aux-"+agent_name).prop('disabled', true);
         $("#btn-login-"+agent_name).text("Login");
-        data = JSON.parse('{"agent": "'+ agent_name +'", "status": "Login"}');
-        postAgentStatus(data);
-        data = JSON.parse('{"agent": "'+ agent_name +'", "status": "Avail"}');
+        data = JSON.parse('{"agent": "'+ agent_name +'", "status": "Logout"}');
         postAgentStatus(data);
     }
     
