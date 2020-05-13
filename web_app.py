@@ -26,7 +26,7 @@ def sendAgentStatus():
     jsonData["activityDate"] = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")
     
     producer = KafkaProducer(
-    bootstrap_servers=["localhost:9092"],
+    bootstrap_servers=["0.0.0.0:9092"],
     client_id="agents-webpage-producer",
     value_serializer=lambda v: json.dumps(v).encode("utf-8")
     )
@@ -36,7 +36,7 @@ def sendAgentStatus():
 
 @app.route("/getDruidData")
 def getDruidData():
-    url = "http://localhost:8888/druid/v2/sql"
+    url = "http://0.0.0.0:8888/druid/v2/sql"
     headers = {"Content-Type": "application/json"}
     param = {'query': """SELECT 'Total' as "Agent"
                             ,sum(duration) as "Sum of Duration"
