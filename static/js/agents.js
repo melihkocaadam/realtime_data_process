@@ -213,7 +213,7 @@ function auxClick(agent_name){
 }
 
 function postAgentStatus(jsonData){
-    var Url = "http://localhost:5000/sendAgentStatus";
+    var Url = "http://0.0.0.0:5000/sendAgentStatus";
 
     $.ajax({
         url: Url,
