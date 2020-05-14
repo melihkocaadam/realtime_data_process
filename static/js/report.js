@@ -9,6 +9,7 @@ function CreateTableFromJSON() {
         setTimeout(function(){ CreateTableFromJSON() }, interval);
     } else {
         console.log("loop stoped");
+        return;
     }
 
     endPoints.forEach(function(endPoint){
@@ -16,7 +17,7 @@ function CreateTableFromJSON() {
         var htmlContent = createHTML(jsonData);
 
         // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
-        var divContainer = document.getElementById("showData");
+        var divContainer = document.getElementById("addTables");
         divContainer.innerHTML = "";
         divContainer.appendChild(table);
     });
