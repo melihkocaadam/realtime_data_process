@@ -1,10 +1,7 @@
 from flask import Flask, render_template, request
 from kafka import KafkaProducer
 from datetime import datetime
-import json, requests, os, configparser
-
-appConfig = configparser.ConfigParser()
-appConfig.read(os.path.join(os.path.dirname(__file__), 'web_app.conf'))
+import json, requests, os
 
 app = Flask(__name__)
 
@@ -23,7 +20,7 @@ def report():
 def agents():
     return render_template("agents.html")
 
-sequence = int(appConfig["DEFAULT"]["agentStatuSequence"])
+sequence = 0
 @app.route("/sendAgentStatus", methods=['POST'])
 def sendAgentStatus():
     global sequence
@@ -31,7 +28,6 @@ def sendAgentStatus():
     jsonData = request.get_json()
     jsonData["activityDate"] = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")
     jsonData["sequence"] = sequence
-    appConfig["DEFAULT"]["agentStatuSequence"] = str(sequence)
     
     producer = KafkaProducer(
     bootstrap_servers=["0.0.0.0:9092"],
