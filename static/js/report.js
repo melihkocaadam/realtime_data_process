@@ -19,7 +19,7 @@ function CreateTableFromJSON() {
         // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
         var divContainer = document.getElementById("addTables");
         divContainer.innerHTML = "";
-        divContainer.appendChild(table);
+        divContainer.appendChild(htmlContent);
     });
     
 }
