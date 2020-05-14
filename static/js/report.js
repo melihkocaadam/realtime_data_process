@@ -36,7 +36,7 @@ function Start() {
 }
 
 function GetData(endPoint) {
-    var Url = "http://0.0.0.0:5000/"+endPoint;
+    var Url = "http://35.228.71.166:5000/"+endPoint;
     var result = {};
 
     $.ajax({
