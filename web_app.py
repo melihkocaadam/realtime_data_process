@@ -75,7 +75,7 @@ def getCallsData():
 def getAgentsData():
     url = "http://0.0.0.0:8888/druid/v2/sql"
     headers = {"Content-Type": "application/json"}
-    param = {'query': """SELECT mtbl.agent as "Agents"
+    param = {'query':"""SELECT mtbl.agent as "Agents"
                             ,atbl.status as "Status"
                             ,TIMESTAMPDIFF(SECOND, atbl.__time, CURRENT_TIMESTAMP) as "Duration"
                             ,atbl.__time as "Last Update"
@@ -87,8 +87,7 @@ def getAgentsData():
                             ) as mtbl
                         LEFT JOIN "agents" atbl
                             ON atbl.agent = mtbl.agent
-                            and atbl.sequence = mtbl.max_seq
-                        WHERE atbl.status not in ('Logout')"""}
+                            and atbl.sequence = mtbl.max_seq"""}
     r = requests.post(url, data=json.dumps(param), headers=headers)
     result = r.text
     
