@@ -75,10 +75,10 @@ def getCallsData():
 def getAgentsData():
     url = "http://0.0.0.0:8888/druid/v2/sql"
     headers = {"Content-Type": "application/json"}
-    param = {'query': """SELECT mtbl.agent
-                            ,atbl.status
-                            ,TIMESTAMPDIFF(SECOND, atbl.__time, CURRENT_TIMESTAMP) as duration
-                            ,atbl.__time as lastUpdate
+    param = {'query': """SELECT mtbl.agent as "Agents"
+                            ,atbl.status as "Status"
+                            ,TIMESTAMPDIFF(SECOND, atbl.__time, CURRENT_TIMESTAMP) as "Duration"
+                            ,atbl.__time as "Last Update"
                         FROM (
                             SELECT agent
                                 ,max(sequence) as max_seq
