@@ -31,7 +31,7 @@ def sendAgentStatus():
     jsonData = request.get_json()
     jsonData["activityDate"] = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")
     jsonData["sequence"] = sequence
-    print(appConfig["DEFAULT"]["agentStatuSequence"])
+    appConfig["DEFAULT"]["agentStatuSequence"] = str(sequence)
     
     producer = KafkaProducer(
     bootstrap_servers=["0.0.0.0:9092"],
