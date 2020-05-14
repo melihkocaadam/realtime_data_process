@@ -1,4 +1,3 @@
-console.log("init js");
 var started = true;
 var endPoints = ["getAgentsData", "getCallsData"];
 
@@ -17,8 +16,10 @@ function CreateTableFromJSON() {
 
     endPoints.forEach(function(endPoint){
         var jsonData = GetData(endPoint);
-        var htmlContent = createHTML(jsonData);
-        
+        var getHtml = createHTML(jsonData);
+        var htmlContent = document.createElement("div");
+        htmlContent.setAttribute("class", "row justify-content-center");
+        htmlContent.appendChild(getHtml);
         divContainer.appendChild(htmlContent);
     });
     
@@ -35,7 +36,7 @@ function Start() {
 }
 
 function GetData(endPoint) {
-    var Url = "http://35.228.71.166:5000/"+endPoint;
+    var Url = "http://0.0.0.0:5000/"+endPoint;
     var result = {};
 
     $.ajax({
@@ -80,7 +81,6 @@ function createHTML(jsonData) {
 
     // ADD JSON DATA TO THE TABLE AS ROWS.
     for (var i = 0; i < jsonData.length; i++) {
-
         tr = table.insertRow(-1);
 
         for (var j = 0; j < col.length; j++) {
