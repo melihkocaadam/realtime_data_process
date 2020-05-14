@@ -1,6 +1,6 @@
 console.log("init js");
 var started = true;
-var endPoints = ["getCallsData", "getAgentsData"];
+var endPoints = ["getAgentsData", "getCallsData"];
 
 function CreateTableFromJSON() {
     var int_str = document.getElementById("interval").value;
