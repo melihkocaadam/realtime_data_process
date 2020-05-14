@@ -23,7 +23,7 @@ def report():
 def agents():
     return render_template("agents.html")
 
-sequence = appConfig["DEFAULT"]["agentStatuSequence"]
+sequence = int(appConfig["DEFAULT"]["agentStatuSequence"])
 @app.route("/sendAgentStatus", methods=['POST'])
 def sendAgentStatus():
     global sequence
