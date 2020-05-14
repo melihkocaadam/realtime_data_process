@@ -1,19 +1,63 @@
 console.log("init js");
-started=true
-function CreateTableFromJSON(jsonData) {
+var started = true;
+var endPoints = ["getCallsData", "getAgentsData"];
+
+function CreateTableFromJSON() {
     var int_str = document.getElementById("interval").value;
     var interval = 1000 * parseInt(int_str);
     if (started) {
-        setTimeout(function(){ CreateTableFromJSON(jsonData) }, interval);
+        setTimeout(function(){ CreateTableFromJSON() }, interval);
     } else {
         console.log("loop stoped");
     }
 
-    myBooks = jsonData
+    endPoints.forEach(function(endPoint){
+        var jsonData = GetData(endPoint);
+        var htmlContent = createHTML(jsonData);
 
+        // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
+        var divContainer = document.getElementById("showData");
+        divContainer.innerHTML = "";
+        divContainer.appendChild(table);
+    });
+    
+}
+
+function Stop() {
+    started=false
+}
+
+function Start() {
+    started=true
+    console.log("loop started");
+    CreateTableFromJSON();
+}
+
+function GetData() {
+    var Url = "http://35.228.71.166:5000/getDruidData";
+    var result = {};
+
+    $.ajax({
+        type: "GET",
+        url: Url,
+        dataType: "json",
+        async: false,
+        success: function(resp){
+            result = resp;
+        }
+        ,
+        error: function(error){
+            console.log(error);
+        }
+    });
+
+    return result;
+}
+
+function createHTML(jsonData) {
     var col = [];
-    for (var i = 0; i < myBooks.length; i++) {
-        for (var key in myBooks[i]) {
+    for (var i = 0; i < jsonData.length; i++) {
+        for (var key in jsonData[i]) {
             if (col.indexOf(key) === -1) {
                 col.push(key);
             }
@@ -34,53 +78,15 @@ function CreateTableFromJSON(jsonData) {
     }
 
     // ADD JSON DATA TO THE TABLE AS ROWS.
-    for (var i = 0; i < myBooks.length; i++) {
+    for (var i = 0; i < jsonData.length; i++) {
 
         tr = table.insertRow(-1);
 
         for (var j = 0; j < col.length; j++) {
             var tabCell = tr.insertCell(-1);
-            tabCell.innerHTML = myBooks[i][col[j]];
+            tabCell.innerHTML = jsonData[i][col[j]];
         }
     }
 
     return table;
-}
-
-function Stop() {
-    started=false
-}
-function Start() {
-    started=true
-    console.log("loop started");
-    var callsData = GetData("getCallsData");
-    var callsTable = CreateTableFromJSON(callsData);
-
-    var agentsData = GetData("getAgentsData");
-    var agentsTable = CreateTableFromJSON(agentsData);
-
-    var divContainer = document.getElementById("addTables");
-    divContainer.innerHTML = "";
-    divContainer.appendChild(agentsTable);
-    divContainer.appendChild(callsTable);
-}
-function GetData(endPointName) {
-    var Url = "http://35.228.71.166:5000/"+endPointName;
-    var result = {}
-
-    $.ajax({
-        type: "GET",
-        url: Url,
-        dataType: "json",
-        async: false,
-        success: function(resp){
-            result = resp;
-        }
-        ,
-        error: function(error){
-            console.log(error);
-        }
-    });
-
-    return result
 }
