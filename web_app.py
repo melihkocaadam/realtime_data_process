@@ -1,7 +1,10 @@
 from flask import Flask, render_template, request
 from kafka import KafkaProducer
 from datetime import datetime
-import json, requests, os
+import json, requests, os, configparser
+
+appConfig = configparser.ConfigParser()
+appConfig.read(os.path.join(os.path.dirname(__file__), 'web_app.conf'))
 
 app = Flask(__name__)
 
@@ -9,7 +12,7 @@ app = Flask(__name__)
 def serve_static(filename):
 
     root_dir = os.path.dirname(os.getcwd())
-    print(os.path.join(root_dir, 'realtime_data_process/static', filename))
+    # print(os.path.join(root_dir, 'realtime_data_process/static', filename))
     return send_from_directory(os.path.join(root_dir, 'realtime_data_process/static'), filename)
 
 @app.route("/report")
@@ -20,7 +23,7 @@ def report():
 def agents():
     return render_template("agents.html")
 
-sequence = int(os.environ.get("agentStatuSequence", "0"))
+sequence = appConfig["DEFAULT"]["agentStatuSequence"]
 @app.route("/sendAgentStatus", methods=['POST'])
 def sendAgentStatus():
     global sequence
@@ -28,7 +31,7 @@ def sendAgentStatus():
     jsonData = request.get_json()
     jsonData["activityDate"] = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")
     jsonData["sequence"] = sequence
-    os.environ["agentStatuSequence"] = str(sequence)
+    appConfig["DEFAULT"]["agentStatuSequence"] = sequence
     
     producer = KafkaProducer(
     bootstrap_servers=["0.0.0.0:9092"],
