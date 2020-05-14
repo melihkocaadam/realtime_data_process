@@ -33,8 +33,8 @@ function Start() {
     CreateTableFromJSON();
 }
 
-function GetData() {
-    var Url = "http://35.228.71.166:5000/getDruidData";
+function GetData(endPoint) {
+    var Url = "http://35.228.71.166:5000/"+endPoint;
     var result = {};
 
     $.ajax({
