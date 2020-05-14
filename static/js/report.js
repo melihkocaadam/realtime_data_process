@@ -12,12 +12,13 @@ function CreateTableFromJSON() {
         return;
     }
 
+    var divContainer = document.getElementById("addTables");
+    divContainer.innerHTML = "";
+
     endPoints.forEach(function(endPoint){
         var jsonData = GetData(endPoint);
         var htmlContent = createHTML(jsonData);
-
-        // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
-        var divContainer = document.getElementById("addTables");
+        
         divContainer.appendChild(htmlContent);
     });
     
