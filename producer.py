@@ -41,7 +41,7 @@ producer = KafkaProducer(
 i = 0
 for d in data_list:
     i += 1
-    producer.send("callsTable", d)
+    producer.send("calls", d)
     print("\r", i , end="")
     time.sleep(0.2)
 

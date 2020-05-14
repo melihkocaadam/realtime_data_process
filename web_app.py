@@ -34,7 +34,7 @@ def sendAgentStatus():
     client_id="agents-webpage-producer",
     value_serializer=lambda v: json.dumps(v).encode("utf-8")
     )
-    producer.send("agentsTable", jsonData)
+    producer.send("agents", jsonData)
 
     return 'JSON posted'
 
@@ -50,7 +50,7 @@ def getCallsData():
                             ,sum(acw) as "Sum of ACW Time"
                             ,count(*) as "Count of Calls"
                             ,count(DISTINCT campaign_id) as "Count of Unique Camp"
-                        FROM "callsTable"
+                        FROM "calls"
                         UNION ALL
                         SELECT *
                         FROM (
@@ -62,7 +62,7 @@ def getCallsData():
                             ,sum(acw) as "Sum of ACW Time"
                             ,count(*) as "Count of Calls"
                             ,count(DISTINCT campaign_id) as "Count of Unique Camp"
-                        FROM "callsTable"
+                        FROM "calls"
                         GROUP BY agent
                         ORDER BY 6
                         ) as tbl"""}
@@ -82,10 +82,10 @@ def getAgentsData():
                         FROM (
                             SELECT agent
                                 ,max(sequence) as max_seq
-                            FROM "agentsTable"
+                            FROM "agents"
                             GROUP BY agent
                             ) as mtbl
-                        LEFT JOIN "agentsTable" atbl
+                        LEFT JOIN "agents" atbl
                             ON atbl.agent = mtbl.agent
                             and atbl.sequence = mtbl.max_seq"""}
     r = requests.post(url, data=json.dumps(param), headers=headers)
