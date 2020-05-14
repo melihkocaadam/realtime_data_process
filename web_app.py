@@ -77,7 +77,9 @@ def getAgentsData():
     headers = {"Content-Type": "application/json"}
     param = {'query': """SELECT mtbl.agent as "Agents"
                             ,atbl.status as "Status"
-                            ,TIMESTAMPDIFF(SECOND, atbl.__time, CURRENT_TIMESTAMP) as "Duration"
+                            ,CASE WHEN atbl.status = 'Logout' THEN 0
+                                  ELSE TIMESTAMPDIFF(SECOND, atbl.__time, CURRENT_TIMESTAMP)
+                              END as "Duration"
                             ,atbl.__time as "Last Update"
                         FROM (
                             SELECT agent
