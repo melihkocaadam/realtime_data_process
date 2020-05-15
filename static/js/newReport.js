@@ -38,15 +38,16 @@ function Start() {
 
 function GetData(endPoint) {
     var Url = "http://35.228.71.166:5000/"+endPoint;
-    var result = {};
+    //var result = {};
 
     $.ajax({
         type: "GET",
         url: Url,
         dataType: "json",
-        async: false,
+        async: true,
         success: function(resp){
-            result = resp;
+            //result = resp;
+            console.log(resp);
         }
         ,
         error: function(error){
@@ -54,7 +55,7 @@ function GetData(endPoint) {
         }
     });
 
-    return result;
+    //return result;
 }
 
 function createHTML(jsonData) {
