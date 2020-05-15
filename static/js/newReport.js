@@ -23,7 +23,7 @@ function CreateTableFromJSON() {
         htmlContent.appendChild(getHtml);
         divContainer.appendChild(htmlContent);
     });
-    setTimeout(function(){ CreateTableFromJSON() }, interval / 10);
+    
 }
 
 function Stop() {
@@ -48,14 +48,13 @@ function GetData(endPoint) {
         success: function(resp){
             result = resp;
             console.log(resp);
+            CreateTableFromJSON();
         },
         error: function(error){
             console.log(error);
         }
     });
-    while (result.l) {
-        setTimeout(1000);
-    }
+
     return result;
 }
 
