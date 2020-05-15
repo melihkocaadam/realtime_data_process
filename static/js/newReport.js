@@ -5,12 +5,12 @@ function CreateTableFromJSON() {
     var int_str = document.getElementById("interval").value;
     var interval = 1000 * parseInt(int_str);
     if (started) {
-        setTimeout(function(){ CreateTableFromJSON() }, interval);
+        //setTimeout(function(){ CreateTableFromJSON() }, interval);
+        console.log("in loop | " + String(Date()));
     } else {
         console.log("loop stoped");
         return;
     }
-    console.log("in loop | " + String(Date()));
 
     var divContainer = document.getElementById("addTables");
     divContainer.innerHTML = "";
@@ -23,7 +23,7 @@ function CreateTableFromJSON() {
         htmlContent.appendChild(getHtml);
         divContainer.appendChild(htmlContent);
     });
-    
+    setTimeout(function(){ CreateTableFromJSON() }, interval / 10);
 }
 
 function Stop() {
@@ -45,15 +45,17 @@ function GetData(endPoint) {
         url: Url,
         dataType: "json",
         // async: false,
-        // success: function(resp){
-        //     result = resp;
-        //     console.log(resp);
-        // },
+        success: function(resp){
+            result = resp;
+            console.log(resp);
+        },
         error: function(error){
             console.log(error);
         }
     });
-
+    while (result.l) {
+        setTimeout(1000);
+    }
     return result;
 }
 
