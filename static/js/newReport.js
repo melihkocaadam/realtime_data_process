@@ -38,24 +38,23 @@ function Start() {
 
 function GetData(endPoint) {
     var Url = "http://35.228.71.166:5000/"+endPoint;
-    //var result = {};
+    // var result = {};
 
     $.ajax({
         type: "GET",
         url: Url,
         dataType: "json",
-        async: true,
-        success: function(resp){
-            //result = resp;
-            console.log(resp);
-        }
-        ,
+        // async: false,
+        // success: function(resp){
+        //     result = resp;
+        //     console.log(resp);
+        // },
         error: function(error){
             console.log(error);
         }
     });
 
-    //return result;
+    // return result;
 }
 
 function createHTML(jsonData) {
