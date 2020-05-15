@@ -38,7 +38,7 @@ function Start() {
 
 function GetData(endPoint) {
     var Url = "http://35.228.71.166:5000/"+endPoint;
-    // var result = {};
+    var result = {};
 
     $.ajax({
         type: "GET",
@@ -54,7 +54,7 @@ function GetData(endPoint) {
         }
     });
 
-    // return result;
+    return result;
 }
 
 function createHTML(jsonData) {
