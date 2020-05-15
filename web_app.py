@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from kafka import KafkaProducer
+from kafka import KafkaProducer, KafkaConsumer
 from datetime import datetime
 import json, requests, os
 
@@ -19,6 +19,15 @@ def report():
 @app.route("/agents")
 def agents():
     return render_template("agents.html")
+
+@app.route("/consumer")
+def consumer():
+    consumer = KafkaConsumer(
+        'agents',
+        bootstrap_servers=['localhost:9092'])
+
+    for message in consumer:
+        print (message.value)
 
 @app.route("/sendAgentStatus", methods=['POST'])
 def sendAgentStatus():
@@ -88,7 +97,7 @@ def getAgentsData():
                         WHERE COALESCE(atbl.status, '') not in ('Logout')"""}
     r = requests.post(url, data=json.dumps(param), headers=headers)
     result = r.text
-    
+
     return result
 
 if __name__ == "__main__":
