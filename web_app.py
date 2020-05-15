@@ -31,7 +31,7 @@ def consumer():
         bootstrap_servers=['localhost:9092'])
 
     for message in consumer:
-        jsonResult = json.dumps(message.value)
+        jsonResult = json.loads(message.value)
         return jsonResult
 
 @app.route("/sendAgentStatus", methods=['POST'])
