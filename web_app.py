@@ -22,8 +22,6 @@ def agents():
 
 @app.route("/sendAgentStatus", methods=['POST'])
 def sendAgentStatus():
-    global sequence
-    sequence += 1
     jsonData = request.get_json()
     jsonData["activityDate"] = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")
     jsonData["sequence"] = int(datetime.now().timestamp() * 1000)
