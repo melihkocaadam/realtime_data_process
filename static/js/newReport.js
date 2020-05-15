@@ -5,7 +5,7 @@ function CreateTableFromJSON() {
     var int_str = document.getElementById("interval").value;
     var interval = 1000 * parseInt(int_str);
     if (started) {
-        //setTimeout(function(){ CreateTableFromJSON() }, interval);
+        setTimeout(function(){ CreateTableFromJSON() }, interval);
         console.log("in loop | " + String(Date()));
     } else {
         console.log("loop stoped");
@@ -38,7 +38,7 @@ function Start() {
 
 function GetData(endPoint) {
     var Url = "http://35.228.71.166:5000/"+endPoint;
-    var result = {};
+    // var result = {};
 
     $.ajax({
         type: "GET",
@@ -46,16 +46,15 @@ function GetData(endPoint) {
         dataType: "json",
         // async: false,
         success: function(resp){
-            result = resp;
+            // result = resp;
             console.log(resp);
-            CreateTableFromJSON();
+            return resp;
         },
         error: function(error){
             console.log(error);
         }
     });
-
-    return result;
+    
 }
 
 function createHTML(jsonData) {
