@@ -20,6 +20,10 @@ def report():
 def agents():
     return render_template("agents.html")
 
+@app.route("/newReport")
+def newReport():
+    return render_template("newReport.html")
+
 @app.route("/consumer")
 def consumer():
     consumer = KafkaConsumer(

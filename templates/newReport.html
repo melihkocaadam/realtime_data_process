@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calls Report</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='image/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='image/favicon.ico') }}">
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/fontawesome.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/brands.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/solid.css') }}" rel="stylesheet">
+    <style>
+        th, td, p, input {
+            font:14px Verdana;
+        }
+        table, th, td 
+        {
+            border: solid 1px #DDD;
+            border-collapse: collapse;
+            padding: 2px 3px;
+            text-align: center;
+        }
+        th {
+            font-weight:bold;
+        }
+    </style>
+</head>
+<body>
+    <br>
+    <div class="container">
+        <div class="form-group form-inline">
+            <label for="interval">interval (sec):</label>
+            <input type="text" class="form-control rounded" id="interval" size="5" value="5">
+            <button class="btn rounded btn-outline-success" type="button" onclick="Start()">Start</button>
+            <button class="btn rounded btn-outline-danger" type="button" onclick="Stop()">Stop</button>
+        </div>
+
+        <div class="row justify-content-center" id="addTables">
+
+        </div>
+    </div>
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='js/newReport.js') }}"></script>
+</html>
