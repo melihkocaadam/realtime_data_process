@@ -27,7 +27,7 @@ def consumer():
         bootstrap_servers=['localhost:9092'])
 
     for message in consumer:
-        print (message.value)
+        return message.value
 
 @app.route("/sendAgentStatus", methods=['POST'])
 def sendAgentStatus():
