@@ -9,11 +9,13 @@ function startStop() {
         button.innerText = "Stop";
         button.className = "btn rounded btn-outline-danger";
         started = true;
+        console.log("into start");
         getData(endPoint);
     } else {
         button.innerText = "Start";
         button.className = "btn rounded btn-outline-success";
         started = false;
+        console.log("into stop");
     }
 }
 
@@ -21,6 +23,7 @@ function getData(endPoint) {
     var Url = "http://35.228.71.166:5000/"+endPoint;
     var result = {};
 
+    console.log("into getData()");
     queue.push(endPoint);
 
     $.ajax({
@@ -41,6 +44,7 @@ function getData(endPoint) {
 }
 
 function createHTML(jsonData, endPoint) {
+    console.log("into createHTML()");
     var col = [];
     for (var i = 0; i < jsonData.length; i++) {
         for (var key in jsonData[i]) {
