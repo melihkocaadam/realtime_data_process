@@ -1,44 +1,27 @@
 var started = true;
-var endPoints = ["consumer"];
+var queue = [];
 
-function CreateTableFromJSON() {
-    var int_str = document.getElementById("interval").value;
-    var interval = 1000 * parseInt(int_str);
-    if (started) {
-        setTimeout(function(){ CreateTableFromJSON() }, interval);
-        console.log("in loop | " + String(Date()));
+function startStop() {
+    var button = document.getElementById("start-stop");
+    var endPoint = document.getElementById("endPoint").value;
+
+    if (button.innerText == "Start") {
+        button.innerText = "Stop";
+        button.className = "btn rounded btn-outline-danger";
+        started = true;
+        getData(endPoint);
     } else {
-        console.log("loop stoped");
-        return;
+        button.innerText = "Start";
+        button.className = "btn rounded btn-outline-success";
+        started = false;
     }
-
-    var divContainer = document.getElementById("addTables");
-    divContainer.innerHTML = "";
-
-    endPoints.forEach(function(endPoint){
-        var jsonData = GetData(endPoint);
-        var getHtml = createHTML(jsonData);
-        var htmlContent = document.createElement("div");
-        htmlContent.setAttribute("class", "row justify-content-center");
-        htmlContent.appendChild(getHtml);
-        divContainer.appendChild(htmlContent);
-    });
-    
 }
 
-function Stop() {
-    started=false
-}
-
-function Start() {
-    started=true
-    console.log("loop started");
-    CreateTableFromJSON();
-}
-
-function GetData(endPoint) {
+function getData(endPoint) {
     var Url = "http://35.228.71.166:5000/"+endPoint;
     var result = {};
+
+    queue.push(endPoint);
 
     $.ajax({
         type: "GET",
@@ -48,16 +31,16 @@ function GetData(endPoint) {
         success: function(resp){
             result = resp;
             console.log(resp);
+            createHTML(result, endPoint);
         },
         error: function(error){
             console.log(error);
         }
     });
 
-    return result;
 }
 
-function createHTML(jsonData) {
+function createHTML(jsonData, endPoint) {
     var col = [];
     for (var i = 0; i < jsonData.length; i++) {
         for (var key in jsonData[i]) {
@@ -90,5 +73,17 @@ function createHTML(jsonData) {
         }
     }
 
-    return table;
+    var divContainer = document.getElementById("addTables");
+    var existChild = divContainer.getElementById(endPoint);
+    if (existChild.id == endpoint) {
+        divContainer.parentNode.removeChild(existChild);
+    }
+
+    var htmlContent = document.createElement("div");
+    htmlContent.setAttribute("class", "row justify-content-center");
+    htmlContent.setAttribute("id", endPoint);
+    htmlContent.appendChild(table);
+    divContainer.appendChild(htmlContent);
+
+    getData(endPoint);
 }

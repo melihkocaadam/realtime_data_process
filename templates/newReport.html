@@ -27,11 +27,17 @@
 <body>
     <br>
     <div class="container">
-        <div class="form-group form-inline">
-            <label for="interval">interval (sec):</label>
-            <input type="text" class="form-control rounded" id="interval" size="5" value="5">
-            <button class="btn rounded btn-outline-success" type="button" onclick="Start()">Start</button>
-            <button class="btn rounded btn-outline-danger" type="button" onclick="Stop()">Stop</button>
+
+        <div class="input-group left">
+            <div class="input-group-append">
+                <button class="btn rounded btn-outline-success" type="button" id="start-stop" onclick="startStop()">Start</button>
+            </div>
+
+            <select class="custom-select" id="endPoint">
+                <option selected>Please choose endpoint name...</option>
+                <option value="agentsreport">Agents Report</option>
+            </select>
+            
         </div>
 
         <div class="row justify-content-center" id="addTables">
