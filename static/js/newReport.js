@@ -78,7 +78,7 @@ function createHTML(jsonData, endPoint) {
     }
 
     var divContainer = document.getElementById("addTables");
-    console.log(typeof divContainer);
+    console.log(divContainer);
     var existChild = divContainer.getElementById(endPoint);
     if (existChild.id == endpoint) {
         divContainer.parentNode.removeChild(existChild);
