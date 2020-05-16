@@ -79,15 +79,19 @@ function createHTML(jsonData, endPoint) {
 
     var divContainer = document.getElementById("addTables");
     var existChild = document.getElementById(endPoint);
-    if (existChild != null) {
-        divContainer.parentNode.removeChild(existChild);
-    }
-
     var htmlContent = document.createElement("div");
     htmlContent.setAttribute("class", "row justify-content-center");
     htmlContent.setAttribute("id", endPoint);
     htmlContent.appendChild(table);
+
+    if (existChild != null) {
+        existChild.remove();
+    }
+    
     divContainer.appendChild(htmlContent);
 
-    getData(endPoint);
+    if (started) {
+        getData(endPoint);
+    }
+    
 }
