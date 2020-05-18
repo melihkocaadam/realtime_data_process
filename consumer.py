@@ -1,11 +1,12 @@
 from kafka import KafkaConsumer, TopicPartition
 from datetime import datetime
-import json
+import json, sys
 
+clientId = sys.argv[1]
 
 my_topic = 'agents'
 consumer = KafkaConsumer(
-    client_id='local-consumer1',
+    client_id=clientId,
     group_id='new-group',
     bootstrap_servers=['localhost:9092'])
 
