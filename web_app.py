@@ -33,7 +33,7 @@ def consumer(clientid):
 
     for message in consumer:
         print(message.value)
-        jsonResult = json.loads(json.dumps(message.value))
+        jsonResult = str(json.loads(message.value))
         print(jsonResult)
         print(type(jsonResult))
         return jsonResult
