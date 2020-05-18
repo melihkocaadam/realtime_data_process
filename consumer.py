@@ -1,4 +1,5 @@
 from kafka import KafkaConsumer
+from datetime import datetime
 import json
 
 consumer = KafkaConsumer(
@@ -16,7 +17,7 @@ for message in consumer:
     msg_len = len(str(msg_json))
     print(msg_len, msg_json)
     jsonResult.append(msg_json)
-    if msg_len == 0:
-        break
+    
+    print(message.offset)
 
 print(jsonResult)
