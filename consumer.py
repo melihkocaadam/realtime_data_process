@@ -15,11 +15,9 @@ tp = TopicPartition(my_topic, 0)
 consumer.assign([tp])
 exist_offset = consumer.position(tp)
 print(exist_offset)
-# consumer.seek_to_end(tp)
-# end_offset = consumer.position(tp)
 end_oss = consumer.end_offsets([tp])
 for offset in end_oss:
-    end_offset = end_oss[offset] -1
+    end_offset = end_oss[offset]
     break
 print(end_offset)
 
@@ -31,7 +29,7 @@ for message in consumer:
     jsonResult.append(msg_json)
     msg_offset = message.offset
     print(msg_offset)
-    if msg_offset == end_offset:
+    if msg_offset == end_offset -1:
         break
 
 print(jsonResult)
