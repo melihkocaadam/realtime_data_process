@@ -17,7 +17,7 @@ print(exist_offset)
 # end_offset = consumer.position(tp)
 end_oss = consumer.end_offsets([tp])
 for offset in end_oss:
-    end_offset = end_oss[offset]
+    end_offset = end_oss[offset] -1
     break
 print(end_offset)
 
