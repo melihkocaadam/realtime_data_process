@@ -8,7 +8,6 @@ consumer = KafkaConsumer(
     client_id='local-consumer',
     group_id='new-group',
     bootstrap_servers=['localhost:9092'])
-consumer.
 
 tp = TopicPartition(my_topic, 0)
 consumer.assign([tp])
