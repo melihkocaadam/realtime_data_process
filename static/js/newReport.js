@@ -45,6 +45,8 @@ function getData(endPoint) {
 
 function createHTML(jsonData, endPoint) {
     console.log("into createHTML()");
+    console.log(jsonData);
+    console.log(endPoint);
     var col = [];
     for (var i = 0; i < jsonData.length; i++) {
         for (var key in jsonData[i]) {
@@ -53,6 +55,7 @@ function createHTML(jsonData, endPoint) {
             }
         }
     }
+    console.log(col);
 
     var table = document.createElement("table");
     table.setAttribute("class", "table");
@@ -66,6 +69,7 @@ function createHTML(jsonData, endPoint) {
         th.innerHTML = col[i];
         tr.appendChild(th);
     }
+    console.log(table);
 
     // ADD JSON DATA TO THE TABLE AS ROWS.
     for (var i = 0; i < jsonData.length; i++) {
