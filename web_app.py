@@ -33,8 +33,7 @@ def consumer(clientid):
 
     jsonResult = []
     for message in consumer:
-        jsonResult.append(message.value)
-        return json.loads(jsonResult)
+        return json.loads(message.value)
 
 @app.route("/sendAgentStatus", methods=['POST'])
 def sendAgentStatus():
