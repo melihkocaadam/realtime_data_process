@@ -34,6 +34,7 @@ def consumer(clientid):
     for message in consumer:
         jsonResult = json.loads(message.value)
         print(type(jsonResult))
+        print(jsonResult)
         return jsonResult
 
 @app.route("/sendAgentStatus", methods=['POST'])
@@ -105,6 +106,7 @@ def getAgentsData():
     r = requests.post(url, data=json.dumps(param), headers=headers)
     result = r.text
     print(type(result))
+    print(result)
     return result
 
 if __name__ == "__main__":
