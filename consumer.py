@@ -2,14 +2,14 @@ from kafka import KafkaConsumer, TopicPartition
 from datetime import datetime
 import json
 
-topic_list = ['agents']
+my_topic = 'agents'
 consumer = KafkaConsumer(
-    topics=topic_list,
+    my_topic,
     client_id='local-consumer',
     auto_offset_reset='smallest',
     bootstrap_servers=['localhost:9092'])
 tp = TopicPartition(
-    topic=topic_list[0],
+    topic=my_topic,
     partition=0
     )
 end_offset = consumer.end_offsets(tp)
