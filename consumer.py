@@ -4,14 +4,16 @@ import json
 
 my_topic = 'agents'
 consumer = KafkaConsumer(
-    my_topic,
     client_id='local-consumer',
     auto_offset_reset='smallest',
     bootstrap_servers=['localhost:9092'])
 
 tp = TopicPartition(my_topic, 0)
-
-end_offset = consumer.end_offsets(tp)
+consumer.assign([tp])
+exist_offset = consumer.position(tp)
+print(exist_offset)
+consumer.seek_to_end(tp)
+end_offset = consumer.position(tp)
 print(end_offset)
 
 jsonResult = []
