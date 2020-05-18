@@ -32,10 +32,7 @@ def consumer(clientid):
         bootstrap_servers=['localhost:9092'])
 
     for message in consumer:
-        print(message.value)
-        jsonResult = str(json.loads(message.value))
-        print(jsonResult)
-        print(type(jsonResult))
+        jsonResult = json.loads(message.value)
         return jsonResult
 
 @app.route("/sendAgentStatus", methods=['POST'])
@@ -106,8 +103,7 @@ def getAgentsData():
                         WHERE COALESCE(atbl.status, '') not in ('Logout')"""}
     r = requests.post(url, data=json.dumps(param), headers=headers)
     result = r.text
-    print(result)
-    print(type(result))
+
     return result
 
 if __name__ == "__main__":

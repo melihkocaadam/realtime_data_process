@@ -38,7 +38,8 @@ function getData(endPoint) {
         // async: false,
         success: function(resp){
             result = resp;
-            console.log(resp);
+            console.log(result);
+            console.log(typeof result);
             createHTML(result, endPoint);
         },
         error: function(error){
