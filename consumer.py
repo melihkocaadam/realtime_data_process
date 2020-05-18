@@ -4,7 +4,7 @@ import json
 
 topic = 'agents'
 consumer = KafkaConsumer(
-    topic=topic,
+    topic,
     client_id='local-consumer',
     auto_offset_reset='smallest',
     bootstrap_servers=['localhost:9092'])
