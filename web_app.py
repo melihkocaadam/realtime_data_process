@@ -29,12 +29,12 @@ def consumer(clientid):
     consumer = KafkaConsumer(
         'agents',
         client_id=clientid,
+        group_id='web-clients',
         bootstrap_servers=['localhost:9092'])
 
     for message in consumer:
         jsonResult = "[" + str(json.loads(message.value)).replace("'", '"') + "]"
-        print(type(jsonResult))
-        print(jsonResult)
+        
         return jsonResult
 
 @app.route("/sendAgentStatus", methods=['POST'])
@@ -105,8 +105,7 @@ def getAgentsData():
                         WHERE COALESCE(atbl.status, '') not in ('Logout')"""}
     r = requests.post(url, data=json.dumps(param), headers=headers)
     result = r.text
-    print(type(result))
-    print(result)
+    
     return result
 
 if __name__ == "__main__":
