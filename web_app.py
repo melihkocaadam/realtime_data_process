@@ -32,7 +32,7 @@ def consumer(clientid):
         bootstrap_servers=['localhost:9092'])
 
     for message in consumer:
-        jsonResult = "[" + str(json.loads(message.value)) + "]"
+        jsonResult = "[" + str(json.loads(message.value)).replace("'", '"') + "]"
         print(type(jsonResult))
         print(jsonResult)
         return jsonResult
