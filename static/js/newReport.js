@@ -20,7 +20,7 @@ function startStop() {
 }
 
 function getData(endPoint) {
-    var Url = "http://35.228.71.166:5000/"+endPoint;
+    var Url = "http://35.228.71.166:5000/"+endPoint+"/melih.kocaadam";
     var result = {};
 
     console.log("into getData()");
@@ -87,11 +87,11 @@ function createHTML(jsonData, endPoint) {
     if (existChild != null) {
         existChild.remove();
     }
-    
+
     divContainer.appendChild(htmlContent);
 
     if (started) {
-        getData(endPoint);
+        setTimeout(function(){ getData(endPoint) }, 100);
     }
     
 }

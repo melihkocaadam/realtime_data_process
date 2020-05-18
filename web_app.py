@@ -24,10 +24,11 @@ def agents():
 def newReport():
     return render_template("newReport.html")
 
-@app.route("/agentsreport")
-def consumer():
+@app.route("/agentsReport/<clientid>")
+def consumer(clientid):
     consumer = KafkaConsumer(
         'agents',
+        client_id=clientid,
         bootstrap_servers=['localhost:9092'])
 
     for message in consumer:
