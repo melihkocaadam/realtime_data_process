@@ -15,7 +15,7 @@ exist_offset = consumer.position(tp)
 print(exist_offset)
 # consumer.seek_to_end(tp)
 # end_offset = consumer.position(tp)
-end_offset = consumer.end_offsets([tp])
+end_offset = consumer.end_offsets([tp])[0]
 print(end_offset)
 consumer.seek(tp, exist_offset)
 
