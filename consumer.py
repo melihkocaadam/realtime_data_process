@@ -15,6 +15,7 @@ print(exist_offset)
 consumer.seek_to_end(tp)
 end_offset = consumer.position(tp)
 print(end_offset)
+consumer.subscribe(topics=('agents'), listener='local-consumer')
 print("subscriptions: ", consumer.subscription())
 
 jsonResult = []
