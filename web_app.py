@@ -105,7 +105,7 @@ def getAgentsData():
                         WHERE COALESCE(atbl.status, '') not in ('Logout')"""}
     r = requests.post(url, data=json.dumps(param), headers=headers)
     result = r.text
-
+    print(result)
     return result
 
 if __name__ == "__main__":
