@@ -1,7 +1,19 @@
 from kafka import KafkaConsumer
-consumer = KafkaConsumer('deneme',
-                         #group_id='my-group',
-                         bootstrap_servers=['35.228.71.166:9092'])
 
+consumer = KafkaConsumer(
+    'agents',
+    client_id='local-consumer',
+    auto_offset_reset='smallest',
+    bootstrap_servers=['localhost:9092'])
+
+jsonResult = []
 for message in consumer:
-    print (message.value)
+    msg = message.value
+    print(type(msg))
+    msg_len = len(str(msg))
+    print(msg_len, msg)
+    jsonResult.append(json.loads(message.value))
+    if msg_len > 0:
+        break
+
+print(jsonResult)
