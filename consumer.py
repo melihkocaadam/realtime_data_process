@@ -15,6 +15,7 @@ print(exist_offset)
 consumer.seek_to_end(tp)
 end_offset = consumer.position(tp)
 print(end_offset)
+print("subscriptions: ", consumer.subscription())
 
 jsonResult = []
 for message in consumer:
