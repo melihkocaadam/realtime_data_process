@@ -7,7 +7,7 @@ group = sys.argv[2]
 
 my_topic = 'agents'
 consumer = KafkaConsumer(
-    client_id=clientId,
+    client_id=client,
     group_id=group,
     bootstrap_servers=['localhost:9092'])
 
