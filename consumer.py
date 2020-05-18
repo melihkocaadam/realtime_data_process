@@ -7,7 +7,6 @@ consumer = KafkaConsumer(
     topic=topic,
     client_id='local-consumer',
     auto_offset_reset='smallest',
-    iter_timeout=5,
     bootstrap_servers=['localhost:9092'])
 tp = TopicPartition(
     topic=topic,
