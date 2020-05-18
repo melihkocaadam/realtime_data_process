@@ -31,11 +31,15 @@ def consumer(clientid):
         client_id=clientid,
         auto_offset_reset='smallest',
         bootstrap_servers=['localhost:9092'])
-
+    
+    jsonResult = []
     for message in consumer:
-        jsonResult = "[" + str(json.loads(message.value)).replace("'", '"') + "]"
+        msg = message.value
+        jsonResult.append(json.loads(message.value))
+        if len(str(msg)):
+            break
         
-        return jsonResult
+    return str(jsonResult).replace("'", '"')
 
 @app.route("/sendAgentStatus", methods=['POST'])
 def sendAgentStatus():
