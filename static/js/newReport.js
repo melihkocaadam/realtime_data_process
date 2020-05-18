@@ -76,7 +76,7 @@ function createHTML(jsonData, endPoint) {
             tabCell.innerHTML = jsonData[i][col[j]];
         }
     }
-
+    console.log(table);
     var divContainer = document.getElementById("addTables");
     var existChild = document.getElementById(endPoint);
     var htmlContent = document.createElement("div");
