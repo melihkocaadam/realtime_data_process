@@ -22,14 +22,15 @@ for offset in end_oss:
 print(end_offset)
 
 jsonResult = []
-for message in consumer:
-    msg = message.value
-    msg_json = json.loads(msg)
-    print(msg_json)
-    jsonResult.append(msg_json)
-    msg_offset = message.offset
-    print(msg_offset)
-    if msg_offset == end_offset -1:
-        break
+if exist_offset < end_offset:
+    for message in consumer:
+        msg = message.value
+        msg_json = json.loads(msg)
+        print(msg_json)
+        jsonResult.append(msg_json)
+        msg_offset = message.offset
+        print(msg_offset)
+        if msg_offset == end_offset -1:
+            break
 
 print(jsonResult)
