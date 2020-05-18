@@ -20,8 +20,12 @@ function startStop() {
 }
 
 function getData(endPoint) {
-    var Url = "http://35.228.71.166:5000/"+endPoint+"/melih.kocaadam";
+    var Url = "http://35.228.71.166:5000/"+endPoint;
     var result = {};
+
+    if (endPoint == "agentsReport") {
+        Url = Url + "/melih.kocaadam";
+    }
 
     console.log("into getData()");
     queue.push(endPoint);
