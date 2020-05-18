@@ -6,7 +6,9 @@ import json
 my_topic = 'agents'
 consumer = KafkaConsumer(
     client_id='local-consumer',
+    group_id='new-group'
     bootstrap_servers=['localhost:9092'])
+consumer.
 
 tp = TopicPartition(my_topic, 0)
 consumer.assign([tp])
@@ -19,11 +21,8 @@ print(end_offset)
 jsonResult = []
 for message in consumer:
     msg = message.value
-    print(type(msg))
     msg_json = json.loads(msg)
-    print(type(msg_json))
-    msg_len = len(str(msg_json))
-    print(msg_len, msg_json)
+    print(msg_json)
     jsonResult.append(msg_json)
     msg_offset = message.offset
     print(msg_offset)
