@@ -35,7 +35,8 @@ def consumer(clientid):
     jsonResult = []
     for message in consumer:
         msg = message.value
-        msg_len = len(str(msg)
+        print(type(msg))
+        msg_len = len(str(msg))
         print(msg_len, msg)
         jsonResult.append(json.loads(message.value))
         if msg_len > 0:
