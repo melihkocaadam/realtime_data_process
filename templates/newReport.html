@@ -27,18 +27,19 @@
 <body>
     <br>
     <div class="container">
+        <div class="row justify-content-left">
+            <div class="input-group">
+                <div class="input-group-append">
+                    <button class="btn rounded btn-outline-success" type="button" id="start-stop" onclick="startStop()">Start</button>
+                </div>
 
-        <div class="input-group left">
-            <div class="input-group-append">
-                <button class="btn rounded btn-outline-success" type="button" id="start-stop" onclick="startStop()">Start</button>
+                <select class="custom-select" id="endPoint">
+                    <option selected>Please choose endpoint name...</option>
+                    <option value="agentsReport">Agents Report Kafka</option>
+                    <option value="getAgentsData">Agents Report Druid</option>
+                </select>
+                
             </div>
-
-            <select class="custom-select" id="endPoint">
-                <option selected>Please choose endpoint name...</option>
-                <option value="agentsReport">Agents Report Kafka</option>
-                <option value="getAgentsData">Agents Report Druid</option>
-            </select>
-            
         </div>
 
         <div class="row justify-content-center" id="addTables">
