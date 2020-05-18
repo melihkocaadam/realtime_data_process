@@ -34,6 +34,7 @@ def consumer(clientid):
     jsonResult = []
     for message in consumer:
         jsonResult.append(json.loads(message.value))
+        break
     
     return jsonResult
 

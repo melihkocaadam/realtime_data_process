@@ -29,6 +29,7 @@ function getData(endPoint) {
 
     console.log("into getData()");
     queue.push(endPoint);
+    console.log(queue);
 
     $.ajax({
         type: "GET",
