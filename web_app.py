@@ -29,7 +29,7 @@ def consumer(clientid):
     consumer = KafkaConsumer(
         'agents',
         client_id=clientid,
-        group_id='web-clients',
+        auto_offset_reset='smallest',
         bootstrap_servers=['localhost:9092'])
 
     for message in consumer:
