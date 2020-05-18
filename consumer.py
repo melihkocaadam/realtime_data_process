@@ -2,12 +2,9 @@ from kafka import KafkaConsumer, TopicPartition
 from datetime import datetime
 import json
 
+client = "localhost:9092"
+consumer = KafkaConsumer(client)
 my_topic = 'agents'
-consumer = KafkaConsumer(
-    client_id='local-consumer',
-    auto_offset_reset='smallest',
-    bootstrap_servers=['localhost:9092'])
-
 tp = TopicPartition(my_topic, 0)
 consumer.assign([tp])
 exist_offset = consumer.position(tp)
