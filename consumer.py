@@ -11,10 +11,10 @@ jsonResult = []
 for message in consumer:
     msg = message.value
     print(type(msg))
-    msg_len = len(str(msg))
+    msg_len = len(str(json.dumps(msg)))
     print(msg_len, msg)
     jsonResult.append(json.loads(message.value))
-    if msg_len > 0:
+    if msg_len = 0:
         break
 
 print(jsonResult)
