@@ -8,10 +8,9 @@ consumer = KafkaConsumer(
     client_id='local-consumer',
     auto_offset_reset='smallest',
     bootstrap_servers=['localhost:9092'])
-tp = TopicPartition(
-    topic=my_topic,
-    partition=0
-    )
+
+tp = TopicPartition(my_topic, 0)
+
 end_offset = consumer.end_offsets(tp)
 print(end_offset)
 
