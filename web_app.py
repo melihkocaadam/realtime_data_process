@@ -32,6 +32,7 @@ def consumer(clientid):
         bootstrap_servers=['localhost:9092'])
 
     for message in consumer:
+        print(message.value)
         jsonResult = json.loads(message.value)
         print(jsonResult)
         return jsonResult
