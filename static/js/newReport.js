@@ -29,7 +29,6 @@ function getData(endPoint) {
 
     console.log("into getData()");
     queue.push(endPoint);
-    console.log(queue);
 
     $.ajax({
         type: "GET",
@@ -51,8 +50,6 @@ function getData(endPoint) {
 
 function createHTML(jsonData, endPoint) {
     console.log("into createHTML()");
-    console.log(jsonData);
-    console.log(endPoint);
     var col = [];
     for (var i = 0; i < jsonData.length; i++) {
         for (var key in jsonData[i]) {
@@ -75,7 +72,6 @@ function createHTML(jsonData, endPoint) {
         th.innerHTML = col[i];
         tr.appendChild(th);
     }
-    console.log(table);
 
     // ADD JSON DATA TO THE TABLE AS ROWS.
     for (var i = 0; i < jsonData.length; i++) {
@@ -86,7 +82,6 @@ function createHTML(jsonData, endPoint) {
             tabCell.innerHTML = jsonData[i][col[j]];
         }
     }
-    console.log(table);
     var divContainer = document.getElementById("addTables");
     var existChild = document.getElementById(endPoint);
     var htmlContent = document.createElement("div");
