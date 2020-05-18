@@ -36,7 +36,7 @@ def consumer(clientid):
     for message in consumer:
         msg = message.value
         jsonResult.append(json.loads(message.value))
-        if len(str(msg) > 0):
+        if len(str(msg)) > 0:
             break
         
     return str(jsonResult).replace("'", '"')
