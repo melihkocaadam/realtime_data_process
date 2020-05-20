@@ -24,23 +24,26 @@ def agents():
 def newReport():
     return render_template("newReport.html")
 
-@app.route("/agentsReport/<clientid>")
+@app.route("/agentsCompact/<clientid>")
 def consumer(clientid):
     consumer = KafkaConsumer(
-        'agents',
-        client_id=clientid,
-        auto_offset_reset='smallest',
+        'agentsCompact',
+        client_id=client,
+        group_id=group,
         bootstrap_servers=['localhost:9092'])
     
     jsonResult = []
-    for message in consumer:
-        msg = message.value
-        print(type(msg))
-        msg_len = len(str(msg))
-        print(msg_len, msg)
-        jsonResult.append(json.loads(message.value))
-        if msg_len > 0:
-            break
+    if exist_offset < end_offset:
+        for message in consumer:
+            msg = message.value
+            msg_json = json.loads(msg)
+            
+            jsonResult.append(msg_json)
+            msg_offset = message.offset
+
+            if msg_offset == end_offset -1:
+                consumer.seek_to_end(tp)
+                break
         
     return str(jsonResult).replace("'", '"')
 

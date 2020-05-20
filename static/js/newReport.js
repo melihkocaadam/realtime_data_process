@@ -23,7 +23,7 @@ function getData(endPoint) {
     var Url = "http://35.228.71.166:5000/"+endPoint;
     var result = {};
 
-    if (endPoint == "agentsReport") {
+    if (endPoint == "agentsCompact") {
         Url = Url + "/melih.kocaadam";
     }
 
