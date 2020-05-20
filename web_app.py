@@ -26,7 +26,7 @@ def newReport():
 
 @app.route("/agentsCompact")
 def consumer():
-    res = request.__dict__()
+    res = request.__dict__
     for r, v in res:
         print(r, v)
     my_topic = 'agentsCompact'
