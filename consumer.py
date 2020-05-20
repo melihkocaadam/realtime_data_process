@@ -23,7 +23,9 @@ for offset in end_oss:
     break
 print(end_offset)
 
-consumer.position(tp) = exist_offset
+consumer.seek_to_beginning([tp])
+exist_offset = consumer.position(tp)
+print(exist_offset)
 
 jsonResult = []
 if exist_offset < end_offset:
