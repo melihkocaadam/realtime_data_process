@@ -26,8 +26,9 @@ def newReport():
 
 @app.route("/agentsCompact")
 def consumer():
-    res = request.args
-    print(res)
+    params = request.args
+    for param in params:
+        print(param)
 
     my_topic = 'agentsCompact'
     consumer = KafkaConsumer(
