@@ -23,8 +23,7 @@ for offset in end_oss:
     break
 print(end_offset)
 
-tp_tupple = tuple([tp])
-consumer.seek_to_beginning(tp_tupple)
+consumer.seek(tp, exist_offset)
 exist_offset = consumer.position(tp)
 print(exist_offset)
 
