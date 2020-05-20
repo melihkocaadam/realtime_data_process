@@ -31,6 +31,8 @@ function getData(endPoint) {
     dataJson.userName = 'melih.kocaadam';
     dataJson.cycleNum = cycleNum;
 
+    cycleNum ++;
+
     $.ajax({
         type: "GET",
         url: Url,
