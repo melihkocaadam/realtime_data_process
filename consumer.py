@@ -23,7 +23,7 @@ for offset in end_oss:
     break
 print(end_offset)
 
-consumer.seek(tp, exist_offset)
+consumer.seek(tp, 1)
 exist_offset = consumer.position(tp)
 print(exist_offset)
 
