@@ -49,13 +49,15 @@ def sendAgentStatus():
     jsonData = request.get_json()
     jsonData["activityDate"] = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")
     jsonData["sequence"] = int(datetime.now().timestamp() * 1000)
+    keyVal = jsonData["agent"]
     
     producer = KafkaProducer(
     bootstrap_servers=["0.0.0.0:9092"],
     client_id="agents-webpage-producer",
     value_serializer=lambda v: json.dumps(v).encode("utf-8")
     )
-    producer.send("agents", jsonData)
+    producer.send("agents", value=jsonData)
+    producer.send("agentsCompact", key=keyVal, value=jsonData)
 
     return 'JSON posted'
 

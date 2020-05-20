@@ -150,12 +150,6 @@ function secToTime(value) {
     return hours + ':' + minutes + ':' + seconds;
 }
 
-$('#agentName').keypress(function(event) {
-    if (event.which == 13) {
-       $.print("Enter pushed");
-    }
-});
-
 function loginClick(agent_name){
     var btn_name = $("#btn-login-"+agent_name).text();
     var data;
