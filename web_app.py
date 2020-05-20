@@ -26,7 +26,7 @@ def newReport():
 
 @app.route("/agentsCompact")
 def consumer():
-    res = request.view_args
+    res = request.json()
     for r in res:
         print(r)
     my_topic = 'agentsCompact'
