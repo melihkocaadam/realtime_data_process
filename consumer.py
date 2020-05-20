@@ -2,10 +2,11 @@ from kafka import KafkaConsumer, TopicPartition
 from datetime import datetime
 import json, sys
 
-client = sys.argv[1]
-group = sys.argv[2]
+my_topic = sys.argv[1]
+client = sys.argv[2]
+group = sys.argv[3]
 
-my_topic = 'agentsCompact'
+# my_topic = 'agentsCompact'
 consumer = KafkaConsumer(
     client_id=client,
     group_id=group,
