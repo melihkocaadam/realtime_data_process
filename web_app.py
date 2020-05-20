@@ -27,8 +27,8 @@ def newReport():
 @app.route("/agentsCompact")
 def consumer():
     res = request.__dict__
-    for r, v in res:
-        print(r, v)
+    for r in res:
+        print(r)
     my_topic = 'agentsCompact'
     consumer = KafkaConsumer(
         # client_id=clientid,
