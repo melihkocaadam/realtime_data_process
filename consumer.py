@@ -13,7 +13,7 @@ consumer = KafkaConsumer(
     bootstrap_servers=['localhost:9092'])
 
 tp = TopicPartition(my_topic, 0)
-consumer.assign(tp)
+consumer.assign([tp])
 exist_offset = consumer.position(tp)
 print(exist_offset)
 
@@ -23,7 +23,7 @@ for offset in end_oss:
     break
 print(end_offset)
 
-consumer.seek_to_beginning(tp)
+consumer.seek_to_beginning([tp])
 exist_offset = consumer.position(tp)
 print(exist_offset)
 
