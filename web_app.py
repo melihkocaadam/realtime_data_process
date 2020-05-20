@@ -29,7 +29,7 @@ def consumer():
     print(request.data)
     my_topic = 'agentsCompact'
     consumer = KafkaConsumer(
-        client_id=clientid,
+        # client_id=clientid,
         bootstrap_servers=['localhost:9092'])
 
     tp = TopicPartition(my_topic, 0)
