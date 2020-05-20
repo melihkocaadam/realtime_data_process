@@ -26,10 +26,22 @@ def newReport():
 
 @app.route("/agentsCompact/<clientid>")
 def consumer(clientid):
+    my_topic = 'agentsCompact'
     consumer = KafkaConsumer(
-        'agentsCompact',
         client_id=clientid,
         bootstrap_servers=['localhost:9092'])
+
+    tp = TopicPartition(my_topic, 0)
+    consumer.assign([tp])
+    exist_offset = consumer.position(tp)
+
+    end_oss = consumer.end_offsets([tp])
+    for offset in end_oss:
+        end_offset = end_oss[offset]
+        break
+
+    consumer.seek(tp, 1)
+    exist_offset = consumer.position(tp)
     
     jsonResult = []
     if exist_offset < end_offset:
