@@ -5,7 +5,7 @@ import json, sys
 client = sys.argv[1]
 group = sys.argv[2]
 
-my_topic = 'agents'
+my_topic = 'agentsCompact'
 consumer = KafkaConsumer(
     client_id=client,
     group_id=group,
