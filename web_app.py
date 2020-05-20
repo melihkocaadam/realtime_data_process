@@ -27,12 +27,12 @@ def newReport():
 @app.route("/agentsCompact")
 def consumer():
     params = request.args
-    print(params["userName"])
-    print(params["cycleNum"])
+    clientid = params["userName"]
+    cycleNum = params["cycleNum"]
 
     my_topic = 'agentsCompact'
     consumer = KafkaConsumer(
-        # client_id=clientid,
+        client_id=clientid,
         bootstrap_servers=['localhost:9092'])
 
     tp = TopicPartition(my_topic, 0)
@@ -44,8 +44,12 @@ def consumer():
         end_offset = end_oss[offset]
         break
 
-    consumer.seek(tp, 1)
-    exist_offset = consumer.position(tp)
+    if cycleNum == 0:
+        consumer.seek(tp, 1)
+        exist_offset = consumer.position(tp)
+    else:
+        consumer.seek(tp, exist_offset)
+        exist_offset = consumer.position(tp)
     
     jsonResult = []
     if exist_offset < end_offset:
