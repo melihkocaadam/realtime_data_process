@@ -28,8 +28,7 @@ def newReport():
 def consumer(clientid):
     consumer = KafkaConsumer(
         'agentsCompact',
-        client_id=client,
-        group_id=group,
+        client_id=clientid,
         bootstrap_servers=['localhost:9092'])
     
     jsonResult = []
