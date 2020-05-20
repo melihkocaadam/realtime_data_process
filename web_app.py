@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, Response
+from flask import Flask, render_template, request
 from kafka import KafkaProducer, KafkaConsumer, TopicPartition
 from datetime import datetime
 import json, requests, os
@@ -26,7 +26,7 @@ def newReport():
 
 @app.route("/agentsCompact")
 def consumer():
-    res = Response.json
+    res = request.args
     print(res)
 
     my_topic = 'agentsCompact'
