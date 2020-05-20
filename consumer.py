@@ -16,11 +16,11 @@ tp = TopicPartition(my_topic, 0)
 consumer.assign([tp])
 exist_offset = consumer.position(tp)
 print(exist_offset)
-end_oss = consumer.end_offsets([tp])
-for offset in end_oss:
-    end_offset = end_oss[offset]
-    break
-print(end_offset)
+# end_oss = consumer.end_offsets([tp])
+# for offset in end_oss:
+#     end_offset = end_oss[offset]
+#     break
+# print(end_offset)
 
 jsonResult = []
 if exist_offset < end_offset:
