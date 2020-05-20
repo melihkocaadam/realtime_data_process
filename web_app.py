@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from kafka import KafkaProducer, KafkaConsumer
+from kafka import KafkaProducer, KafkaConsumer, TopicPartition
 from datetime import datetime
 import json, requests, os
 
