@@ -32,10 +32,12 @@ if exist_offset < end_offset:
     for message in consumer:
         msg = message.value
         msg_json = json.loads(msg)
-        print(msg_json)
+        
         jsonResult.append(msg_json)
         msg_offset = message.offset
-        print(msg_offset)
+        msg_offset["offset"] = msg_offset
+        print(msg_json)
+        
         if msg_offset == end_offset -1:
             consumer.seek_to_end(tp)
             break
