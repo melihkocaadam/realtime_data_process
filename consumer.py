@@ -39,5 +39,3 @@ if exist_offset < end_offset:
         if msg_offset == end_offset -1:
             consumer.seek_to_end(tp)
             break
-
-print(jsonResult)
