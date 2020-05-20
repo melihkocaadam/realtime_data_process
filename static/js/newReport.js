@@ -1,5 +1,6 @@
 var started = true;
 var queue = [];
+var cycleNum = 0;
 
 function startStop() {
     var button = document.getElementById("start-stop");
@@ -23,17 +24,18 @@ function getData(endPoint) {
     var Url = "http://35.228.71.166:5000/"+endPoint;
     var result = {};
 
-    if (endPoint == "agentsCompact") {
-        Url = Url + "/melih.kocaadam";
-    }
-
     console.log("into getData()");
     queue.push(endPoint);
+
+    var dataJson = {}
+    dataJson.userName = 'melih.kocaadam';
+    dataJson.cycleNum = cycleNum;
 
     $.ajax({
         type: "GET",
         url: Url,
         dataType: "json",
+        data: dataJson,
         // async: false,
         success: function(resp){
             result = resp;

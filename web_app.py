@@ -24,8 +24,9 @@ def agents():
 def newReport():
     return render_template("newReport.html")
 
-@app.route("/agentsCompact/<clientid>")
-def consumer(clientid):
+@app.route("/agentsCompact")
+def consumer():
+    print(request.data)
     my_topic = 'agentsCompact'
     consumer = KafkaConsumer(
         client_id=clientid,
