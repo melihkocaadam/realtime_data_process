@@ -143,6 +143,7 @@ def getAgentsData():
 
 existData = []
 def run_every_5_seconds():
+    global existData
     print("in schedule", datetime.now())
     data = getAgentsData()
     newData = json.loads(data)
