@@ -125,6 +125,7 @@ def getAgentsData():
                             ,atbl.status as "Status"
                             ,TIMESTAMPDIFF(SECOND, atbl.__time, CURRENT_TIMESTAMP) as "Duration"
                             ,atbl.__time as "Last Update"
+                            ,mtbl.max_seq as "Sequence"
                         FROM (
                             SELECT agent
                                 ,max(sequence) as max_seq
@@ -140,20 +141,36 @@ def getAgentsData():
     
     return result
 
+existData = []
 def run_every_5_seconds():
     print("in schedule", datetime.now())
     data = getAgentsData()
-    # data = '{"data": ' + data + '}'
-    jsonData = json.loads(data)
-    for d in jsonData:
-        print(d)
+    newData = json.loads(data)
 
+    if existData.len() == 0:
+        existData = newData
+    else:
+        for i, erow in enumerate(existData):
+            for j, nrow in enumerate(newData):
+                if erow["Agents"] == nrow["Agents"]:
+                    if erow["Sequence"] >= nrow["Sequence"]:
+                        existData[i]["Status"] = "save"
+                        newData[j]["Status"] = "delete"
+                    else:
+                        existData[i]["Status"] = "save"
+                        newData[j]["Status"] = "delete"
+
+    print("\nexistData")
+    print(existData)
+    print("\nnewData")
+    print(newData)
+
+    
 schedule.every(5).seconds.do(run_every_5_seconds)
 
 def run_schedule():
     while True:
         schedule.run_pending()
-        print("in while", datetime.now())
         time.sleep(1)
 
 
