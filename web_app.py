@@ -140,14 +140,8 @@ def getAgentsData():
     
     return result
 
-def sleep_10_secs():
-    time.sleep(10)
-    print("in sleep 10 secs", datetime.now())
-
 def run_every_5_seconds():
     print("in schedule", datetime.now())
-    t = Thread(target=sleep_10_secs)
-    t.start()
 
 schedule.every(5).seconds.do(run_every_5_seconds)
 
@@ -161,4 +155,4 @@ def run_schedule():
 if __name__ == "__main__":
     t = Thread(target=run_schedule)
     t.start()
-    app.run(debug=False, host="0.0.0.0", use_reloader=False)
+    app.run(debug=False, host="0.0.0.0")
