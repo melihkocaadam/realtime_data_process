@@ -123,8 +123,8 @@ def getAgentsData():
     headers = {"Content-Type": "application/json"}
     param = {'query':"""SELECT mtbl.agent as "Agents"
                             ,atbl.status as "Status"
-                            ,TIMESTAMPDIFF(SECOND, atbl.__time, CURRENT_TIMESTAMP) as "Duration"
-                            ,atbl.__time as "Last Update"
+                            --,TIMESTAMPDIFF(SECOND, atbl.__time, CURRENT_TIMESTAMP) as "Duration"
+                            --,atbl.__time as "Last Update"
                             ,mtbl.max_seq as "Sequence"
                         FROM (
                             SELECT agent
@@ -168,8 +168,11 @@ def run_every_5_seconds():
 
 
     print("\nexistData")
-    for r in existData:
-        print(r)
+    for i, row in enumerate(existData):
+        print(row)
+        if existData[i]["Flag"] == "delete":
+            del existData[i]
+
     
 schedule.every(5).seconds.do(run_every_5_seconds)
 
