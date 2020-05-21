@@ -142,7 +142,7 @@ def getAgentsData():
 
 def run_every_5_seconds():
     print("in schedule", datetime.now())
-    data = getAgentsData()
+    data = getAgentsData().json
     for d in data:
         print(d)
 
