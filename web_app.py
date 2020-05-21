@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 from kafka import KafkaProducer, KafkaConsumer, TopicPartition
 from datetime import datetime
 from threading import Thread
-import json, requests, os, time
+import json, requests, os, time, schedule
 
 app = Flask(__name__)
 
