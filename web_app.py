@@ -38,7 +38,7 @@ def newReport():
 def agentsStream():
     params = request.args
     clientid = params["userName"]
-    cycleNum = params["cycleNum"]
+    cycleNum = int(params["cycleNum"])
     topicName = params["topicName"]
     jsonResult = []
     print(params)
