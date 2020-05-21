@@ -142,7 +142,7 @@ def getAgentsData():
 
 def run_schedule():
     while True:
-        schedule.run_pending()
+        # schedule.run_pending()
         print(datetime.now())
         time.sleep(3)
 
