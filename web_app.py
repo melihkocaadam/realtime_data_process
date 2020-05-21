@@ -137,7 +137,7 @@ def getAgentsData():
                             and atbl.sequence = mtbl.max_seq
                         WHERE 1=1
                             --and COALESCE(atbl.status, '') not in ('Logout')
-                            and atbl.__time > '2020-05-21'"""}
+                            and COALESCE(atbl.__time, '2000-01-01') > '2020-05-21'"""}
     r = requests.post(url, data=json.dumps(param), headers=headers)
     result = r.text
     
