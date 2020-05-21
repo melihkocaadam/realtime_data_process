@@ -142,9 +142,13 @@ def getAgentsData():
 
 def run_schedule():
     while True:
-        # schedule.run_pending()
-        print(datetime.now())
-        time.sleep(3)
+        schedule.every(5).seconds.do(run_every_5_seconds)
+        schedule.run_pending()
+        print("in while", datetime.now())
+        time.sleep(1)
+
+def run_every_5_seconds():
+    print("in schedule", datetime.now())
 
 if __name__ == "__main__":
     t = Thread(target=run_schedule)
