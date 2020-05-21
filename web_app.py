@@ -158,8 +158,8 @@ def run_every_5_seconds():
                         existData[i]["Flag"] = "save"
                         newData[j]["Flag"] = "delete"
                     else:
-                        existData[i]["Flag"] = "save"
-                        newData[j]["Flag"] = "delete"
+                        existData[i]["Flag"] = "delete"
+                        newData[j]["Flag"] = "add"
         
         for k, row in enumerate(existData):
             if "Flag" not in row:
