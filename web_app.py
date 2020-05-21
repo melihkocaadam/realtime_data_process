@@ -169,6 +169,8 @@ def run_every_5_seconds():
     print("\nnewData")
     for i, row in enumerate(newData):
         print(row)
+        if "Flag" in newData[i] and newData[i]["Flag"] == "add":
+            existData.append(newData[i])
     print("existData")
     for i, row in enumerate(existData):
         print(row)
