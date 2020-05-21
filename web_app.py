@@ -41,13 +41,16 @@ def agentsStream():
     cycleNum = params["cycleNum"]
     topicName = params["topicName"]
     jsonResult = []
+    print(params)
 
     if cycleNum == 0:
+        print("first cycle for browser")
         druidResult = getAgentsData()
         jsonResult = json.loads(druidResult)
 
         return str(jsonResult).replace("'", '"')
 
+    print("data stream started")
     consumer = KafkaConsumer(
         client_id=clientid,
         bootstrap_servers=['localhost:9092'])
@@ -65,7 +68,8 @@ def agentsStream():
         for message in consumer:
             msg = message.value
             msg_json = json.loads(msg)
-            
+            print(msg_json)
+
             jsonResult.append(msg_json)
             msg_offset = message.offset
 
