@@ -170,7 +170,7 @@ def run_every_5_seconds():
     print("\nexistData")
     for i, row in enumerate(existData):
         print(row)
-        if existData[i]["Flag"] == "delete":
+        if "Flag" in existData[i] and existData[i]["Flag"] == "delete":
             del existData[i]
 
     
