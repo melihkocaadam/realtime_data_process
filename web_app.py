@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request
 from kafka import KafkaProducer, KafkaConsumer, TopicPartition
 from datetime import datetime
-import json, requests, os
+from threading import Thread
+import json, requests, os, time
 
 app = Flask(__name__)
 
@@ -139,5 +140,12 @@ def getAgentsData():
     
     return result
 
+def run_schedule():
+    while True:
+        schedule.run_pending()
+        print(datetime.now())
+        time.sleep(3)
+
 if __name__ == "__main__":
-    app.run(debug=False, host="0.0.0.0")
+    t = Thread(target=run_schedule)
+    app.run(debug=False, host="0.0.0.0", use_reloader=False)
