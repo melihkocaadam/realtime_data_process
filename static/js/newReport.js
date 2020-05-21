@@ -1,5 +1,4 @@
 var started = true;
-var queue = [];
 var cycleNum = 0;
 
 function startStop() {
@@ -20,16 +19,15 @@ function startStop() {
     }
 }
 
-function getData(endPoint) {
-    var Url = "http://35.228.71.166:5000/"+endPoint;
+function getData(topic) {
+    var Url = "http://35.228.71.166:5000/streamTopics";
     var result = {};
-
     console.log("into getData()");
-    queue.push(endPoint);
 
     var dataJson = {}
     dataJson.userName = 'melih.kocaadam';
     dataJson.cycleNum = cycleNum;
+    dataJson.topicName = topic;
 
     cycleNum ++;
 

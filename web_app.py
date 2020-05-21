@@ -6,6 +6,9 @@ import json, requests, os, time, schedule
 
 app = Flask(__name__)
 
+##########################
+### Static File Config ###
+##########################
 @app.route('/__/<path:filename>')
 def serve_static(filename):
 
@@ -13,6 +16,9 @@ def serve_static(filename):
     # print(os.path.join(root_dir, 'realtime_data_process/static', filename))
     return send_from_directory(os.path.join(root_dir, 'realtime_data_process/static'), filename)
 
+######################
+### HTML Endpoints ###
+######################
 @app.route("/report")
 def report():
     return render_template("report.html")
@@ -25,34 +31,36 @@ def agents():
 def newReport():
     return render_template("newReport.html")
 
-@app.route("/agentsCompact")
-def consumer():
+################################
+### Kafka Consumer Endpoints ###
+################################
+@app.route("/streamTopics")
+def agentsStream():
     params = request.args
     clientid = params["userName"]
     cycleNum = params["cycleNum"]
+    topicName = params["topicName"]
+    jsonResult = []
 
-    my_topic = 'agentsCompact'
+    if cycleNum == 0:
+        druidResult = getAgentsData()
+        jsonResult = json.loads(druidResult)
+
+        return str(jsonResult).replace("'", '"')
+
     consumer = KafkaConsumer(
         client_id=clientid,
         bootstrap_servers=['localhost:9092'])
 
-    tp = TopicPartition(my_topic, 0)
+    tp = TopicPartition(topicName, 0)
     consumer.assign([tp])
     exist_offset = consumer.position(tp)
 
-    end_oss = consumer.end_offsets([tp])
-    for offset in end_oss:
-        end_offset = end_oss[offset]
+    end_ofs = consumer.end_offsets([tp])
+    for offset in end_ofs:
+        end_offset = end_ofs[offset]
         break
-
-    if cycleNum == 0:
-        consumer.seek(tp, 1)
-        exist_offset = consumer.position(tp)
-    else:
-        consumer.seek(tp, exist_offset)
-        exist_offset = consumer.position(tp)
     
-    jsonResult = []
     if exist_offset < end_offset:
         for message in consumer:
             msg = message.value
@@ -67,6 +75,9 @@ def consumer():
         
     return str(jsonResult).replace("'", '"')
 
+################################
+### Kafka Producer Endpoints ###
+################################
 @app.route("/sendAgentStatus", methods=['POST'])
 def sendAgentStatus():
     jsonData = request.get_json()
@@ -84,6 +95,9 @@ def sendAgentStatus():
 
     return 'JSON posted'
 
+#######################
+### Druid Endpoints ###
+#######################
 @app.route("/getCallsData")
 def getCallsData():
     url = "http://0.0.0.0:8888/druid/v2/sql"
@@ -143,6 +157,9 @@ def getAgentsData():
     
     return result
 
+#########################
+### Scheduler Methods ###
+#########################
 existData = []
 def run_every_5_seconds():
     global existData
@@ -181,7 +198,6 @@ def run_every_5_seconds():
         if "Flag" in existData[i] and existData[i]["Flag"] == "delete":
             del existData[i]
 
-    
 schedule.every(5).seconds.do(run_every_5_seconds)
 
 def run_schedule():
@@ -189,7 +205,9 @@ def run_schedule():
         schedule.run_pending()
         time.sleep(1)
 
-
+###################
+### Main Method ###
+###################
 if __name__ == "__main__":
     t = Thread(target=run_schedule)
     t.start()
