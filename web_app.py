@@ -144,6 +144,7 @@ def getAgentsData():
                             SELECT agent
                                 ,max(sequence) as max_seq
                             FROM "agents"
+                            WHERE sequence > 1590019200000
                             GROUP BY agent
                             ) as mtbl
                         LEFT JOIN "agents" atbl
