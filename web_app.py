@@ -155,15 +155,20 @@ def run_every_5_seconds():
             for j, nrow in enumerate(newData):
                 if erow["Agents"] == nrow["Agents"]:
                     if erow["Sequence"] >= nrow["Sequence"]:
-                        existData[i]["Status"] = "save"
-                        newData[j]["Status"] = "delete"
+                        existData[i]["Flag"] = "save"
+                        newData[j]["Flag"] = "delete"
                     else:
-                        existData[i]["Status"] = "save"
-                        newData[j]["Status"] = "delete"
+                        existData[i]["Flag"] = "save"
+                        newData[j]["Flag"] = "delete"
+        
+        for k, row in enumerate(existData):
+            if "Flag" not in row:
+                existData[k]["Flag"] = "delete"
+
 
     print("\nexistData")
     print(existData)
-    print("\nnewData")
+    print("newData")
     print(newData)
 
     
