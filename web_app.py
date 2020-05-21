@@ -143,8 +143,9 @@ def getAgentsData():
 def run_every_5_seconds():
     print("in schedule", datetime.now())
     data = getAgentsData()
-    data = '{"data": ' + data + '}'
-    for d in json.load(data):
+    # data = '{"data": ' + data + '}'
+    jsonData = json.loads(data)
+    for d in jsonData:
         print(d)
 
 schedule.every(5).seconds.do(run_every_5_seconds)
