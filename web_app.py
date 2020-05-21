@@ -135,7 +135,7 @@ def getAgentsData():
                         LEFT JOIN "agents" atbl
                             ON atbl.agent = mtbl.agent
                             and atbl.sequence = mtbl.max_seq
-                        WHERE COALESCE(atbl.status, '') not in ('Logout')"""}
+                        --WHERE COALESCE(atbl.status, '') not in ('Logout')"""}
     r = requests.post(url, data=json.dumps(param), headers=headers)
     result = r.text
     
