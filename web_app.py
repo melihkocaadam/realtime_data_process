@@ -166,8 +166,10 @@ def run_every_5_seconds():
             if "Flag" not in row:
                 existData[k]["Flag"] = "delete"
 
-
-    print("\nexistData")
+    print("\nnewData")
+    for i, row in enumerate(newData):
+        print(row)
+    print("existData")
     for i, row in enumerate(existData):
         print(row)
         if "Flag" in existData[i] and existData[i]["Flag"] == "delete":
