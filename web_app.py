@@ -146,7 +146,8 @@ def sleep_10_secs():
 
 def run_every_5_seconds():
     print("in schedule", datetime.now())
-    sleep_10_secs()
+    t = Thread(target=sleep_10_secs)
+    t.start()
 
 schedule.every(5).seconds.do(run_every_5_seconds)
 
