@@ -168,10 +168,8 @@ def run_every_5_seconds():
 
 
     print("\nexistData")
-    print(existData)
-    print("newData")
-    print(newData)
-
+    for r in existData:
+        print(r)
     
 schedule.every(5).seconds.do(run_every_5_seconds)
 
