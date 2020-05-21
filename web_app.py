@@ -140,9 +140,18 @@ def getAgentsData():
     
     return result
 
+@app.route("/getScheduleData")
+def getScheduleData():
+    result = {
+        "name": "melih",
+        "surname": "kocaadam"
+        }
+    
+    return result
+
 def run_every_5_seconds():
     print("in schedule", datetime.now())
-    data = getAgentsData()
+    data = getScheduleData()
     print(data)
 
 schedule.every(5).seconds.do(run_every_5_seconds)
