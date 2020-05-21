@@ -142,6 +142,8 @@ def getAgentsData():
 
 def run_every_5_seconds():
     print("in schedule", datetime.now())
+    data = getAgentsData()
+    print(data)
 
 schedule.every(5).seconds.do(run_every_5_seconds)
 
