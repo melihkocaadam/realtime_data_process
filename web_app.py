@@ -148,4 +148,5 @@ def run_schedule():
 
 if __name__ == "__main__":
     t = Thread(target=run_schedule)
+    t.start()
     app.run(debug=False, host="0.0.0.0", use_reloader=False)
