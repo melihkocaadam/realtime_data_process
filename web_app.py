@@ -187,7 +187,7 @@ def run_every_5_seconds():
             if "Flag" not in row:
                 newData[k]["Flag"] = "add"
 
-    print("\nnewData")
+    # print("\nnewData")
     for i, row in enumerate(newData):
         # print(row)
         if "Flag" in newData[i] and newData[i]["Flag"] == "add":
