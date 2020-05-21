@@ -140,9 +140,12 @@ def getAgentsData():
     
     return result
 
+def sleep_10_secs():
+    time.sleep(10)
+    print("in sleep 10 secs", datetime.now())
+
 def run_every_5_seconds():
     print("in schedule", datetime.now())
-    time.sleep(10)
 
 schedule.every(5).seconds.do(run_every_5_seconds)
 
