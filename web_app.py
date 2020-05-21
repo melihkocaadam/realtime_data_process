@@ -148,7 +148,7 @@ def run_every_5_seconds():
     data = getAgentsData()
     newData = json.loads(data)
 
-    if existData.len() == 0:
+    if len(existData) == 0:
         existData = newData
     else:
         for i, erow in enumerate(existData):
