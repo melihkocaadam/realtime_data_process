@@ -107,7 +107,7 @@ def sendAgentStatus():
     value_serializer=lambda v: json.dumps(v).encode("utf-8")
     )
     producer.send("agents", value=jsonData)
-    producer.send("agentsCompact", key=keyVal, value=jsonData)
+    # producer.send("agentsCompact", key=keyVal, value=jsonData)
 
     return 'JSON posted'
 
@@ -213,6 +213,14 @@ def run_every_5_seconds():
     for i, row in enumerate(existData):
         if "Flag" in row and row["Flag"] != "save":
             print(row)
+
+            producer = KafkaProducer(
+                bootstrap_servers=["0.0.0.0:9092"],
+                client_id="agents-scheduled-producer",
+                value_serializer=lambda v: json.dumps(v).encode("utf-8")
+                )
+            producer.send("agentsCompact", value=row)
+
         if "Flag" in existData[i] and existData[i]["Flag"] == "delete":
             del existData[i]
 
