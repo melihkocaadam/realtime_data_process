@@ -22,7 +22,7 @@ function startStop() {
 function getData(topic) {
     var Url = "http://35.228.71.166:5000/streamTopics";
     var result = {};
-    console.log("\ninto getData()");
+    console.log("into getData func.");
 
     var dataJson = {}
     dataJson.userName = 'melih.kocaadam';
@@ -36,7 +36,7 @@ function getData(topic) {
         url: Url,
         dataType: "json",
         data: dataJson,
-        // async: false,
+        // async: true,
         success: function(resp){
             result = resp;
             console.log(result);
@@ -51,7 +51,7 @@ function getData(topic) {
 }
 
 function createHTML(jsonData, topic) {
-    console.log("into createHTML()");
+    console.log("into createHTML func.");
     var col = [];
     for (var i = 0; i < jsonData.length; i++) {
         for (var key in jsonData[i]) {
