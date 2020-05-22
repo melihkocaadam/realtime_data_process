@@ -41,7 +41,7 @@ function getData(topic) {
             result = resp;
             console.log(result);
             console.log(typeof result);
-            createHTML(result, endPoint);
+            createHTML(result, topic);
         },
         error: function(error){
             console.log(error);
@@ -50,7 +50,7 @@ function getData(topic) {
 
 }
 
-function createHTML(jsonData, endPoint) {
+function createHTML(jsonData, topic) {
     console.log("into createHTML()");
     var col = [];
     for (var i = 0; i < jsonData.length; i++) {
@@ -85,10 +85,10 @@ function createHTML(jsonData, endPoint) {
         }
     }
     var divContainer = document.getElementById("addTables");
-    var existChild = document.getElementById(endPoint);
+    var existChild = document.getElementById(topic);
     var htmlContent = document.createElement("div");
     htmlContent.setAttribute("class", "row justify-content-center");
-    htmlContent.setAttribute("id", endPoint);
+    htmlContent.setAttribute("id", topic);
     htmlContent.appendChild(table);
 
     if (existChild != null) {
@@ -98,7 +98,7 @@ function createHTML(jsonData, endPoint) {
     divContainer.appendChild(htmlContent);
 
     if (started) {
-        setTimeout(function(){ getData(endPoint) }, 100);
+        setTimeout(function(){ getData(topic) }, 100);
     }
     
 }
