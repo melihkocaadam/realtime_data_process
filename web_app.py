@@ -59,24 +59,33 @@ def agentsStream():
     consumer.assign([tp])
     exist_offset = consumer.position(tp)
 
-    end_ofs = consumer.end_offsets([tp])
-    for offset in end_ofs:
-        end_offset = end_ofs[offset]
-        break
+    for message in consumer:
+        msg = message.value
+        msg_json = json.loads(msg)
+        print(msg_json)
+
+        jsonResult.append(msg_json)
+        msg_offset = message.offset
+        print(msg_offset)
+
+    # end_ofs = consumer.end_offsets([tp])
+    # for offset in end_ofs:
+    #     end_offset = end_ofs[offset]
+    #     break
     
-    if exist_offset < end_offset:
-        for message in consumer:
-            msg = message.value
-            msg_json = json.loads(msg)
-            print(msg_json)
+    # if exist_offset < end_offset:
+    #     for message in consumer:
+    #         msg = message.value
+    #         msg_json = json.loads(msg)
+    #         print(msg_json)
 
-            jsonResult.append(msg_json)
-            msg_offset = message.offset
-            print(msg_offset)
+    #         jsonResult.append(msg_json)
+    #         msg_offset = message.offset
+    #         print(msg_offset)
 
-            if msg_offset == end_offset -1:
-                consumer.seek_to_end(tp)
-                break
+    #         if msg_offset == end_offset -1:
+    #             consumer.seek_to_end(tp)
+    #             break
         
     return str(jsonResult).replace("'", '"')
 
