@@ -203,7 +203,7 @@ def run_every_5_seconds():
             if "Flag" not in row: # eğer flag etiketi olmamayan bir satır varsa
                 newData[k]["Flag"] = "add" # yeni dataya add flag ekle
 
-    print("\nnewData")
+    print("\nnewData", datetime.now())
     for i, row in enumerate(newData):
         print(row)
         if "Flag" in newData[i] and newData[i]["Flag"] == "add":
