@@ -186,31 +186,31 @@ def run_every_5_seconds():
     if len(existData) == 0:
         existData = newData
     else:
-        for i, erow in enumerate(existData):
-            for j, nrow in enumerate(newData):
-                if erow["Agents"] == nrow["Agents"]:
-                    if erow["Sequence"] >= nrow["Sequence"]:
-                        existData[i]["Flag"] = "save"
-                        newData[j]["Flag"] = "delete"
-                    else:
-                        existData[i]["Flag"] = "delete"
-                        newData[j]["Flag"] = "add"
+        for i, erow in enumerate(existData): # mevcut datanın satırlarında dön
+            for j, nrow in enumerate(newData): # yeni datanın her bir satırı ile karşılaştır
+                if erow["Agents"] == nrow["Agents"]: # Agent isimleri eşleşiyor ise,
+                    if erow["Sequence"] >= nrow["Sequence"]: # yeni datanın sequence'ı mevcuttan küçükse
+                        existData[i]["Flag"] = "save" # mevcut dataya save flag ekle
+                        newData[j]["Flag"] = "delete" # yeni datayı sil
+                    else:                           # eğer yeni datanın sequence'ı mevcuttan büyükse
+                        existData[i]["Flag"] = "delete" # mevcut dataya delete flag ekle
+                        newData[j]["Flag"] = "add" # yeni dataya add flag ekle
             
-            if "Flag" not in erow:
-                existData[i]["Flag"] = "delete"
+            if "Flag" not in erow: # bir satır için yeni datanın tüm satırları döndüğünde flag yok ise,
+                existData[i]["Flag"] = "delete" # mevcut dataya delete flag ekle
 
-        for k, row in enumerate(newData):
-            if "Flag" not in row:
-                newData[k]["Flag"] = "add"
+        for k, row in enumerate(newData): # yeni datanın satırlarında dön
+            if "Flag" not in row: # eğer flag etiketi olmamayan bir satır varsa
+                newData[k]["Flag"] = "add" # yeni dataya add flag ekle
 
-    # print("\nnewData")
+    print("\nnewData")
     for i, row in enumerate(newData):
-        # print(row)
+        print(row)
         if "Flag" in newData[i] and newData[i]["Flag"] == "add":
             existData.append(newData[i])
     print("existData", datetime.now())
     for i, row in enumerate(existData):
-        if "Flag" in row and row["Flag"] != "save":
+        if True or ("Flag" in row and row["Flag"] != "save"):
             print(row)
 
             producer = KafkaProducer(
