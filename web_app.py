@@ -68,6 +68,8 @@ def agentsStream():
         msg_offset = message.offset
         print(msg_offset)
 
+        return str(jsonResult).replace("'", '"')
+
     # end_ofs = consumer.end_offsets([tp])
     # for offset in end_ofs:
     #     end_offset = end_ofs[offset]
@@ -87,7 +89,7 @@ def agentsStream():
     #             consumer.seek_to_end(tp)
     #             break
         
-    return str(jsonResult).replace("'", '"')
+    # return str(jsonResult).replace("'", '"')
 
 ################################
 ### Kafka Producer Endpoints ###
