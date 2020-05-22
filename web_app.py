@@ -204,10 +204,10 @@ def run_every_5_seconds():
                 newData[k]["Flag"] = "add" # yeni dataya add flag ekle
 
     print("\nnewData", datetime.now())
-    for i, row in enumerate(newData):
+    for row in newData:
         print(row)
-        if "Flag" in newData[i] and newData[i]["Flag"] == "add":
-            existData.append(newData[i])
+        if "Flag" in row and row["Flag"] == "add":
+            existData.append(row)
     print("existData", datetime.now())
     for i, row in enumerate(existData):
         if True or ("Flag" in row and row["Flag"] != "save"):
