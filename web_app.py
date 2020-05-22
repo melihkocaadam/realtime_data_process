@@ -205,10 +205,12 @@ def run_every_5_seconds():
 
     print("\nnewData", datetime.now())
     for row in newData:
-        print(row)
         if "Flag" in row and row["Flag"] == "add":
-            print("add new row in existData with append")
+            print(row, "| This row added in existData with append")
             existData.append(row)
+        else:
+            print(row)
+
     print("existData", datetime.now())
     for i, row in enumerate(existData):
         if True or ("Flag" in row and row["Flag"] != "save"):
