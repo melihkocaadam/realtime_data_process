@@ -197,7 +197,7 @@ def run_every_5_seconds():
         # print(row)
         if "Flag" in newData[i] and newData[i]["Flag"] == "add":
             existData.append(newData[i])
-    print("existData")
+    print("existData", datetime.now())
     for i, row in enumerate(existData):
         print(row)
         if "Flag" in existData[i] and existData[i]["Flag"] == "delete":

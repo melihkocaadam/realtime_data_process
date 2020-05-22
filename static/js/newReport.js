@@ -22,7 +22,7 @@ function startStop() {
 function getData(topic) {
     var Url = "http://35.228.71.166:5000/streamTopics";
     var result = {};
-    console.log("into getData()");
+    console.log("\ninto getData()");
 
     var dataJson = {}
     dataJson.userName = 'melih.kocaadam';
