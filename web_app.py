@@ -204,27 +204,27 @@ def run_every_5_seconds():
                 newData[k]["Flag"] = "add" # yeni dataya add flag ekle
 
     print("\nnewData", datetime.now())
-    for row in newData:
-        if "Flag" in row and row["Flag"] == "add":
-            print(row, "| This row added in existData with append")
-            existData.append(row)
+    for rown in newData:
+        if "Flag" in rown and rown["Flag"] == "add":
+            print(rown, "| This row added in existData with append")
+            existData.append(rown)
         else:
-            print(row)
+            print(rown)
 
     print("existData", datetime.now())
-    for i, row in enumerate(existData):
-        if True or ("Flag" in row and row["Flag"] != "save"):
-            print(row)
+    for r, rowe in enumerate(existData):
+        if True or ("Flag" in rowe and rowe["Flag"] != "save"):
+            print(rowe)
 
             producer = KafkaProducer(
                 bootstrap_servers=["0.0.0.0:9092"],
                 client_id="agents-scheduled-producer",
                 value_serializer=lambda v: json.dumps(v).encode("utf-8")
                 )
-            producer.send("agentsCompact", value=row)
+            producer.send("agentsCompact", value=rowe)
 
-        if "Flag" in existData[i] and existData[i]["Flag"] == "delete":
-            del existData[i]
+        if "Flag" in existData[r] and existData[r]["Flag"] == "delete":
+            del existData[r]
 
 schedule.every(5).seconds.do(run_every_5_seconds)
 
