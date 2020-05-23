@@ -54,8 +54,7 @@ def agentsStream():
     consumer = KafkaConsumer(
         group_id=groupid,
         bootstrap_servers=['localhost:9092'],
-        enable_auto_commit=True,
-        auto_commit_interval_ms=100
+        enable_auto_commit=False
         )
 
     tp = TopicPartition(topicName, 0)
