@@ -70,6 +70,7 @@ function insertAllData(data, key) {
         } else {
             allData[log].push(data);
         }
+    }
     
     console.log("allData");
     console.log(allData);
