@@ -55,15 +55,17 @@ function insertAllData(data, key) {
     var log = key + "Log";
     console.log(log);
 
-    if ("Flag" in data) {
-        if (log in allData) {
-            allData[log].push(data);
+    for (var i = 0; i < data.length; i++) {
+        if ("Flag" in data[i]) {
+            if (log in allData) {
+                allData[log].push(data[i]);
+            } else {
+                allData[log] = [data[i]];
+            }
+            
         } else {
-            allData[log] = data;
+            allData[key] = [data[i]];
         }
-        
-    } else {
-        allData[key] = data;
     }
     
     console.log("allData");
