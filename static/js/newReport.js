@@ -1,5 +1,6 @@
 var started = true;
 var cycleNum = 0;
+var allData = {};
 
 function startStop() {
     var button = document.getElementById("start-stop");
@@ -22,7 +23,7 @@ function startStop() {
 function getData(topic) {
     var Url = "http://35.228.71.166:5000/streamTopics";
     var result = {};
-    console.log("into getData func.");
+    console.log("into getData  function");
 
     var dataJson = {}
     dataJson.userName = 'melih.kocaadam';
@@ -41,7 +42,7 @@ function getData(topic) {
             result = resp;
             console.log(result);
             console.log(typeof result);
-            createHTML(result, topic);
+            insertDict(result, topic);
         },
         error: function(error){
             console.log(error);
@@ -50,8 +51,24 @@ function getData(topic) {
 
 }
 
+function insertDict(data, key) {
+
+    if (!(key in allData)) {
+        allData.push({
+            key: data
+        });
+    } else {
+        allData[key] = data;
+    }
+
+    if (started) {
+        setTimeout(function(){ getData(topic) }, 100);
+    }
+    
+}
+
 function createHTML(jsonData, topic) {
-    console.log("into createHTML func.");
+    console.log("into createHTML  function");
     var col = [];
     for (var i = 0; i < jsonData.length; i++) {
         for (var key in jsonData[i]) {
