@@ -37,7 +37,7 @@ def newReport():
 @app.route("/streamTopics")
 def agentsStream():
     params = request.args
-    groupid = params["userName"]
+    clientid = params["userName"]
     cycleNum = int(params["cycleNum"])
     topicName = params["topicName"]
     jsonResult = []
@@ -52,7 +52,8 @@ def agentsStream():
 
     print("data stream started")
     consumer = KafkaConsumer(
-        group_id=groupid,
+        client_id=clientid,
+        group_id=clientid,
         bootstrap_servers=['localhost:9092'],
         enable_auto_commit=False
         )
