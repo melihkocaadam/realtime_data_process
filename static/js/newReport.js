@@ -65,7 +65,7 @@ function insertAllData(data, key) {
             }
             
         } else {
-            allData[key] = [data[i]];
+            allData[key] = [data];
         }
     }
     
