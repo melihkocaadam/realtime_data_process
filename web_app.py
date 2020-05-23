@@ -65,11 +65,10 @@ def agentsStream():
         msg = message.value
         msg_json = json.loads(msg)
         print(msg_json)
-        time.sleep(1)
         jsonResult.append(msg_json)
         msg_offset = message.offset
         print(msg_offset)
-
+        consumer.seek(tp, msg_offset + 1)
         return str(jsonResult).replace("'", '"')
 
     # end_ofs = consumer.end_offsets([tp])
