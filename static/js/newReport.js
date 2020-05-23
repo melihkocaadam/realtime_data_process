@@ -54,11 +54,9 @@ function getData(topic) {
 function insertDict(data, key) {
 
     if (!(key in allData)) {
-        allData.push({
-            key: data
-        });
+        allData[key] = [data];
     } else {
-        allData[key] = data;
+        allData[key].push(data);
     }
 
     if (started) {
