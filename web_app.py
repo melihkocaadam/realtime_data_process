@@ -37,7 +37,7 @@ def newReport():
 @app.route("/streamTopics")
 def agentsStream():
     params = request.args
-    clientid = params["userName"]
+    groupid = params["userName"]
     cycleNum = int(params["cycleNum"])
     topicName = params["topicName"]
     jsonResult = []
@@ -52,8 +52,11 @@ def agentsStream():
 
     print("data stream started")
     consumer = KafkaConsumer(
-        client_id=clientid,
-        bootstrap_servers=['localhost:9092'])
+        group_id=groupid,
+        bootstrap_servers=['localhost:9092'],
+        enable_auto_commit=True,
+        auto_commit_interval_ms=100
+        )
 
     tp = TopicPartition(topicName, 0)
     consumer.assign([tp])
