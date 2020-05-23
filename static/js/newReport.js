@@ -23,7 +23,7 @@ function startStop() {
 function getData(topic) {
     var Url = "http://35.228.71.166:5000/streamTopics";
     var result = {};
-    console.log("into getData  function");
+    console.log("into getData function");
 
     var dataJson = {}
     dataJson.userName = 'melih.kocaadam';
@@ -52,21 +52,25 @@ function getData(topic) {
 }
 
 function insertDict(data, key) {
+    var log = key + "_log";
 
-    if (!(key in allData)) {
-        allData[key] = [data];
+    if ("Flag" in data) {
+        if (!(log in allData)) {
+            allData[log] = data;
+        } else {
+            allData[log].push(data);
+        }
     } else {
-        allData[key].push(data);
+        allData[key] = data;
     }
-
+    
     if (started) {
         setTimeout(function(){ getData(key) }, 100);
     }
-    
 }
 
 function createHTML(jsonData, topic) {
-    console.log("into createHTML  function");
+    console.log("into createHTML function");
     var col = [];
     for (var i = 0; i < jsonData.length; i++) {
         for (var key in jsonData[i]) {
