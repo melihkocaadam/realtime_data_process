@@ -194,7 +194,7 @@ def run_every_5_seconds():
                         newData[j]["Flag"] = "delete" # yeni datayı sil
                     else:                           # eğer yeni datanın sequence'ı mevcuttan büyükse
                         existData[i]["Flag"] = "delete" # mevcut dataya delete flag ekle
-                        newData[j]["Flag"] = "add" # yeni dataya add flag ekle
+                        newData[j]["Flag"] = "update" # yeni dataya add flag ekle
             
             if "Flag" not in erow: # bir satır için yeni datanın tüm satırları döndüğünde flag yok ise,
                 existData[i]["Flag"] = "delete" # mevcut dataya delete flag ekle
@@ -205,7 +205,7 @@ def run_every_5_seconds():
 
     print("\nnewData", datetime.now())
     for rown in newData:
-        if "Flag" in rown and rown["Flag"] == "add":
+        if "Flag" in rown and rown["Flag"] in ("add", "update"):
             print(rown, "| This row added in existData with append")
             existData.append(rown)
         else:
@@ -223,7 +223,7 @@ def run_every_5_seconds():
                 )
             producer.send("agentsCompact", value=rowe)
 
-        if "Flag" in existData[r] and existData[r]["Flag"] == "delete":
+        if "Flag" in rowe and rowe["Flag"] == "delete":
             del existData[r]
 
 schedule.every(5).seconds.do(run_every_5_seconds)
