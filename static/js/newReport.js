@@ -64,7 +64,22 @@ function insertAllData(data, key) {
             }
             
         } else {
-            allData[key] = data;
+            if (key in allData) {
+                for (var j = 0; j < allData[key].length; j++) {
+                    if (allData[key][j]["Agents"] == data[i]["Agents"]) {
+                        if (data[i]["Flag"] == "add") {
+                            allData[key][j].push(data[i]);
+                        } else if (data[i]["Flag"] == "delete") {
+                            allData[key].push(data[i]);
+                        } else {
+                            allData[key].splice(j, 1);
+                        }
+                    }
+                }
+            } else {
+                allData[key] = [data];
+                break;
+            }
         }
     }
     
