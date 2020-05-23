@@ -215,7 +215,7 @@ def run_every_5_seconds():
     for r, rowe in enumerate(existData):
         if "Flag" in rowe:
             if rowe["Flag"] == "save":
-                # print(rowe)
+                pass # print(rowe)
             elif rowe["Flag"] in ("upgrade", "add", "delete"):
                 producer = KafkaProducer(
                     bootstrap_servers=["0.0.0.0:9092"],
