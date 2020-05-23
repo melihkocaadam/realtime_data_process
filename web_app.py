@@ -55,7 +55,7 @@ def agentsStream():
         group_id=groupid,
         bootstrap_servers=['localhost:9092'],
         enable_auto_commit=True,
-        auto_commit_interval_ms=1000
+        auto_commit_interval_ms=100
         )
 
     tp = TopicPartition(topicName, 0)
@@ -66,7 +66,7 @@ def agentsStream():
         msg = message.value
         msg_json = json.loads(msg)
         print(msg_json)
-
+        time.sleep(1)
         jsonResult.append(msg_json)
         msg_offset = message.offset
         print(msg_offset)
