@@ -66,7 +66,7 @@ function insertAllData(data, key) {
         } else {
             if (key in allData) {
                 for (var j = 0; j < allData[key].length; j++) {
-                    if (allData[key][j]["Agents"] == data[i]["Agents"]) {
+                    if (allData[key][j]["Agents"] == data[i]["Agents"] && allData[key][j]["Sequence"] == data[i]["Sequence"]) {
                         if (data[i]["Flag"] == "add") {
                             allData[key].push(data[i]);
                         } else if (data[i]["Flag"] == "delete") {
