@@ -68,11 +68,11 @@ function insertAllData(data, key) {
                 for (var j = 0; j < allData[key].length; j++) {
                     if (allData[key][j]["Agents"] == data[i]["Agents"]) {
                         if (data[i]["Flag"] == "add") {
-                            allData[key][j].push(data[i]);
-                        } else if (data[i]["Flag"] == "delete") {
                             allData[key].push(data[i]);
-                        } else {
+                        } else if (data[i]["Flag"] == "delete") {
                             allData[key].splice(j, 1);
+                        } else {
+                            console.log("no command delete or add in flag");
                         }
                     }
                 }
