@@ -217,6 +217,7 @@ def run_every_5_seconds():
             if rowe["Flag"] == "save":
                 pass # print(rowe)
             elif rowe["Flag"] in ("upgrade", "add", "delete"):
+                print(rowe)
                 producer = KafkaProducer(
                     bootstrap_servers=["0.0.0.0:9092"],
                     client_id="agents-scheduled-producer",
