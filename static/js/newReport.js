@@ -64,6 +64,9 @@ function insertAllData(data, key) {
         allData[key] = data;
     }
     
+    console.log("allData");
+    console.log(allData);
+
     if (started) {
         setTimeout(function(){ getData(key) }, 100);
     }
