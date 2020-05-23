@@ -60,7 +60,7 @@ function insertDict(data, key) {
     }
 
     if (started) {
-        setTimeout(function(){ getData(topic) }, 100);
+        setTimeout(function(){ getData(key) }, 100);
     }
     
 }
