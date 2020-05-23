@@ -63,23 +63,24 @@ function insertAllData(data, key) {
                 allData[log] = [data[i]];
             }
             
-        } else {
-            if (key in allData) {
-                for (var j = 0; j < allData[key].length; j++) {
-                    if (allData[key][j]["Agents"] == data[i]["Agents"] && allData[key][j]["Sequence"] == data[i]["Sequence"]) {
-                        if (data[i]["Flag"] == "add") {
-                            allData[key].push(data[i]);
-                        } else if (data[i]["Flag"] == "delete") {
-                            allData[key].splice(j, 1);
-                        } else {
-                            console.log("no command delete or add in flag");
-                        }
+        }
+
+        if (key in allData) {
+            for (var j = 0; j < allData[key].length; j++) {
+                // console.log("data process" + allData[key][j]);
+                if (allData[key][j]["Agents"] == data[i]["Agents"] && allData[key][j]["Sequence"] == data[i]["Sequence"]) {
+                    if (data[i]["Flag"] == "add") {
+                        allData[key].push(data[i]);
+                    } else if (data[i]["Flag"] == "delete") {
+                        allData[key].splice(j, 1);
+                    } else {
+                        console.log("no command delete or add in flag");
                     }
                 }
-            } else {
-                allData[key] = data;
-                break;
             }
+        } else {
+            allData[key] = data;
+            break;
         }
     }
     
