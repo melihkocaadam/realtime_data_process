@@ -87,7 +87,7 @@ function insertAllData(data, key) {
     console.log(allData);
 
     if (started) {
-        setTimeout(function(){ getData(key) }, 1000);
+        setTimeout(function(){ getData(key) }, 10);
     }
 }
 
