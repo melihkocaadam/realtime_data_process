@@ -213,18 +213,21 @@ def run_every_5_seconds():
 
     print("existData", datetime.now())
     for r, rowe in enumerate(existData):
-        if True or ("Flag" in rowe and rowe["Flag"] != "save"):
-            print(rowe)
+        if "Flag" in rowe:
+            if rowe["Flag"] == "save":
+                # print(rowe)
+            elif rowe["Flag"] in ("upgrade", "add", "delete"):
+                producer = KafkaProducer(
+                    bootstrap_servers=["0.0.0.0:9092"],
+                    client_id="agents-scheduled-producer",
+                    value_serializer=lambda v: json.dumps(v).encode("utf-8")
+                    )
+                producer.send("agentsCompact", value=rowe)
 
-            producer = KafkaProducer(
-                bootstrap_servers=["0.0.0.0:9092"],
-                client_id="agents-scheduled-producer",
-                value_serializer=lambda v: json.dumps(v).encode("utf-8")
-                )
-            producer.send("agentsCompact", value=rowe)
-
-        if "Flag" in rowe and rowe["Flag"] == "delete":
-            del existData[r]
+                if rowe["Flag"] == "delete":
+                    del existData[r]
+        else:
+            print("no flag")
 
 schedule.every(5).seconds.do(run_every_5_seconds)
 
