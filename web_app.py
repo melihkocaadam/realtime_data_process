@@ -208,15 +208,13 @@ def run_every_5_seconds():
         if "Flag" in rown and rown["Flag"] in ("add", "update"):
             print(rown, "| This row added in existData with append")
             existData.insert(0, rown)
-        else:
-            pass # print(rown)
 
     print("existData", datetime.now())
     for r, rowe in enumerate(existData):
         if "Flag" in rowe:
             if rowe["Flag"] == "save":
                 pass # print(rowe)
-            elif rowe["Flag"] in ("upgrade", "add", "delete"):
+            elif rowe["Flag"] in ("add", "update", "delete"):
                 print(rowe)
                 producer = KafkaProducer(
                     bootstrap_servers=["0.0.0.0:9092"],
@@ -227,8 +225,6 @@ def run_every_5_seconds():
 
                 if rowe["Flag"] == "delete":
                     del existData[r]
-        else:
-            print("no flag")
 
 schedule.every(5).seconds.do(run_every_5_seconds)
 
