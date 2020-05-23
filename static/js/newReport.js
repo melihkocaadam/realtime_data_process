@@ -77,7 +77,7 @@ function insertAllData(data, key) {
                     }
                 }
             } else {
-                allData[key] = [data];
+                allData[key] = data;
                 break;
             }
         }
