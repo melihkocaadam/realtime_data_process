@@ -55,7 +55,7 @@ def agentsStream():
         group_id=groupid,
         bootstrap_servers=['localhost:9092'],
         enable_auto_commit=True,
-        auto_commit_interval_ms=10000
+        auto_commit_interval_ms=1000
         )
 
     tp = TopicPartition(topicName, 0)
