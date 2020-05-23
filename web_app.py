@@ -69,7 +69,7 @@ def agentsStream():
         jsonResult.append(msg_json)
         msg_offset = message.offset
         print(msg_offset)
-        consumer.commit(msg_offset)
+        consumer.commit()
         
         return str(jsonResult).replace("'", '"')
 
