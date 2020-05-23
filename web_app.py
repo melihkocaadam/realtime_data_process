@@ -194,7 +194,7 @@ def run_every_5_seconds():
                         newData[j]["Flag"] = "delete" # yeni datayı sil
                     else:                           # eğer yeni datanın sequence'ı mevcuttan büyükse
                         existData[i]["Flag"] = "delete" # mevcut dataya delete flag ekle
-                        newData[j]["Flag"] = "update" # yeni dataya add flag ekle
+                        newData[j]["Flag"] = "add" # yeni dataya add flag ekle
             
             if "Flag" not in erow: # bir satır için yeni datanın tüm satırları döndüğünde flag yok ise,
                 existData[i]["Flag"] = "delete" # mevcut dataya delete flag ekle
@@ -203,18 +203,16 @@ def run_every_5_seconds():
             if "Flag" not in row: # eğer flag etiketi olmamayan bir satır varsa
                 newData[k]["Flag"] = "add" # yeni dataya add flag ekle
 
-    print("\nnewData", datetime.now())
+    # print("\nnewData", datetime.now())
     for rown in newData:
-        if "Flag" in rown and rown["Flag"] in ("add", "update"):
-            print(rown, "| This row added in existData with append")
+        if "Flag" in rown and rown["Flag"] in ("add"):
+            # print(rown, "| This row added in existData with append")
             existData.insert(0, rown)
 
     print("existData", datetime.now())
     for r, rowe in enumerate(existData):
         if "Flag" in rowe:
-            if rowe["Flag"] == "save":
-                pass # print(rowe)
-            elif rowe["Flag"] in ("add", "update", "delete"):
+            if rowe["Flag"] in ("add", "delete"):
                 print(rowe)
                 producer = KafkaProducer(
                     bootstrap_servers=["0.0.0.0:9092"],
