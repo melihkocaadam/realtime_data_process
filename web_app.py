@@ -209,7 +209,7 @@ def run_every_5_seconds():
             print(rown, "| This row added in existData with append")
             existData.insert(0, rown)
         else:
-            print(rown)
+            pass # print(rown)
 
     print("existData", datetime.now())
     for r, rowe in enumerate(existData):
