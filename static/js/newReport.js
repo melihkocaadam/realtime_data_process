@@ -52,7 +52,7 @@ function getData(topic) {
 }
 
 function insertAllData(data, key) {
-    var log = key + "_log";
+    var log = key + "Log";
     console.log(log);
 
     if ("Flag" in data) {
