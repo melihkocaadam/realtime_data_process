@@ -42,7 +42,7 @@ function getData(topic) {
             result = resp;
             console.log(result);
             console.log(typeof result);
-            insertDict(result, topic);
+            insertAllData(result, topic);
         },
         error: function(error){
             console.log(error);
@@ -51,7 +51,7 @@ function getData(topic) {
 
 }
 
-function insertDict(data, key) {
+function insertAllData(data, key) {
     var log = key + "_log";
 
     if ("Flag" in data) {
