@@ -55,17 +55,9 @@ function insertAllData(data, key) {
     var log = key + "_log";
 
     if ("Flag" in data) {
-        // if (!(key in allData)) {
-        //     allData[key] = data;
-        // } else {
-        //     allData[key].push(data);
-        // }
+        allData[log].push(data);
     } else {
         allData[key] = data;
-    }
-
-    if ("Flag" in data) {
-        allData[log].push(data);
     }
     
     console.log("allData");
