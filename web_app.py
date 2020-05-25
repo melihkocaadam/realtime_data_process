@@ -57,7 +57,6 @@ def streamTopics():
         exist_offset = consumer.position(tp)
 
         lastestOffset = consumer.end_offsets([tp])
-        lastestOffset = lastestOffset["TopicPartition"]
         print(lastestOffset)
 
         jsonResult = []
