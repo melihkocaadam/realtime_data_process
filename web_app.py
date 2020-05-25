@@ -69,9 +69,10 @@ def streamTopics():
             consumer.commit()
 
             time.sleep(1)
-            
             yield str(jsonResult).replace("'", '"')
-            break
+            
+            if msg_offset == lastestOffset -1:
+                break
         
         print("Stream consumer finished")
         yield ""
