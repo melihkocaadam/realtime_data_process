@@ -40,7 +40,15 @@ def streamTopics():
     clientid = params["userName"]
     cycleNum = int(params["cycleNum"])
     topicName = params["topicName"]
+    jsonResult = []
     print(params)
+
+    if cycleNum == 0:
+        print("first cycle for browser")
+        druidResult = getAgentsData()
+        jsonResult = json.loads(druidResult)
+
+        return str(jsonResult).replace("'", '"')
 
     def consumer():
         print("Stream consumer started")
@@ -56,7 +64,6 @@ def streamTopics():
         consumer.assign([tp])
         exist_offset = consumer.position(tp)
 
-        jsonResult = []
         for message in consumer:
             msg = message.value
             msg_json = json.loads(msg)
