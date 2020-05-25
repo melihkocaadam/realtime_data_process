@@ -68,6 +68,7 @@ def streamTopics():
             time.sleep(1)
             
             yield str(jsonResult).replace("'", '"')
+            break
         
         print("Stream consumer finished")
         yield ""
