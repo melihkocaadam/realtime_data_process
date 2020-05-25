@@ -55,14 +55,12 @@ def test():
         for message in consumer:
             msg = message.value
             msg_json = json.loads(msg)
-            print(msg_json)
             jsonResult.append(msg_json)
             msg_offset = message.offset
-            print(msg_offset)
+            print("offset:", msg_offset, "|", msg_json)
             consumer.commit()
 
             time.sleep(1)
-            print("offset:", str(msg_offset))
             
             yield str(jsonResult).replace("'", '"')
         
