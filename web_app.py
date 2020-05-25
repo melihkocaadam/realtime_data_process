@@ -39,6 +39,7 @@ def test():
     def consumer():
         print("Stream consumer started")
 
+        topicName = "agentsCompact"
         consumer = KafkaConsumer(
             client_id="client1",
             group_id="group1",
