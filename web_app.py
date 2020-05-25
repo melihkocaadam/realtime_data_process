@@ -65,7 +65,7 @@ def test():
             yield str(jsonResult).replace("'", '"')
         
         print("Stream consumer finished")
-        # yield ""
+        yield ""
     
     return Response(consumer(), mimetype="text/plain")
 
@@ -229,7 +229,7 @@ def run_every_5_seconds():
     for r, rowe in enumerate(existData):
         if "Flag" in rowe:
             if rowe["Flag"] in ("add", "delete"):
-                print(rowe)
+                print("scheduler |", rowe)
                 producer = KafkaProducer(
                     bootstrap_servers=["0.0.0.0:9092"],
                     client_id="agents-scheduled-producer",
