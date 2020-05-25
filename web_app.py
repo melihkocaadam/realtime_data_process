@@ -57,7 +57,7 @@ def streamTopics():
         exist_offset = consumer.position(tp)
 
         lastestOffset = consumer.end_offsets([tp])
-        print(lastestOffset)
+        print(lastestOffset[tp])
 
         jsonResult = []
         for message in consumer:
