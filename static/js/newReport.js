@@ -43,15 +43,11 @@ function getData(topic) {
             console.log(result);
             console.log(typeof result);
             insertAllData(result, topic);
-        },
-        error: function(xhr, status, error) {
-            var err = eval("(" + xhr.responseText + ")");
-            alert(err.Message);
         }
-        // error: function(error){
-        //     console.log("ajax error");
-        //     console.log(error);
-        // }
+        error: function(error){
+            console.log("ajax error");
+            console.log(error);
+        }
     });
 
 }

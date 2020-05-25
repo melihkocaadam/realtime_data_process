@@ -77,7 +77,7 @@ def streamTopics():
         yield ""
     
     print("Stream returned")
-    return Response(consumer(), content_type='text/event-stream') # mimetype="text/plain", 
+    return Response(consumer(), mimetype="text/plain") 
 
 @app.route("/changeLogTopics")
 def changeLogTopics():
