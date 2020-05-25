@@ -44,10 +44,14 @@ function getData(topic) {
             console.log(typeof result);
             insertAllData(result, topic);
         },
-        error: function(error){
-            console.log("ajax error");
-            console.log(error);
+        error: function(xhr, status, error) {
+            var err = eval("(" + xhr.responseText + ")");
+            alert(err.Message);
         }
+        // error: function(error){
+        //     console.log("ajax error");
+        //     console.log(error);
+        // }
     });
 
 }
