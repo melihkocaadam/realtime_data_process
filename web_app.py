@@ -66,7 +66,6 @@ def streamTopics():
             consumer.commit()
 
             lastestOffset = consumer.end_offsets([tp])
-            print(lastestOffset[tp])
             time.sleep(1)
             
             if msg_offset == lastestOffset[tp] -1:
