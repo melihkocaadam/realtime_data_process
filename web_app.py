@@ -34,16 +34,20 @@ def newReport():
 ################################
 ### Kafka Consumer Endpoints ###
 ################################
-@app.route('/test')
-def test():
+@app.route('/streamTopics')
+def streamTopics():
+    params = request.args
+    clientid = params["userName"]
+    cycleNum = int(params["cycleNum"])
+    topicName = params["topicName"]
+    print(params)
+
     def consumer():
         print("Stream consumer started")
 
-        jsonResult = []
-        topicName = "agentsCompact"
         consumer = KafkaConsumer(
-            client_id="client1",
-            group_id="group1",
+            client_id=clientid,
+            group_id=clientid,
             bootstrap_servers=['localhost:9092'],
             enable_auto_commit=False
             )
@@ -53,6 +57,7 @@ def test():
         exist_offset = consumer.position(tp)
 
         for message in consumer:
+            jsonResult = []
             msg = message.value
             msg_json = json.loads(msg)
             jsonResult.append(msg_json)
@@ -70,8 +75,8 @@ def test():
     print("Stream returned")
     return Response(consumer(), content_type='text/event-stream') # mimetype="text/plain", 
 
-@app.route("/streamTopics")
-def agentsStream():
+@app.route("/changeLogTopics")
+def changeLogTopics():
     params = request.args
     clientid = params["userName"]
     cycleNum = int(params["cycleNum"])
