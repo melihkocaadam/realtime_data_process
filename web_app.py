@@ -225,7 +225,7 @@ def run_every_5_seconds():
             # print(rown, "| This row added in existData with append")
             existData.insert(0, rown)
 
-    print("existData", datetime.now())
+    # print("existData", datetime.now())
     for r, rowe in enumerate(existData):
         if "Flag" in rowe:
             if rowe["Flag"] in ("add", "delete"):
