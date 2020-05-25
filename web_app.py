@@ -71,7 +71,7 @@ def streamTopics():
             time.sleep(1)
             yield str(jsonResult).replace("'", '"')
             
-            if msg_offset == lastestOffset -1:
+            if msg_offset == lastestOffset[tp] -1:
                 break
         
         print("Stream consumer finished")
