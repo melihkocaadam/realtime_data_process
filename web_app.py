@@ -125,7 +125,6 @@ def sendAgentStatus():
     value_serializer=lambda v: json.dumps(v).encode("utf-8")
     )
     producer.send("agents", value=jsonData)
-    producer.send("agentsCompact", key=keyVal, value=jsonData)
 
     return 'JSON posted'
 
