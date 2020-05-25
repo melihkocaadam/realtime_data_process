@@ -56,9 +56,6 @@ def streamTopics():
         consumer.assign([tp])
         exist_offset = consumer.position(tp)
 
-        lastestOffset = consumer.end_offsets([tp])
-        print(lastestOffset[tp])
-
         jsonResult = []
         for message in consumer:
             msg = message.value
@@ -68,6 +65,8 @@ def streamTopics():
             print("offset:", msg_offset, "|", datetime.now().strftime("%H:%M:%S"), "|", msg_json)
             consumer.commit()
 
+            lastestOffset = consumer.end_offsets([tp])
+            print(lastestOffset[tp])
             time.sleep(1)
             yield str(jsonResult).replace("'", '"')
             
