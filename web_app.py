@@ -57,9 +57,9 @@ def streamTopics():
         exist_offset = consumer.position(tp)
 
         lastestOffset = consumer.end_offsets([tp])
-        lastestOffset = lastestOffset[0]
+        lastestOffset = lastestOffset["TopicPartition"]
         print(lastestOffset)
-        
+
         jsonResult = []
         for message in consumer:
             msg = message.value
