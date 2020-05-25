@@ -62,6 +62,7 @@ def test():
             consumer.commit()
 
             time.sleep(1)
+            print("offset:", str(msg_offset))
             
             yield str(jsonResult).replace("'", '"')
         
