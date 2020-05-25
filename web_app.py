@@ -66,7 +66,7 @@ def test():
             yield str(jsonResult).replace("'", '"')
         
         print("Stream consumer finished")
-        yield ""
+        # yield ""
     
     return Response(consumer()) # mimetype="text/plain"
 
@@ -108,27 +108,6 @@ def agentsStream():
         consumer.commit()
         
         return str(jsonResult).replace("'", '"')
-
-    # end_ofs = consumer.end_offsets([tp])
-    # for offset in end_ofs:
-    #     end_offset = end_ofs[offset]
-    #     break
-    
-    # if exist_offset < end_offset:
-    #     for message in consumer:
-    #         msg = message.value
-    #         msg_json = json.loads(msg)
-    #         print(msg_json)
-
-    #         jsonResult.append(msg_json)
-    #         msg_offset = message.offset
-    #         print(msg_offset)
-
-    #         if msg_offset == end_offset -1:
-    #             consumer.seek_to_end(tp)
-    #             break
-        
-    # return str(jsonResult).replace("'", '"')
 
 ################################
 ### Kafka Producer Endpoints ###
