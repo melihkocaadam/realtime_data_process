@@ -68,13 +68,12 @@ def streamTopics():
             lastestOffset = consumer.end_offsets([tp])
             print(lastestOffset[tp])
             time.sleep(1)
-            yield str(jsonResult).replace("'", '"')
             
             if msg_offset == lastestOffset[tp] -1:
                 break
         
         print("Stream consumer finished")
-        yield ""
+        yield str(jsonResult).replace("'", '"')
     
     print("Stream returned")
     return Response(consumer(), mimetype="text/plain") 
