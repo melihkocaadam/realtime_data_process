@@ -66,7 +66,7 @@ def test():
         print("Stream consumer finished")
         yield ""
     
-    return Response(consumer())
+    return Response(consumer()) # mimetype="text/plain"
 
 @app.route("/streamTopics")
 def agentsStream():
