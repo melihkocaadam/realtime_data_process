@@ -45,6 +45,7 @@ function getData(topic) {
             insertAllData(result, topic);
         },
         error: function(error){
+            console.log("ajax error");
             console.log(error);
         }
     });
