@@ -57,7 +57,7 @@ def test():
             msg_json = json.loads(msg)
             jsonResult.append(msg_json)
             msg_offset = message.offset
-            print("offset:", msg_offset, "|", msg_json)
+            print("offset:", msg_offset, "|", datetime.now().strftime("%H:%M:%S"), "|", msg_json)
             consumer.commit()
 
             time.sleep(1)
