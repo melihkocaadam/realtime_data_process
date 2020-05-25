@@ -67,7 +67,8 @@ def test():
         print("Stream consumer finished")
         yield ""
     
-    return Response(consumer(), mimetype="text/plain")
+    print("Stream returned")
+    return Response(consumer(), content_type='text/event-stream') # mimetype="text/plain", 
 
 @app.route("/streamTopics")
 def agentsStream():
