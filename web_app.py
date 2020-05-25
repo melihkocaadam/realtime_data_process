@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, Response
 from kafka import KafkaProducer, KafkaConsumer, TopicPartition
 from datetime import datetime
 from threading import Thread
@@ -34,6 +34,40 @@ def newReport():
 ################################
 ### Kafka Consumer Endpoints ###
 ################################
+@app.route('/test')
+def test():
+    def consumer():
+        print("Stream consumer started")
+
+        consumer = KafkaConsumer(
+            client_id="client1",
+            group_id="group1",
+            bootstrap_servers=['localhost:9092'],
+            enable_auto_commit=False
+            )
+
+        tp = TopicPartition(topicName, 0)
+        consumer.assign([tp])
+        exist_offset = consumer.position(tp)
+
+        for message in consumer:
+            msg = message.value
+            msg_json = json.loads(msg)
+            print(msg_json)
+            jsonResult.append(msg_json)
+            msg_offset = message.offset
+            print(msg_offset)
+            consumer.commit()
+
+            time.sleep(1)
+            
+            yield str(jsonResult).replace("'", '"')
+        
+        print("Stream consumer finished")
+        yield ""
+    
+    return Response(consumer())
+
 @app.route("/streamTopics")
 def agentsStream():
     params = request.args
