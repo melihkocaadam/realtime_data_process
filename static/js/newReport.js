@@ -37,10 +37,10 @@ function getData(topic) {
         url: Url,
         dataType: "json",
         data: dataJson,
-        // async: true,
+        // async: false,
         success: function(resp){
             result = resp;
-            console.log(result);
+            // console.log(result);
             console.log(typeof result);
             insertAllData(result, topic);
         },
@@ -54,7 +54,8 @@ function getData(topic) {
 
 function insertAllData(data, key) {
     var log = key + "Log";
-    console.log(data.length);
+    console.log("into insertAllData function");
+    // console.log(data.length);
 
     for (var i = 0; i < data.length; i++) {
         if ("Flag" in data[i]) {
@@ -71,12 +72,12 @@ function insertAllData(data, key) {
                 // console.log("data process" + allData[key][j]);
                 if (data[i]["Flag"] == "add") {
                     allData[key].push(data[i]);
-                } else if (data[i]["Flag"] == "add") {
+                } else if (data[i]["Flag"] == "delete") {
                     if (allData[key][j]["Agents"] == data[i]["Agents"] && allData[key][j]["Sequence"] == data[i]["Sequence"]) {
                         allData[key].splice(j, 1);
                     }
                 } else {
-                    console.log("wrong command in Flag (add or delete)" + data[i]["Flag"]);
+                    console.log("wrong command in Flag (add or delete) | " + data[i]["Flag"]);
                 }
             }
         } else {
@@ -103,7 +104,7 @@ function createHTML(jsonData, topic) {
             }
         }
     }
-    console.log(col);
+    // console.log(col);
 
     var table = document.createElement("table");
     table.setAttribute("class", "table");
