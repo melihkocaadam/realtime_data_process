@@ -42,6 +42,10 @@ def agents():
 def newReport():
     return render_template("newReport.html")
 
+@app.route("/socketReport")
+def newReport():
+    return render_template("socketReport.html")
+
 ################################
 ### Kafka Consumer Endpoints ###
 ################################
