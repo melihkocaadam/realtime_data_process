@@ -28,26 +28,30 @@
     <br>
     <div class="container">
         <div class="row justify-content-center">
-            <div class="input-group">
-                <div class="input-group-append">
-                    <button class="btn rounded btn-outline-success" type="button" id="start-stop" onclick="startStop()">Start</button>
-                </div>
-                <div class="input-group-append">
-                    <select class="custom-select" id="roomName">
-                        <option selected>Please choose endpoint name...</option>
-                        <option value="agentsCompact">Agents Changelog Report</option>
-                        <option value="agents">Agents Status Report</option>
-                        <option value="calls">Calls Report</option>
-                    </select>
-                </div>
-                <div class="input-group-append">
-                    <input type="text" class="form-control" placeholder="Username" id="userName">
+            <div class="container">
+                <div class="input-group">
+                    <div class="input-group-append">
+                        <button class="btn rounded btn-outline-success" type="button" id="start-stop" onclick="startStop()">Start</button>
+                    </div>
+                    <div class="input-group-append">
+                        <select class="custom-select" id="roomName">
+                            <option selected>Please choose endpoint name...</option>
+                            <option value="agentsCompact">Agents Changelog Report</option>
+                            <option value="agents">Agents Status Report</option>
+                            <option value="calls">Calls Report</option>
+                        </select>
+                    </div>
+                    <div class="input-group-append">
+                        <input type="text" class="form-control" placeholder="Username" id="userName">
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="row justify-content-center" id="addTables">
-
+        <div class="row justify-content-center">
+            <div class="container" id="addTables">
+                
+            </div>
         </div>
     </div>
 
