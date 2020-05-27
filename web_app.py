@@ -35,7 +35,8 @@ def receiveDataOnSocket(data):
 @socketio.on("agents")
 def sendDataOnSocket(jsonData):
     print("send data: " + str(jsonData))
-    send(jsonData, json=True)
+    # send(jsonData, json=True)
+    emit("agents", jsonData)
 
 ######################
 ### HTML Endpoints ###
