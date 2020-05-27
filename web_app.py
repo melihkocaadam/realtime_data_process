@@ -51,7 +51,7 @@ def sendDataOnSocket(room, jsonData):
     sendData = {room: jsonData}
     print("send data: " + str(sendData))
     
-    socketio.emit(topic, sendData, namespace="/realTime")
+    socketio.emit(room, sendData, namespace="/realTime")
 
 def joinRoom(user, room):
     global rooms
