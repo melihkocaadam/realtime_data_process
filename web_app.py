@@ -23,23 +23,17 @@ def serve_static(filename):
 ######################
 ### Socket Methods ###
 ######################
-def callback():
-    print("data was reveived from client")
-    
 @socketio.on("agentsCompact")
 def receiveDataOnSocket(data):
     print("received data: " + str(data))
     time.sleep(2)
-    sendData = {
-        "sendData": data
-    }
-    sendDataOnSocket(sendData)
+    sendDataOnSocket(data)
 
-@socketio.on("message")
-def sendDataOnSocket(jsonData):
+@socketio.on("emitClients")
+def sendDataOnSocket(topic, jsonData):
+    sendData = {topic: jsonData}
     print("send data: " + str(jsonData))
-    # send(jsonData, json=True)
-    emit("agents", jsonData, callback=callback)
+    emit(topic, jsonData)
 
 ######################
 ### HTML Endpoints ###
