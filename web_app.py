@@ -32,7 +32,7 @@ def receiveDataOnSocket(data):
     }
     sendDataOnSocket(sendData)
 
-@socketio.on("JsonMessage")
+@socketio.on("agentsCompact")
 def sendDataOnSocket(jsonData):
     print("socket data sending")
     send(jsonData, json=True)
