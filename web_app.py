@@ -8,6 +8,7 @@ import json, requests, os, time, schedule
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "real-time"
 socketio = SocketIO(app)
+rooms = {}
 
 
 ##########################
@@ -52,8 +53,8 @@ def sendDataOnSocket(topic, jsonData):
     
     socketio.emit(topic, sendData, namespace="/realTime")
 
-rooms = {}
 def joinRoom(user, room):
+    global rooms
     if room not in rooms:
         rooms[room] = []
     
