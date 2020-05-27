@@ -29,7 +29,7 @@ def receiveDataOnSocket(data):
     time.sleep(2)
     sendDataOnSocket("agentsCompact", data)
 
-@socketio.on("message")
+@socketio.on("emitClients")
 def sendDataOnSocket(topic, jsonData):
     sendData = {topic: jsonData}
     print("send data: " + str(sendData))
