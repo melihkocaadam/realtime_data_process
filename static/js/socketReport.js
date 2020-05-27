@@ -3,8 +3,7 @@ var allData = {};
 var roomName = "";
 var userName = "";
 var realTimeSocket = io("/realTime", {
-    forceNew: true,
-    transports: ['websocket']
+    forceNew: true
 });
 
 realTimeSocket.on("connect", function() {
