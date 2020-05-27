@@ -18,6 +18,11 @@ socket.on("json", function(data) {
     console.log(data);
 });
 
+function connSocket(topicName) {
+    socket.emit(topicName, {data: "connected to " + topicName});
+    console.log("data send on socket");
+}
+
 function startStop() {
     var button = document.getElementById("start-stop");
     var topicName = document.getElementById("topicName").value;
@@ -35,10 +40,4 @@ function startStop() {
         console.log("into stop");
         location.reload();
     }
-}
-
-function connSocket(topicName) {
-
-    socket.emit(topicName, {data: "connected to " + topicName});
-
 }
