@@ -31,11 +31,19 @@ def socketConnect():
 def socketDisconnect():
     print('client disconnected')
 
-@socketio.on("agentsCompact")
-def receiveDataOnSocket(data):
-    print("received data: " + str(data))
-    time.sleep(3)
-    sendDataOnSocket("agentsCompact", data)
+@socketio.on('join')
+def on_join(data):
+    username = data['username']
+    room = data['room']
+    join_room(room)
+    send(username + ' has entered the room.', room=room)
+
+@socketio.on('leave')
+def on_leave(data):
+    username = data['username']
+    room = data['room']
+    leave_room(room)
+    send(username + ' has left the room.', room=room)
 
 @socketio.on("emitClients")
 def sendDataOnSocket(topic, jsonData):
