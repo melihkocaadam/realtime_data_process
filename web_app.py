@@ -23,6 +23,14 @@ def serve_static(filename):
 ######################
 ### Socket Methods ###
 ######################
+@socketio.on('connect')
+def socketConnect():
+    print("client connected")
+
+@socketio.on('disconnect')
+def socketDisconnect():
+    print('client disconnected')
+
 @socketio.on("agentsCompact")
 def receiveDataOnSocket(data):
     print("received data: " + str(data))
