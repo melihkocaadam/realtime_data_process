@@ -1,10 +1,14 @@
 from flask import Flask, render_template, request, Response
 from kafka import KafkaProducer, KafkaConsumer, TopicPartition
+from flask_socketio import SocketIO
 from datetime import datetime
 from threading import Thread
 import json, requests, os, time, schedule
 
 app = Flask(__name__)
+app.config["SECRET_KEY"] = "real-time"
+socketio = SocketIO(app)
+
 
 ##########################
 ### Static File Config ###
@@ -268,4 +272,4 @@ def run_schedule():
 if __name__ == "__main__":
     t = Thread(target=run_schedule)
     t.start()
-    app.run(debug=False, host="0.0.0.0")
+    socketio.run(debug=True, host="0.0.0.0", port=5000)
