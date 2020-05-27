@@ -34,7 +34,7 @@ def receiveDataOnSocket(data):
 
 def sendDataOnSocket(jsonData):
     print("socket data sending")
-    emit(JsonMessage, jsonData, json=True)
+    send(JsonMessage, jsonData, json=True)
 
 ######################
 ### HTML Endpoints ###
