@@ -32,7 +32,7 @@ def handle_connection(data):
     }
     handle_json(sendData)
 
-@socketio.on('json')
+@socketio.on('json2')
 def handle_json(jsonData):
     print("socket data sending")
     send(jsonData, json=True)
