@@ -32,6 +32,7 @@ def receiveDataOnSocket(data):
     }
     sendDataOnSocket(sendData)
 
+@socketio.on()
 def sendDataOnSocket(jsonData):
     print("socket data sending")
     send(JsonMessage, jsonData, json=True)
