@@ -20,7 +20,7 @@ function startStop() {
 }
 
 function connSocket(topicName) {
-    var socket = io.connect("http://35.228.71.166:6000");
+    var socket = io.connect();
     
     socket.on("connect", function() {
         console.log("web socket connected");
