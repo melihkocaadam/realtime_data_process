@@ -2,6 +2,18 @@ var started = true;
 var allData = {};
 var socket = io();
 
+socket.on("connect", function() {
+    console.log("web socket connected");
+});
+
+socket.on("unauthorized", function(error) {
+    // this should now fire
+    if (error.data.type == "UnauthorizedError" || error.data.code == "invalid_token") {
+      console.log("User's token has expired or unauthorized");
+      console.log(error.data);
+    }
+});
+
 function startStop() {
     var button = document.getElementById("start-stop");
     var topicName = document.getElementById("topicName").value;
@@ -23,17 +35,6 @@ function startStop() {
 
 function connSocket(topicName) {
 
-    socket.on("connect", function() {
-        console.log("web socket connected");
-        socket.emit(topicName, {data: "connected to " + topicName})
-    });
-
-    socket.on("unauthorized", function(error) {
-        // this should now fire
-        if (error.data.type == "UnauthorizedError" || error.data.code == "invalid_token") {
-          console.log("User's token has expired or unauthorized");
-          console.log(error.data);
-        }
-    });
+    socket.emit(topicName, {data: "connected to " + topicName});
 
 }
