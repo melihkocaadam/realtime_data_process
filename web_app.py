@@ -31,11 +31,10 @@ def handle_connection(data):
         "sendData": data
     }
     handle_json(sendData)
-
-@socketio.on('json2')
+    
 def handle_json(jsonData):
     print("socket data sending")
-    send(jsonData, json=True)
+    emit(jsonData, json=True)
 
 ######################
 ### HTML Endpoints ###
