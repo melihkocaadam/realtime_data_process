@@ -21,6 +21,13 @@ def serve_static(filename):
     return send_from_directory(os.path.join(root_dir, 'realtime_data_process/static'), filename)
 
 ######################
+### Socket Methods ###
+######################
+@socketio.on("connect")
+def handle_connection(data):
+    print("received data: " + data)
+
+######################
 ### HTML Endpoints ###
 ######################
 @app.route("/report")
