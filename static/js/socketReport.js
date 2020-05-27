@@ -39,7 +39,7 @@ function leaveRoom(userName, roomName) {
 function sendMessage() {
     message = document.getElementById("message").value;
     var data = {data: message};
-    realTimeSocket.emit("emitMessage", data);
+    realTimeSocket.emit("emitMessage", roomName, data);
 }
 
 function startStop() {
