@@ -49,9 +49,10 @@ def on_leave(data):
 @socketio.on("emitMessage", namespace="/realTime")
 def sendDataOnSocket(room, jsonData):
     sendData = {room: jsonData}
-    print("send data: " + str(sendData))
     
+    time.sleep(3)
     socketio.emit(room, sendData, namespace="/realTime")
+    print("send data: " + str(sendData))
 
 def joinRoom(user, room):
     global rooms
