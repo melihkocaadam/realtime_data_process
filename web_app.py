@@ -34,7 +34,7 @@ def sendDataOnSocket(topic, jsonData):
     sendData = {topic: jsonData}
     print("send data: " + str(jsonData))
     # emit("agentsCompact", jsonData)
-    socketio.emit(topic, sendData)
+    emit(topic, sendData)
 
 ######################
 ### HTML Endpoints ###
