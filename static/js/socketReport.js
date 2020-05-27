@@ -40,6 +40,7 @@ function sendMessage() {
     message = document.getElementById("message").value;
     var data = {data: message};
     realTimeSocket.emit("emitMessage", roomName, data);
+    console.log("send data on socket");
 }
 
 function startStop() {
