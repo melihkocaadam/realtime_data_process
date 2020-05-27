@@ -1,5 +1,6 @@
 var started = true;
 var allData = {};
+var socket = io();
 
 function startStop() {
     var button = document.getElementById("start-stop");
@@ -20,8 +21,7 @@ function startStop() {
 }
 
 function connSocket(topicName) {
-    var socket = io.connect();
-    
+
     socket.on("connect", function() {
         console.log("web socket connected");
         socket.emit(topicName, {data: "connected to " + topicName})
