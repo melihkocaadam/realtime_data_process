@@ -26,6 +26,11 @@ realTimeSocket.on(roomName, function(data) {
     console.log(data);
 });
 
+realTimeSocket.on("agentsCompact", function(data) {
+    console.log("received data on socket for static function agentsCompact");
+    console.log(data);
+});
+
 function joinRoom(userName, roomName) {
     var data = {username: userName, room: roomName};
     realTimeSocket.emit("join", data);
