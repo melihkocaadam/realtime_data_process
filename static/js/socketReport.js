@@ -56,6 +56,7 @@ function startStop() {
         started = true;
         console.log("into start");
 
+        realTimeSocket.connect();
         joinRoom(userName, roomName);
 
         realTimeSocket.on(roomName, function(data) {
@@ -69,5 +70,6 @@ function startStop() {
         console.log("into stop");
         
         leaveRoom(userName, roomName);
+        realTimeSocket.disconnect();
     }
 }
