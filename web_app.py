@@ -37,14 +37,14 @@ def on_join(data):
     username = data['username']
     room = data['room']
     joinRoom(username, room)
-    send(room, username + ' has entered the room.', room=room, namespace="/realTime")
+    socketio.send(username + ' has entered the room.', room=room, namespace="/realTime")
 
 @socketio.on('leave', namespace="/realTime")
 def on_leave(data):
     username = data['username']
     room = data['room']
     leaveRoom(username, room)
-    send(room, username + ' has left the room.', room=room, namespace="/realTime")
+    socketio.send(username + ' has left the room.', room=room, namespace="/realTime")
 
 @socketio.on("emitMessage", namespace="/realTime")
 def sendDataOnSocket(room, jsonData):
