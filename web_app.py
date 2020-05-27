@@ -35,14 +35,14 @@ def socketDisconnect():
 def on_join(data):
     username = data['username']
     room = data['room']
-    join_room(room)
+    joinRoom(username, room)
     send(username + ' has entered the room.', room=room, namespace="/realTime")
 
 @socketio.on('leave', namespace="/realTime")
 def on_leave(data):
     username = data['username']
     room = data['room']
-    leave_room(room)
+    joinRoom(username, room)
     send(username + ' has left the room.', room=room, namespace="/realTime")
 
 @socketio.on("emitMessage", namespace="/realTime")
