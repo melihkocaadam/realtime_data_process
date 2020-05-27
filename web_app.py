@@ -23,6 +23,9 @@ def serve_static(filename):
 ######################
 ### Socket Methods ###
 ######################
+def callback():
+    print("data was reveived from client")
+    
 @socketio.on("agentsCompact")
 def receiveDataOnSocket(data):
     print("received data: " + str(data))
@@ -37,9 +40,6 @@ def sendDataOnSocket(jsonData):
     print("send data: " + str(jsonData))
     # send(jsonData, json=True)
     emit("agents", jsonData, callback=callback)
-
-def callback():
-    print("data was reveived from client")
 
 ######################
 ### HTML Endpoints ###
