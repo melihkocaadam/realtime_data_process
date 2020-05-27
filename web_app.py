@@ -57,7 +57,7 @@ def joinRoom(user, room):
     if room not in rooms:
         rooms[room] = []
     
-    rooms[room].insert(user)
+    rooms[room].insert(0, user)
     print(user, "->", room)
     print(rooms)
 
