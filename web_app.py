@@ -27,7 +27,7 @@ def serve_static(filename):
 def receiveDataOnSocket(data):
     print("received data: " + str(data))
     time.sleep(2)
-    sendDataOnSocket(data)
+    sendDataOnSocket("agentsCompact", data)
 
 @socketio.on("emitClients")
 def sendDataOnSocket(topic, jsonData):
