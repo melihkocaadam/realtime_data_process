@@ -26,15 +26,15 @@ def serve_static(filename):
 @socketio.on("agentsCompact")
 def receiveDataOnSocket(data):
     print("received data: " + str(data))
-    time.sleep(2)
+    time.sleep(3)
     sendDataOnSocket("agentsCompact", data)
 
 @socketio.on("emitClients")
 def sendDataOnSocket(topic, jsonData):
     sendData = {topic: jsonData}
     print("send data: " + str(sendData))
-    # emit("agentsCompact", jsonData)
-    emit(topic, sendData)
+    
+    socketio.emit(topic, sendData)
 
 ######################
 ### HTML Endpoints ###
