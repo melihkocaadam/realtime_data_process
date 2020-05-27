@@ -10,7 +10,7 @@ function startStop() {
         button.className = "btn rounded btn-outline-danger";
         started = true;
         console.log("into start");
-        createConnSocket(topicName);
+        connSocket(topicName);
     } else {
         button.innerText = "Start";
         button.className = "btn rounded btn-outline-success";
@@ -19,10 +19,11 @@ function startStop() {
     }
 }
 
-function createConnSocket(topicName) {
-    var socket = io();
+function connSocket(topicName) {
+    var socket = io.connect("http://35.228.71.166:5000");
     
     socket.on("connect", function() {
+        console.log("web socket connected");
         socket.emit(topicName, {data: "connected to " + topicName})
     });
 
