@@ -20,7 +20,7 @@ realTimeSocket.on("unauthorized", function(error) {
 });
 
 realTimeSocket.on(roomName, function(data) {
-    console.log("received data on socket");
+    console.log("received data on socket for room: " + roomName);
     console.log(data);
 });
 

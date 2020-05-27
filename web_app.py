@@ -47,8 +47,8 @@ def on_leave(data):
     send(username + ' has left the room.', room=room, namespace="/realTime")
 
 @socketio.on("emitMessage", namespace="/realTime")
-def sendDataOnSocket(topic, jsonData):
-    sendData = {topic: jsonData}
+def sendDataOnSocket(room, jsonData):
+    sendData = {room: jsonData}
     print("send data: " + str(sendData))
     
     socketio.emit(topic, sendData, namespace="/realTime")
