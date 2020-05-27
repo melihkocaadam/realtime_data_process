@@ -25,7 +25,7 @@ def serve_static(filename):
 ######################
 @socketio.on("agentsCompact")
 def handle_connection(data):
-    print("received data: " + data)
+    print("received data: " + str(data))
 
 ######################
 ### HTML Endpoints ###
