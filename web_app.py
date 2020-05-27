@@ -36,7 +36,10 @@ def receiveDataOnSocket(data):
 def sendDataOnSocket(jsonData):
     print("send data: " + str(jsonData))
     # send(jsonData, json=True)
-    emit("agents", jsonData)
+    emit("agents", jsonData, callback=callback)
+
+def callback():
+    print("data was reveived from client")
 
 ######################
 ### HTML Endpoints ###
