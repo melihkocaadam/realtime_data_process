@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, Response
 from kafka import KafkaProducer, KafkaConsumer, TopicPartition
-from flask_socketio import SocketIO
+from flask_socketio import SocketIO, send, emit
 from datetime import datetime
 from threading import Thread
 import json, requests, os, time, schedule
@@ -26,6 +26,15 @@ def serve_static(filename):
 @socketio.on("agentsCompact")
 def handle_connection(data):
     print("received data: " + str(data))
+    time.sleep(2)
+    sendData = {
+        "sendData": data
+    }
+    handle_json(sendData)
+
+@socketio.on('json')
+def handle_json(json):
+    send(json, json=True)
 
 ######################
 ### HTML Endpoints ###

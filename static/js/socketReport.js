@@ -7,11 +7,14 @@ socket.on("connect", function() {
 });
 
 socket.on("unauthorized", function(error) {
-    // this should now fire
     if (error.data.type == "UnauthorizedError" || error.data.code == "invalid_token") {
       console.log("User's token has expired or unauthorized");
       console.log(error.data);
     }
+});
+
+socket.on("json", function(data) {
+    console.log(data);
 });
 
 function startStop() {
