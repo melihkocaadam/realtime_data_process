@@ -23,34 +23,51 @@ def serve_static(filename):
 ######################
 ### Socket Methods ###
 ######################
-@socketio.on('connect')
+@socketio.on('connect', namespace="/realTime")
 def socketConnect():
     print("client connected")
 
-@socketio.on('disconnect')
+@socketio.on('disconnect', namespace="/realTime")
 def socketDisconnect():
     print('client disconnected')
 
-@socketio.on('join')
+@socketio.on('join', namespace="/realTime")
 def on_join(data):
     username = data['username']
     room = data['room']
     join_room(room)
-    send(username + ' has entered the room.', room=room)
+    send(username + ' has entered the room.', room=room, namespace="/realTime")
 
-@socketio.on('leave')
+@socketio.on('leave', namespace="/realTime")
 def on_leave(data):
     username = data['username']
     room = data['room']
     leave_room(room)
-    send(username + ' has left the room.', room=room)
+    send(username + ' has left the room.', room=room, namespace="/realTime")
 
-@socketio.on("emitClients")
+@socketio.on("emitMessage", namespace="/realTime")
 def sendDataOnSocket(topic, jsonData):
     sendData = {topic: jsonData}
     print("send data: " + str(sendData))
     
-    socketio.emit(topic, sendData)
+    socketio.emit(topic, sendData, namespace="/realTime")
+
+rooms = {}
+def joinRoom(user, room):
+    if room not in rooms:
+        rooms[room] = []
+    
+    rooms[room].insert(user)
+    print(user, "->", room)
+    print(rooms)
+
+def leaveRoom(user, room):
+    for i, u in enumerate(rooms[room]):
+        if u == user:
+            del rooms[room][i]
+            print(user, "x", room)
+    print(rooms)
+
 
 ######################
 ### HTML Endpoints ###
