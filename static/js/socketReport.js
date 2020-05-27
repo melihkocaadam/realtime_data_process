@@ -14,6 +14,7 @@ socket.on("unauthorized", function(error) {
 });
 
 socket.on("json", function(data) {
+    console.log("data received on socket");
     console.log(data);
 });
 
