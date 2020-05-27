@@ -24,17 +24,17 @@ def serve_static(filename):
 ### Socket Methods ###
 ######################
 @socketio.on("agentsCompact")
-def handle_connection(data):
+def receiveDataOnSocket(data):
     print("received data: " + str(data))
     time.sleep(2)
     sendData = {
         "sendData": data
     }
-    handle_json(sendData)
-    
-def handle_json(jsonData):
+    sendDataOnSocket(sendData)
+
+def sendDataOnSocket(jsonData):
     print("socket data sending")
-    emit(jsonData, json=True)
+    emit(JsonMessage, jsonData, json=True)
 
 ######################
 ### HTML Endpoints ###
