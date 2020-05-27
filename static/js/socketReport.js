@@ -36,6 +36,12 @@ function leaveRoom(userName, roomName) {
     console.log("user " + userName + " leaved room: " + roomName);
 }
 
+function sendMessage() {
+    message = document.getElementById("message").value;
+    var data = {data: message};
+    realTimeSocket.emit("emitMessage", data);
+}
+
 function startStop() {
     var button = document.getElementById("start-stop");
     roomName = document.getElementById("roomName").value;
