@@ -21,15 +21,10 @@ realTimeSocket.on("unauthorized", function(error) {
     }
 });
 
-realTimeSocket.on(roomName, function(data) {
-    console.log("received data on socket for room: " + roomName);
-    console.log(data);
-});
-
-realTimeSocket.on("agentsCompact", function(data) {
-    console.log("received data on socket for static function agentsCompact");
-    console.log(data);
-});
+// realTimeSocket.on("agentsCompact", function(data) {
+//     console.log("received data on socket for static function agentsCompact");
+//     console.log(data);
+// });
 
 function joinRoom(userName, roomName) {
     var data = {username: userName, room: roomName};
@@ -62,6 +57,11 @@ function startStop() {
         console.log("into start");
 
         joinRoom(userName, roomName);
+
+        realTimeSocket.on(roomName, function(data) {
+            console.log("received data on socket for room: " + roomName);
+            console.log(data);
+        });
     } else {
         button.innerText = "Start";
         button.className = "btn rounded btn-outline-success";
