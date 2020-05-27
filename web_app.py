@@ -34,6 +34,7 @@ def handle_connection(data):
 
 @socketio.on('json')
 def handle_json(json):
+    print("socket data sending")
     send(json, json=True)
 
 ######################
