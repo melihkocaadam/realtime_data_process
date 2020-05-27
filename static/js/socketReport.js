@@ -27,13 +27,13 @@ socket.on(roomName, function(data) {
 function joinRoom(userName, roomName) {
     var data = {username: userName, room: roomName};
     socket.emit("join", data);
-    console.log("user " + userName + "jonied room: " + roomName);
+    console.log("user " + userName + " jonied room: " + roomName);
 }
 
 function leaveRoom(userName, roomName) {
     var data = {username: userName, room: roomName};
     socket.emit("leave", data);
-    console.log("user " + userName + "leaved room: " + roomName);
+    console.log("user " + userName + " leaved room: " + roomName);
 }
 
 function startStop() {
