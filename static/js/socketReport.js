@@ -13,7 +13,7 @@ socket.on("unauthorized", function(error) {
     }
 });
 
-socket.on("agents", function(data) {
+socket.on("agentsCompact", function(data) {
     console.log("received data on socket");
     console.log(data);
 });
