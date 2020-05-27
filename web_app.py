@@ -23,7 +23,7 @@ def serve_static(filename):
 ######################
 ### Socket Methods ###
 ######################
-@socketio.on("connect")
+@socketio.on("agentsCompact")
 def handle_connection(data):
     print("received data: " + data)
 
