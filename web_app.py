@@ -33,9 +33,9 @@ def handle_connection(data):
     handle_json(sendData)
 
 @socketio.on('json')
-def handle_json(json):
+def handle_json(jsonData):
     print("socket data sending")
-    send(json, json=True)
+    send(jsonData, json=True)
 
 ######################
 ### HTML Endpoints ###
