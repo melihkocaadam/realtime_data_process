@@ -2,6 +2,7 @@ var started = true;
 var allData = {};
 var socket = io();
 var roomName = "";
+var userName = "";
 
 socket.on("connect", function() {
     console.log("web socket connected");
@@ -38,6 +39,7 @@ function leaveRoom(userName, roomName) {
 function startStop() {
     var button = document.getElementById("start-stop");
     roomName = document.getElementById("roomName").value;
+    userName = document.getElementById("userName").value;
 
     if (button.innerText == "Start") {
         button.innerText = "Stop";
@@ -45,12 +47,13 @@ function startStop() {
         started = true;
         console.log("into start");
 
-        joinRoom(roomName);
+        joinRoom(userName, roomName);
     } else {
         button.innerText = "Start";
         button.className = "btn rounded btn-outline-success";
         started = false;
         console.log("into stop");
-        location.reload();
+        
+        leaveRoom(userName, roomName);
     }
 }
