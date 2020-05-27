@@ -43,7 +43,7 @@ def newReport():
     return render_template("newReport.html")
 
 @app.route("/socketReport")
-def newReport():
+def socketReport():
     return render_template("socketReport.html")
 
 ################################
