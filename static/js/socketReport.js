@@ -132,7 +132,7 @@ function createHTML(jsonData) {
 }
 
 function seqToTime(seq) {
-    var date = new Date(seq * 1000);
+    var date = new Date(seq);
     var hours = date.getHours();
     var minutes = "0" + date.getMinutes();
     var seconds = "0" + date.getSeconds();
