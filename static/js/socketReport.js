@@ -86,6 +86,9 @@ function createHTML(jsonData) {
             if (col.indexOf(key) === -1) {
                 col.push(key);
             }
+            if (key == "sequence") {
+                console.log(i);
+            }
         }
     }
     // console.log(col);
