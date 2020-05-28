@@ -7,20 +7,20 @@ var realTimeSocket = io("/realTime", {
     transport: ["webscoket", "pooling"]
 });
 
-realTimeSocket.on("connect", function() {
-    console.log("web socket connected");
-});
+// realTimeSocket.on("connect", function() {
+//     console.log("web socket connected");
+// });
 
-realTimeSocket.on("disconnect", function() {
-    console.log("web socket disconnected");
-});
+// realTimeSocket.on("disconnect", function() {
+//     console.log("web socket disconnected");
+// });
 
-realTimeSocket.on("unauthorized", function(error) {
-    if (error.data.type == "UnauthorizedError" || error.data.code == "invalid_token") {
-      console.log("User's token has expired or unauthorized");
-      console.log(error.data);
-    }
-});
+// realTimeSocket.on("unauthorized", function(error) {
+//     if (error.data.type == "UnauthorizedError" || error.data.code == "invalid_token") {
+//       console.log("User's token has expired or unauthorized");
+//       console.log(error.data);
+//     }
+// });
 
 // realTimeSocket.on("agentsCompact", function(data) {
 //     console.log("received data on socket for static function agentsCompact");
