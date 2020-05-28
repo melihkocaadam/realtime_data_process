@@ -3,11 +3,12 @@ from kafka import KafkaProducer, KafkaConsumer, TopicPartition
 from flask_socketio import SocketIO, send, emit
 from datetime import datetime
 from threading import Thread
-import json, requests, os, time, schedule
+import json, requests, os, time, schedule, gevent
 
+async_mode = "gevent"
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "real-time"
-socketio = SocketIO(app)
+socketio = SocketIO(app, async_mode = async_mode)
 rooms = {}
 
 
