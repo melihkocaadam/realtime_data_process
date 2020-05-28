@@ -54,7 +54,7 @@ def sendDataOnSocket(room, jsonData):
     jsonData["room"] = room
     
     time.sleep(3)
-    socketio.emit(room, sendData, namespace=nsp)
+    socketio.emit(room, jsonData, namespace=nsp)
     print("send data: " + str(jsonData))
 
 def joinRoom(user, room):
