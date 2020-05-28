@@ -4,10 +4,8 @@ var roomName = "";
 var userName = "";
 var realTimeSocket = io("/realTime", {
     forceNew: true,
-    // transport: ["webscoket"]
+    transports: ["webscoket"]
 });
-
-realTimeSocket.set("transports", ["wesocket"]);
 
 // realTimeSocket.on("connect", function() {
 //     console.log("web socket connected");
