@@ -114,7 +114,14 @@ function createHTML(jsonData) {
     }
     var divContainer = document.getElementById("addTables");
     var htmlContent = document.createElement("div");
+    var dataTable = document.getElementById("dataTable");
+
+    if (dataTable != undefined) {
+        dataTable.remove();
+    }
+
     htmlContent.setAttribute("class", "row justify-content-center");
+    htmlContent.setAttribute("id", "dataTable");
     htmlContent.appendChild(table);
 
     divContainer.appendChild(htmlContent);
