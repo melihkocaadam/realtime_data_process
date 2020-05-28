@@ -50,6 +50,7 @@ def on_leave(data):
 
 @socketio.on("emitMessage", namespace=nsp)
 def sendDataOnSocket(room, jsonData):
+    jsonData["sequence"] = int(datetime.now().timestamp() * 1000)
     sendData = {room: jsonData}
     
     time.sleep(3)

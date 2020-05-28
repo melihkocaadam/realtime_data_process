@@ -1,5 +1,5 @@
 var started = true;
-var allData = {};
+var allData = [];
 var roomName = "";
 var userName = "";
 var realTimeSocket = io("/realTime", {
@@ -41,7 +41,8 @@ function leaveRoom(userName, roomName) {
 
 function sendMessage() {
     message = document.getElementById("message").value;
-    var data = {data: message};
+    userName = document.getElementById("userName").value;
+    var data = {username: userName, data: message};
     realTimeSocket.emit("emitMessage", roomName, data);
     console.log("send data on socket");
 }
@@ -63,6 +64,8 @@ function startStop() {
         realTimeSocket.on(roomName, function(data) {
             console.log("received data on socket for room: " + roomName);
             console.log(data);
+            allData.push(data);
+            createHTML(allData);
         });
     } else {
         button.innerText = "Start";
@@ -73,4 +76,48 @@ function startStop() {
         leaveRoom(userName, roomName);
         realTimeSocket.disconnect();
     }
+}
+
+function createHTML(jsonData) {
+    console.log("into createHTML function");
+    var col = [];
+    for (var i = 0; i < jsonData.length; i++) {
+        for (var key in jsonData[i]) {
+            if (col.indexOf(key) === -1) {
+                col.push(key);
+            }
+        }
+    }
+    // console.log(col);
+
+    var table = document.createElement("table");
+    table.setAttribute("class", "table");
+
+    var tr = table.insertRow(-1);                   // TABLE ROW.
+    tr.setAttribute("scope", "row");
+
+    for (var i = 0; i < col.length; i++) {
+        var th = document.createElement("th");      // TABLE HEADER.
+        th.setAttribute("scope", "col");
+        th.innerHTML = col[i];
+        tr.appendChild(th);
+    }
+
+    // ADD JSON DATA TO THE TABLE AS ROWS.
+    for (var i = 0; i < jsonData.length; i++) {
+        tr = table.insertRow(-1);
+
+        for (var j = 0; j < col.length; j++) {
+            var tabCell = tr.insertCell(-1);
+            tabCell.innerHTML = jsonData[i][col[j]];
+        }
+    }
+    var divContainer = document.getElementById("addTables");
+    var htmlContent = document.createElement("div");
+    htmlContent.setAttribute("class", "row justify-content-center");
+    htmlContent.setAttribute("id", topic);
+    htmlContent.appendChild(table);
+
+    divContainer.appendChild(htmlContent);
+    
 }
