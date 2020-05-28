@@ -115,7 +115,6 @@ function createHTML(jsonData) {
     var divContainer = document.getElementById("addTables");
     var htmlContent = document.createElement("div");
     htmlContent.setAttribute("class", "row justify-content-center");
-    htmlContent.setAttribute("id", topic);
     htmlContent.appendChild(table);
 
     divContainer.appendChild(htmlContent);
