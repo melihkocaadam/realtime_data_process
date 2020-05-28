@@ -53,7 +53,7 @@ def sendDataOnSocket(room, jsonData):
     jsonData["sequence"] = int(datetime.now().timestamp() * 1000)
     jsonData["room"] = room
     
-    time.sleep(3)
+    time.sleep(1)
     socketio.emit(room, jsonData, namespace=nsp)
     print("send data: " + str(jsonData))
 
