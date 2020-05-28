@@ -82,6 +82,8 @@ function createHTML(jsonData) {
     console.log("into createHTML function");
     var col = [];
     for (var i = 0; i < jsonData.length; i++) {
+        console.log(jsonData[i]);
+        console.log(jsonData[i].length);
         for (var j = 0; j < jsonData[i].length; j++) {
             if (col.indexOf(jsonData[i][j]) === -1) {
                 col.push(jsonData[i][j]);
