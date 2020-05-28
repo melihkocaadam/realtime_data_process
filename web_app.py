@@ -61,6 +61,7 @@ def joinRoom(user, room):
         rooms[room] = []
 
     if user in rooms[room]:
+        print(user, "exist in room", room)
         return
     
     rooms[room].insert(0, user)
