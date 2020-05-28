@@ -2,7 +2,9 @@ var started = true;
 var allData = [];
 var roomName = "";
 var userName = "";
-var realTimeSocket = io("/realTime");
+var realTimeSocket = io("/realTime", {
+    rememberTransport: false
+});
 
 // realTimeSocket.on("connect", function() {
 //     console.log("web socket connected");
