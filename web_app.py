@@ -51,11 +51,11 @@ def on_leave(data):
 @socketio.on("emitMessage", namespace=nsp)
 def sendDataOnSocket(room, jsonData):
     jsonData["sequence"] = int(datetime.now().timestamp() * 1000)
-    sendData = {room: jsonData}
+    jsonData["room"] = room
     
     time.sleep(3)
     socketio.emit(room, sendData, namespace=nsp)
-    print("send data: " + str(sendData))
+    print("send data: " + str(jsonData))
 
 def joinRoom(user, room):
     if room not in rooms:
