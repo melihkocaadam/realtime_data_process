@@ -5,9 +5,10 @@ from datetime import datetime
 from threading import Thread
 import json, requests, os, time, schedule
 
+asnyc_mode = "eventlet"
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "real-time"
-socketio = SocketIO(app)
+socketio = SocketIO(app, async_mode=asnyc_mode)
 rooms = {}
 
 
