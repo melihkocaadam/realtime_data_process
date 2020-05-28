@@ -24,40 +24,44 @@ def serve_static(filename):
 ######################
 ### Socket Methods ###
 ######################
-@socketio.on('connect', namespace="/realTime")
+nsp = "/realTime"
+
+@socketio.on('connect', namespace=nsp)
 def socketConnect():
     print("client connected")
 
-@socketio.on('disconnect', namespace="/realTime")
+@socketio.on('disconnect', namespace=nsp)
 def socketDisconnect():
     print('client disconnected')
 
-@socketio.on('join', namespace="/realTime")
+@socketio.on('join', namespace=nsp)
 def on_join(data):
     username = data['username']
     room = data['room']
     joinRoom(username, room)
-    socketio.send(username + ' has entered the room.', room=room, namespace="/realTime")
+    socketio.send(username + ' has entered the room.', room=room, namespace=nsp)
 
-@socketio.on('leave', namespace="/realTime")
+@socketio.on('leave', namespace=nsp)
 def on_leave(data):
     username = data['username']
     room = data['room']
     leaveRoom(username, room)
-    socketio.send(username + ' has left the room.', room=room, namespace="/realTime")
+    socketio.send(username + ' has left the room.', room=room, namespace=nsp)
 
-@socketio.on("emitMessage", namespace="/realTime")
+@socketio.on("emitMessage", namespace=nsp)
 def sendDataOnSocket(room, jsonData):
     sendData = {room: jsonData}
     
     time.sleep(3)
-    socketio.emit(room, sendData, namespace="/realTime")
+    socketio.emit(room, sendData, namespace=nsp)
     print("send data: " + str(sendData))
 
 def joinRoom(user, room):
-    global rooms
     if room not in rooms:
         rooms[room] = []
+
+    if user in rooms[room]:
+        return
     
     rooms[room].insert(0, user)
     print(user, "->", room)
