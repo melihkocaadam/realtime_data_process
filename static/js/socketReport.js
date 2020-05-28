@@ -140,3 +140,11 @@ function seqToTime(seq) {
 
     return formattedTime;
 }
+
+$('#message').keydown(function (e) {
+
+    if (e.ctrlKey && e.keyCode == 13) {
+        sendMessage();
+        $('#message').val("");
+    }
+  });
