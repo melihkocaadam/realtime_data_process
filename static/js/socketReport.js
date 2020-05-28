@@ -45,6 +45,7 @@ function sendMessage() {
     var data = {username: userName, data: message};
     realTimeSocket.emit("emitMessage", roomName, data);
     console.log("send data on socket");
+    $('#message').val("");
 }
 
 function startStop() {
@@ -146,6 +147,5 @@ $('#message').keydown(function (e) {
 
     if (e.ctrlKey && e.keyCode == 13) {
         sendMessage();
-        $('#message').val("");
     }
   });
