@@ -82,14 +82,9 @@ function createHTML(jsonData) {
     console.log("into createHTML function");
     var col = [];
     for (var i = 0; i < jsonData.length; i++) {
-        console.log(jsonData[i]);
-        console.log(jsonData[i].length);
-        for (var j = 0; j < jsonData[i].length; j++) {
-            if (col.indexOf(jsonData[i][j]) === -1) {
-                col.push(jsonData[i][j]);
-            }
-            if (key == "sequence") {
-                console.log(j);
+        for (var key in jsonData[i]) {
+            if (col.indexOf(key) === -1) {
+                col.push(key);
             }
         }
     }
@@ -114,7 +109,11 @@ function createHTML(jsonData) {
 
         for (var j = 0; j < col.length; j++) {
             var tabCell = tr.insertCell(-1);
-            tabCell.innerHTML = jsonData[i][col[j]];
+            if (col[j] == "sequence") {
+                tabCell.innerHTML = seqToTime(jsonData[i][col[j]]);
+            } else {
+                tabCell.innerHTML = jsonData[i][col[j]];
+            }
         }
     }
     var divContainer = document.getElementById("addTables");
@@ -129,6 +128,15 @@ function createHTML(jsonData) {
     htmlContent.setAttribute("id", "dataTable");
     htmlContent.appendChild(table);
 
-    divContainer.appendChild(htmlContent);
-    
+    divContainer.appendChild(htmlContent);    
+}
+
+function seqToTime(seq) {
+    var date = new Date(seq * 1000);
+    var hours = date.getHours();
+    var minutes = "0" + date.getMinutes();
+    var seconds = "0" + date.getSeconds();
+    var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+
+    return formattedTime;
 }
