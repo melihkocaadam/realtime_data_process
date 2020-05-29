@@ -25,37 +25,37 @@ def serve_static(filename):
 ######################
 ### Socket Methods ###
 ######################
-nsp = "/realTime"
+msgNsp = "/messaging"
 
-@socketio.on('connect', namespace=nsp)
+@socketio.on('connect', namespace=msgNsp)
 def socketConnect():
     print("client connected")
 
-@socketio.on('disconnect', namespace=nsp)
+@socketio.on('disconnect', namespace=msgNsp)
 def socketDisconnect():
     print('client disconnected')
 
-@socketio.on('join', namespace=nsp)
+@socketio.on('join', namespace=msgNsp)
 def on_join(data):
     username = data['username']
     room = data['room']
     joinRoom(username, room)
-    socketio.send(username + ' has entered the room.', room=room, namespace=nsp)
+    socketio.send(username + ' has entered the room.', room=room, namespace=msgNsp)
 
-@socketio.on('leave', namespace=nsp)
+@socketio.on('leave', namespace=msgNsp)
 def on_leave(data):
     username = data['username']
     room = data['room']
     leaveRoom(username, room)
-    socketio.send(username + ' has left the room.', room=room, namespace=nsp)
+    socketio.send(username + ' has left the room.', room=room, namespace=msgNsp)
 
-@socketio.on("emitMessage", namespace=nsp)
+@socketio.on("emitMessage", namespace=msgNsp)
 def sendDataOnSocket(room, jsonData):
     jsonData["sequence"] = int(datetime.now().timestamp() * 1000)
     jsonData["room"] = room
     
     time.sleep(1)
-    socketio.emit(room, jsonData, namespace=nsp)
+    socketio.emit(room, jsonData, namespace=msgNsp)
     print("send data: " + str(jsonData))
 
 def joinRoom(user, room):
@@ -92,6 +92,10 @@ def agents():
 @app.route("/newReport")
 def newReport():
     return render_template("newReport.html")
+
+@app.route("/socketMessage")
+def socketMessage():
+    return render_template("socketMessage.html")
 
 @app.route("/socketReport")
 def socketReport():
@@ -320,6 +324,8 @@ def run_every_5_seconds():
 
                 if rowe["Flag"] == "delete":
                     del existData[r]
+
+                socketio.emit("send reportData", rowe, namespace="/realtime") ### websocket gönderimi için
 
 schedule.every(5).seconds.do(run_every_5_seconds)
 

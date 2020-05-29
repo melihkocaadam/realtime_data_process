@@ -1,9 +1,54 @@
 var started = true;
 var allData = [];
-var realTimeSocket = io("/realTime");
+var roomName = "";
+var userName = "";
+var messagingSocket = io("/messaging");
+
+// messagingSocket.on("connect", function() {
+//     console.log("web socket connected");
+// });
+
+// messagingSocket.on("disconnect", function() {
+//     console.log("web socket disconnected");
+// });
+
+// messagingSocket.on("unauthorized", function(error) {
+//     if (error.data.type == "UnauthorizedError" || error.data.code == "invalid_token") {
+//       console.log("User's token has expired or unauthorized");
+//       console.log(error.data);
+//     }
+// });
+
+// messagingSocket.on("agentsCompact", function(data) {
+//     console.log("received data on socket for static function agentsCompact");
+//     console.log(data);
+// });
+
+function joinRoom(userName, roomName) {
+    var data = {username: userName, room: roomName};
+    messagingSocket.emit("join", data);
+    console.log("user " + userName + " jonied room: " + roomName);
+}
+
+function leaveRoom(userName, roomName) {
+    var data = {username: userName, room: roomName};
+    messagingSocket.emit("leave", data);
+    console.log("user " + userName + " leaved room: " + roomName);
+}
+
+function sendMessage() {
+    message = document.getElementById("message").value;
+    userName = document.getElementById("userName").value;
+    var data = {username: userName, data: message};
+    messagingSocket.emit("emitMessage", roomName, data);
+    console.log("send data on socket");
+    $('#message').val("");
+}
 
 function startStop() {
     var button = document.getElementById("start-stop");
+    roomName = document.getElementById("roomName").value;
+    userName = document.getElementById("userName").value;
 
     if (button.innerText == "Start") {
         button.innerText = "Stop";
@@ -11,9 +56,10 @@ function startStop() {
         started = true;
         console.log("into start");
 
-        realTimeSocket.connect();
+        messagingSocket.connect();
+        joinRoom(userName, roomName);
 
-        realTimeSocket.on(roomName, function(data) {
+        messagingSocket.on(roomName, function(data) {
             console.log("received data on socket for room: " + roomName);
             console.log(data);
             allData.push(data);
@@ -25,7 +71,8 @@ function startStop() {
         started = false;
         console.log("into stop");
         
-        realTimeSocket.disconnect();
+        leaveRoom(userName, roomName);
+        messagingSocket.disconnect();
     }
 }
 
@@ -92,3 +139,10 @@ function seqToTime(seq) {
 
     return formattedTime;
 }
+
+$('#message').keydown(function (e) {
+
+    if (e.ctrlKey && e.keyCode == 13) {
+        sendMessage();
+    }
+  });

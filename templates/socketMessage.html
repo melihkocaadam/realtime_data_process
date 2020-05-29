@@ -32,6 +32,28 @@
                     <div class="input-group-append">
                         <button class="btn rounded btn-outline-success" type="button" id="start-stop" onclick="startStop()">Start</button>
                     </div>
+                    <div class="input-group-append">
+                        <select class="custom-select" id="roomName">
+                            <option selected>Please choose endpoint name...</option>
+                            <option value="agentsCompact">Agents Changelog Report</option>
+                            <option value="agents">Agents Status Report</option>
+                            <option value="calls">Calls Report</option>
+                        </select>
+                    </div>
+                    <div class="input-group-append">
+                        <input type="text" class="form-control" placeholder="Username" id="userName">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="container p-4">
+                <div class="d-flex justify-content-center">
+                    <textarea class="form-control" placeholder="Write your message..." id="message" rows="3"></textarea>
+                    <div class="d-flex align-items-end">
+                        <button class="btn rounded btn-outline-primary" type="button" id="send" onclick="sendMessage()">Send</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -46,5 +68,5 @@
 </body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
-    <script src="{{ url_for('static', filename='js/socketReport.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/socketMessage.js') }}"></script>
 </html>
