@@ -342,7 +342,7 @@ def run_schedule():
     while True:
         schedule.run_pending()
         time.sleep(1)
-        print("scheduled", datetime.now())
+        # print("scheduled", datetime.now())
 
 ###################
 ### Main Method ###
