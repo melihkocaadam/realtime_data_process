@@ -26,14 +26,23 @@ def serve_static(filename):
 ### Socket Methods ###
 ######################
 msgNsp = "/messaging"
+rtNsp = "/realTime"
 
 @socketio.on('connect', namespace=msgNsp)
 def socketConnect():
-    print("client connected")
+    print("client connected to", msgNsp)
+
+@socketio.on('connect', namespace=rtNsp)
+def socketConnect():
+    print("client connected to", rtNsp)
 
 @socketio.on('disconnect', namespace=msgNsp)
 def socketDisconnect():
-    print('client disconnected')
+    print('client disconnected from', msgNsp)
+
+@socketio.on('disconnect', namespace=rtNsp)
+def socketDisconnect():
+    print('client disconnected from', rtNsp)
 
 @socketio.on('join', namespace=msgNsp)
 def on_join(data):
