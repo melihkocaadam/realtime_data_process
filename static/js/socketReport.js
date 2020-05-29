@@ -14,7 +14,7 @@ function startStop() {
         realTimeSocket.connect();
 
         realTimeSocket.on("reportData", function(data) {
-            console.log("received data on socket for room: " + roomName);
+            console.log("received data on socket");
             console.log(data);
             allData.push(data);
             createHTML(allData);
