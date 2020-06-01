@@ -10,18 +10,25 @@ realTimeSocket.on("reportData", function(data) {
 
 function dataProcess(dataArray) {
     for (var i = 0; i < dataArray.length; i++) {
+        var dataRow = dataArray[i];
         for (var j = 0; j < allData.length; j++) {
             
-            if (dataArray[i]["Agents"] == allData[j]["Agents"] && dataArray[i]["Sequence"] == allData[j]["Sequence"]) {
-                if (dataArray[i]["Flag"] == "delete") {
+            if (dataRow["Agents"] == allData[j]["Agents"] && dataRow["Sequence"] == allData[j]["Sequence"]) {
+                if (dataRow["Flag"] == "delete") {
                     allData.splice(j, 1);
                     dataArray.splice(i, 1);
+                    dataRow = null;
                 }
-                if (dataArray[i]["Flag"] == "add") {
-                    allData.push(dataArray[i]);
+                if (dataRow["Flag"] == "add") {
+                    allData.push(dataRow);
                     dataArray.splice(i, 1);
+                    dataRow = null;
                 }
             }
+        }
+
+        if (dataRow != null && dataRow["Flag"] == "add") {
+            allData.push(dataRow);
         }
     }
 }
