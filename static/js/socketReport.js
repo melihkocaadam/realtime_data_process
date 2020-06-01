@@ -11,7 +11,7 @@ realTimeSocket.on("reportData", function(data) {
 
 function createHTML(jsonData) {
     console.log("into createHTML function");
-    jsonData.reverse();
+    // jsonData.reverse();
     var col = [];
     for (var i = 0; i < jsonData.length; i++) {
         for (var key in jsonData[i]) {
