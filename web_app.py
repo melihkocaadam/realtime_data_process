@@ -70,6 +70,9 @@ def sendDataOnSocket(room, jsonData):
 @socketio.on("reportData", namespace=rtNsp)
 def sendDataOnSocket(jsonData):
     print("data received: " + str(jsonData))
+    time.sleep(2)
+    socketio.emit(jsonData, namespace=rtNsp)
+    print("data send again: " + str(jsonData))
 
 def joinRoom(user, room):
     if room not in rooms:
