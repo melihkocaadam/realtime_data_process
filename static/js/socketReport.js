@@ -2,12 +2,6 @@ var started = true;
 var allData = [];
 var realTimeSocket = io("/realTime");
 
-realTimeSocket.on("reportData", function(data) {
-    console.log("received data on socket");
-    console.log(data);
-    allData.push(data);
-    createHTML(allData);
-});
 
 function startStop() {
     var button = document.getElementById("start-stop");
@@ -18,8 +12,13 @@ function startStop() {
         started = true;
         console.log("into start");
 
-        
         realTimeSocket.connect();
+        realTimeSocket.on("reportData", function(data) {
+            console.log("received data on socket");
+            console.log(data);
+            allData.push(data);
+            createHTML(allData);
+        });
 
     } else {
         button.innerText = "Start";
