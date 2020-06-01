@@ -73,8 +73,8 @@ function seqToTime(seq) {
     return formattedTime;
 }
 
-function sendMessage() {
-    var message = "sabit mesaj";
-    realTimeSocket.emit("reportData", message);
-    console.log("send data on socket");
-}
+// function sendMessage() {
+//     var message = "sabit mesaj";
+//     realTimeSocket.emit("reportData", message);
+//     console.log("send data on socket");
+// }
