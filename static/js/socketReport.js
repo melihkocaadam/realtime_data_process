@@ -9,6 +9,7 @@ realTimeSocket.on("reportData", function(data) {
 });
 
 function dataProcess(dataArray) {
+    console.log("enter data processor");
     for (var i = 0; i < dataArray.length; i++) {
         var dataRow = dataArray[i];
         console.log(dataRow);
