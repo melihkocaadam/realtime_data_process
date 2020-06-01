@@ -1,5 +1,6 @@
 var allData = [];
 var realTimeSocket = io("/realTime");
+var dataRow = {};
 
 realTimeSocket.on("reportData", function(data) {
     console.log("received data on socket");
@@ -10,8 +11,9 @@ realTimeSocket.on("reportData", function(data) {
 
 function dataProcess(dataArray) {
     console.log("enter data processor");
+    dataRow = {};
     for (var i = 0; i < dataArray.length; i++) {
-        var dataRow = dataArray[i];
+        dataRow = dataArray[i];
         console.log(dataRow);
         for (var j = 0; j < allData.length; j++) {
             
