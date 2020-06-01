@@ -334,7 +334,8 @@ def run_every_5_seconds():
                 if rowe["Flag"] == "delete":
                     del existData[r]
 
-                socketio.emit("reportData", rowe, namespace="/realtime") ### websocket gönderimi için
+                # socketio.emit("reportData", rowe, namespace="/realtime") # websocket mesaj yayımlaması için
+                socketio.send(data=rowe, namespace='/realtime') # websocket mesaj gönderimi için
 
 schedule.every(5).seconds.do(run_every_5_seconds)
 
