@@ -4,10 +4,27 @@ var realTimeSocket = io("/realTime");
 realTimeSocket.on("reportData", function(data) {
     console.log("received data on socket");
     console.log(data);
-    allData.push(data);
+    dataProcess(data);
     createHTML(allData);
 });
 
+function dataProcess(dataArray) {
+    for (var i = 0; i < dataArray.length; i++) {
+        for (var j = 0; j < allData.length; j++) {
+            
+            if (dataArray[i]["Agents"] == allData[j]["Agents"] && dataArray[i]["Sequence"] == allData[j]["Sequence"]) {
+                if (dataArray[i]["Flag"] == "delete") {
+                    allData.splice(j, 1);
+                    dataArray.splice(i, 1);
+                }
+                if (dataArray[i]["Flag"] == "add") {
+                    allData.push(dataArray[i]);
+                    dataArray.splice(i, 1);
+                }
+            }
+        }
+    }
+}
 
 function createHTML(jsonData) {
     console.log("into createHTML function");
