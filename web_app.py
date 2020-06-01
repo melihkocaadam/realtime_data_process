@@ -320,7 +320,6 @@ def run_every_5_seconds():
             existData.insert(0, rown)
 
     # print("existData", datetime.now())
-    existData = existData.
     for r, rowe in reversed(list(enumerate(existData))):
         if "Flag" in rowe:
             if rowe["Flag"] in ("add", "delete"):
