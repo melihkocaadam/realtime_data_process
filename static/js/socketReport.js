@@ -1,6 +1,5 @@
 var allData = [];
 var realTimeSocket = io("/realTime");
-var dataRow = {};
 
 realTimeSocket.on("reportData", function(data) {
     console.log("received data on socket");
@@ -9,33 +8,29 @@ realTimeSocket.on("reportData", function(data) {
     createHTML(allData);
 });
 
-function dataProcess(dataArray) {
+function dataProcess(data) {
     console.log("enter data processor");
-    dataRow = {};
-    for (var i = 0; i < dataArray.length; i++) {
-        dataRow = dataArray[i];
-        console.log(dataRow);
-        for (var j = 0; j < allData.length; j++) {
-            
-            if (dataRow["Agents"] == allData[j]["Agents"] && dataRow["Sequence"] == allData[j]["Sequence"]) {
-                if (dataRow["Flag"] == "delete") {
-                    allData.splice(j, 1);
-                    dataArray.splice(i, 1);
-                    dataRow = null;
-                    console.log("enter delete");
-                }
-                if (dataRow["Flag"] == "add") {
-                    allData.push(dataRow);
-                    dataArray.splice(i, 1);
-                    dataRow = null;
-                    console.log("enter add");
-                }
+    var dataRow = data;
+    for (var j = 0; j < allData.length; j++) {
+        
+        if (dataRow["Agents"] == allData[j]["Agents"] && dataRow["Sequence"] == allData[j]["Sequence"]) {
+            if (dataRow["Flag"] == "delete") {
+                allData.splice(j, 1);
+                dataArray.splice(i, 1);
+                dataRow = null;
+                console.log("enter delete");
+            }
+            if (dataRow["Flag"] == "add") {
+                allData.push(dataRow);
+                dataArray.splice(i, 1);
+                dataRow = null;
+                console.log("enter add");
             }
         }
-        if (dataRow != null && dataRow["Flag"] == "add") {
-            allData.push(dataRow);
-            console.log("enter new row");
-        }
+    }
+    if (dataRow != null && dataRow["Flag"] == "add") {
+        allData.push(dataRow);
+        console.log("enter new row");
     }
 }
 
