@@ -1,34 +1,13 @@
-var started = true;
 var allData = [];
 var realTimeSocket = io("/realTime");
 
+realTimeSocket.on("reportData", function(data) {
+    console.log("received data on socket");
+    console.log(data);
+    allData.push(data);
+    createHTML(allData);
+});
 
-function startStop() {
-    var button = document.getElementById("start-stop");
-
-    if (button.innerText == "Start") {
-        button.innerText = "Stop";
-        button.className = "btn rounded btn-outline-danger";
-        started = true;
-        console.log("into start");
-
-        realTimeSocket.connect();
-        realTimeSocket.on("reportData", function(data) {
-            console.log("received data on socket");
-            console.log(data);
-            allData.push(data);
-            createHTML(allData);
-        });
-
-    } else {
-        button.innerText = "Start";
-        button.className = "btn rounded btn-outline-success";
-        started = false;
-        console.log("into stop");
-        
-        realTimeSocket.disconnect();
-    }
-}
 
 function createHTML(jsonData) {
     console.log("into createHTML function");
@@ -62,7 +41,7 @@ function createHTML(jsonData) {
 
         for (var j = 0; j < col.length; j++) {
             var tabCell = tr.insertCell(-1);
-            if (col[j] == "sequence") {
+            if (col[j].toLowerCase() == "sequence") {
                 tabCell.innerHTML = seqToTime(jsonData[i][col[j]]);
             } else {
                 tabCell.innerHTML = jsonData[i][col[j]];
