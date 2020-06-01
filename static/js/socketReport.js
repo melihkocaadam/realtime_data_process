@@ -11,6 +11,7 @@ realTimeSocket.on("reportData", function(data) {
 function dataProcess(dataArray) {
     for (var i = 0; i < dataArray.length; i++) {
         var dataRow = dataArray[i];
+        console.log(dataRow);
         for (var j = 0; j < allData.length; j++) {
             
             if (dataRow["Agents"] == allData[j]["Agents"] && dataRow["Sequence"] == allData[j]["Sequence"]) {
