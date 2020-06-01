@@ -16,13 +16,11 @@ function dataProcess(data) {
         if (dataRow["Agents"] == allData[j]["Agents"] && dataRow["Sequence"] == allData[j]["Sequence"]) {
             if (dataRow["Flag"] == "delete") {
                 allData.splice(j, 1);
-                dataArray.splice(i, 1);
                 dataRow = null;
                 console.log("enter delete");
             }
             if (dataRow["Flag"] == "add") {
                 allData.push(dataRow);
-                dataArray.splice(i, 1);
                 dataRow = null;
                 console.log("enter add");
             }
