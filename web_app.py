@@ -67,13 +67,6 @@ def sendDataOnSocket(room, jsonData):
     socketio.emit(room, jsonData, namespace=msgNsp)
     print("send data: " + str(jsonData))
 
-@socketio.on("reportData", namespace=rtNsp)
-def sendDataOnSocket(jsonData):
-    print("data received: " + str(jsonData))
-    time.sleep(2)
-    socketio.emit(jsonData, namespace=rtNsp)
-    print("data send again: " + str(jsonData))
-
 def joinRoom(user, room):
     if room not in rooms:
         rooms[room] = []
