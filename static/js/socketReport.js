@@ -18,17 +18,19 @@ function dataProcess(dataArray) {
                     allData.splice(j, 1);
                     dataArray.splice(i, 1);
                     dataRow = null;
+                    console.log("enter delete");
                 }
                 if (dataRow["Flag"] == "add") {
                     allData.push(dataRow);
                     dataArray.splice(i, 1);
                     dataRow = null;
+                    console.log("enter add");
                 }
             }
         }
-
         if (dataRow != null && dataRow["Flag"] == "add") {
             allData.push(dataRow);
+            console.log("enter new row");
         }
     }
 }
