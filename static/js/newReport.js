@@ -1,6 +1,7 @@
 var started = true;
 var cycleNum = 0;
 var allData = {};
+var hostName = window.location.hostname;
 
 function startStop() {
     var button = document.getElementById("start-stop");
@@ -21,7 +22,7 @@ function startStop() {
 }
 
 function getData(topic) {
-    var Url = "http://35.228.71.166:5000/streamTopics";
+    var Url = "http://" + hostName + ":5000/streamTopics";
     var result = {};
     console.log("into getData function");
 

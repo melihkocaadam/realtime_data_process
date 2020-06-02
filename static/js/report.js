@@ -1,5 +1,6 @@
 var started = true;
 var endPoints = ["getAgentsData", "getCallsData"];
+var hostName = window.location.hostname;
 
 function CreateTableFromJSON() {
     var int_str = document.getElementById("interval").value;
@@ -36,7 +37,7 @@ function Start() {
 }
 
 function GetData(endPoint) {
-    var Url = "http://35.228.71.166:5000/"+endPoint;
+    var Url = "http://" + hostName + ":5000/"+endPoint;
     var result = {};
 
     $.ajax({
