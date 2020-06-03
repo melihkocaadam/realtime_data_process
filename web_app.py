@@ -279,7 +279,7 @@ def getAgentsData():
                         WHERE 1=1
                             --and COALESCE(atbl.status, '') not in ('Logout')
                             --and COALESCE(atbl.__time, '2000-01-01') > '2020-05-21'"""}
-    result = ""
+    result = None
 
     try:
         r = requests.post(url, data=json.dumps(param), headers=headers)
