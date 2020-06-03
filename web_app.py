@@ -297,7 +297,10 @@ def run_every_5_seconds():
     global existData
     data = getAgentsData()
     print("print getAgentsData", data)
-    newData = json.loads(data)
+    if data is None:
+        newData = {}
+    else:
+        newData = json.loads(data)
 
     if len(existData) == 0:
         existData = newData
