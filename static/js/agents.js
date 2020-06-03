@@ -41,8 +41,8 @@ $(document).ready(function(){
     var getExistAgents = JSON.parse(localStorage.getItem('agentList')) || [];
 
     if (getExistAgents != undefined || getExistAgents != '') {
-        getExistAgents.forEach(function(name) {
-            addAgent(name);
+        getExistAgents.forEach(function(agentRow) {
+            addAgent(agentRow);
         });
     }
 })
@@ -51,7 +51,8 @@ $(document).ready(function(){
 $(function(){
     $('#addAgent').click(function(){
         var agent_name = $('#agentName').val();
-        addAgent(agent_name);
+        data = JSON.parse('{"agent": "'+ agent_name +'", "status": "Logout", "sequence": ' + sequence.toString() + '}');
+        addAgent(data);
         $("#agentName").val("");
     })
 })
@@ -72,8 +73,9 @@ function removeFunction(agent_name) {
     deleteLocalStorage(agent_name);
 }
 
-function addAgent(agent_name) {
-    
+function addAgent(agentData) {
+    var agent_name = agentData["agent"];
+    var status = agentData["status"];
     var exist_agent = $('#agent-'+agent_name).length;
     
     if (agent_name.length < 3) {
@@ -81,12 +83,9 @@ function addAgent(agent_name) {
     } else if (exist_agent > 0) {
         alert(agent_name + " isminde bir agent var.\nAynı isimde iki agent eklenemez...");
     } else {
-        var needed_body = addData(agent_name);
+        var needed_body = addData(agentData);
         $('.inner_body').append(needed_body);
-        var now = new Date();
-        var sequence = now.getTime();
-        var data = JSON.parse('{"agent": "'+ agent_name +'", "status": "Logout", "sequence": ' + sequence.toString() + '}');
-        addLocalStorage(data);
+        addLocalStorage(agentData);
     }
 }
 
