@@ -179,7 +179,7 @@ function loginClick(agent_name){
         $("#btn-login-"+agent_name).text("Logout");
         data = JSON.parse('{"agent": "'+ agent_name +'", "status": "Login", "sequence": ' + sequence.toString() + '}');
         postAgentStatus(data);
-        data = JSON.parse('{"agent": "'+ agent_name +'", "status": "Avail", "sequence": ' + sequence.toString() + '}');
+        data = JSON.parse('{"agent": "'+ agent_name +'", "status": "Avail", "sequence": ' + (sequence+100).toString() + '}');
         postAgentStatus(data);
     } else {
         $('#state-'+agent_name).text("Logout");
