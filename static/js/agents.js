@@ -238,6 +238,20 @@ function auxClick(agent_name){
 function postAgentStatus(jsonData){
     var Url = "http://" + hostName + ":5000/sendAgentStatus";
 
+    var prevSequence = 0;
+
+    var getExistAgents = JSON.parse(localStorage.getItem('agentList')) || [];
+
+    if (getExistAgents != undefined || getExistAgents != '') {
+        getExistAgents.forEach(function(agentRow) {
+            if (agentRow["agent"] == jsonData["agent"]) {
+                prevSequence == agentRow["sequence"];
+            }
+        });
+    }
+
+    jsonData["prevSequence"] = prevSequence;
+
     $.ajax({
         url: Url,
         type: 'POST',
