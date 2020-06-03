@@ -266,8 +266,8 @@ def getAgentsData():
                         FROM "agents"
                         GROUP BY agent),
                         nextTable as (
-                        SELECT a.agent as Agents,
-                            a.__time as activityTime as AvtivityTime,
+                        SELECT a.agent Agents,
+                            a.__time as ActivityTime,
                             a.sequence as Sequence,
                             b.sequence as NextSequence,
                             a.status as Status
@@ -275,11 +275,29 @@ def getAgentsData():
                         LEFT JOIN "agents" as b
                             ON a.agent = b.agent
                             AND a.sequence = b.prevSequence
-                        WHERE a.prevSequence > 0)
-
+                        WHERE a.prevSequence > 0),
+                        resultTable as (
                         SELECT *,
-                            (COALESCE(NextSequence, TIME_EXTRACT(CURRENT_TIMESTAMP, 'EPOCH') * 1000) - sequence) / 1000 as Duration
-                        FROM nextTable"""}
+                            (COALESCE(NextSequence, TIME_EXTRACT(CURRENT_TIMESTAMP, 'EPOCH') * 1000) - Sequence) / 1000 as Duration
+                        FROM nextTable)
+
+                        SELECT rt1.Agents,
+                            rt1.ActivityTime,
+                            rt1.Sequence,
+                            rt1.Status,
+                            rt1.Duration,
+                            sum(rt2.Duration) as SumDurationInSameStatus
+                        FROM maxTable as mt
+                        LEFT JOIN resultTable as rt1
+                            ON rt1.Sequence = mt.maxSequence
+                        LEFT JOIN resultTable as rt2
+                            ON rt2.Agents = rt1.Agents
+                            AND rt2.Status = rt1.Status
+                        GROUP BY rt1.Agents,
+                                rt1.ActivityTime,
+                                rt1.Sequence,
+                                rt1.Status,
+                                rt1.Duration"""}
     result = None
 
     try:
