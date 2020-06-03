@@ -18,11 +18,12 @@ function dataProcess(data) {
                 allData.splice(j, 1);
                 dataRow = null;
                 console.log("enter delete");
-            }
-            if (dataRow["Flag"] == "add") {
+            } else if (dataRow["Flag"] == "add") {
                 allData.push(dataRow);
                 dataRow = null;
                 console.log("enter add");
+            } else {
+                console.log("incorrect flag command");
             }
         }
     }
