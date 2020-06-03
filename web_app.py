@@ -296,7 +296,7 @@ existData = []
 def run_every_5_seconds():
     global existData
     data = getAgentsData()
-    print("print getAgentsData", data)
+    
     if data is None:
         newData = {}
     else:
