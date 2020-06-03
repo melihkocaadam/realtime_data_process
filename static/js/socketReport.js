@@ -8,12 +8,11 @@ realTimeSocket.on("reportData", function(data) {
     createHTML(allData);
 });
 
-function dataProcess(data) {
+function dataProcess(dataRow) {
     console.log("enter data processor");
-    var dataRow = data;
     for (var j = 0; j < allData.length; j++) {
         
-        if (dataRow["Agents"] == allData[j]["Agents"] && dataRow["Sequence"] == allData[j]["Sequence"]) {
+        if (dataRow != null && dataRow["Agents"] == allData[j]["Agents"] && dataRow["Sequence"] == allData[j]["Sequence"]) {
             if (dataRow["Flag"] == "delete") {
                 allData.splice(j, 1);
                 dataRow = null;
