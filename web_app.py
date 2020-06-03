@@ -309,7 +309,9 @@ def run_every_5_seconds():
         print("Exist data is empty, first cycle")
     else:
         for i, erow in enumerate(existData): # mevcut datanın satırlarında dön
+            print(erow)
             for j, nrow in enumerate(newData): # yeni datanın her bir satırı ile karşılaştır
+                print(nrow)
                 if erow["Agents"] == nrow["Agents"]: # Agent isimleri eşleşiyor ise,
                     if erow["Sequence"] >= nrow["Sequence"]: # yeni datanın sequence'ı mevcuttan küçükse
                         existData[i]["Flag"] = "save" # mevcut dataya save flag ekle
