@@ -21,7 +21,7 @@ end_oss = consumer.end_offsets([tp])
 for offset in end_oss:
     end_offset = end_oss[offset]
     break
-print(end_offset)
+print("end offset:" ,end_offset)
 
 consumer.seek(tp, 1)
 exist_offset = consumer.position(tp)
