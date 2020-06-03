@@ -226,7 +226,7 @@ def sendAgentStatus():
 #######################
 @app.route("/getCallsData")
 def getCallsData():
-    url = "http://127.0.0.1:8888/druid/v2/sql"
+    url = "http://127.0.0.1:9888/druid/v2/sql"
     headers = {"Content-Type": "application/json"}
     param = {'query': """SELECT 'Total' as "Agent"
                             ,sum(duration) as "Sum of Duration"
@@ -259,7 +259,7 @@ def getCallsData():
 
 @app.route("/getAgentsData")
 def getAgentsData():
-    url = "http://127.0.0.1:8888/druid/v2/sql"
+    url = "http://127.0.0.1:9888/druid/v2/sql"
     headers = {"Content-Type": "application/json"}
     param = {'query':"""SELECT mtbl.agent as "Agents"
                             ,atbl.status as "Status"
