@@ -77,6 +77,16 @@ function removeFunction(agent_name) {
     deleteLocalStorage(agent_name);
 }
 
+function seqToTime(seq) {
+    var date = new Date(seq);
+    var hours = date.getHours();
+    var minutes = "0" + date.getMinutes();
+    var seconds = "0" + date.getSeconds();
+    var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+
+    return formattedTime;
+}
+
 function addAgent(agentData) {
     var agent_name = agentData["agent"];
     var status = agentData["status"];
