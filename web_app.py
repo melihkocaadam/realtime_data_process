@@ -325,11 +325,11 @@ def run_every_5_seconds():
             if "Flag" not in row: # eğer flag etiketi olmamayan bir satır varsa
                 newData[k]["Flag"] = "add" # yeni dataya add flag ekle
 
-    # print("\nnewData", datetime.now())
-    for rown in newData:
-        if "Flag" in rown and rown["Flag"] in ("add"):
-            # print(rown, "| This row added in existData with append")
-            existData.insert(0, rown)
+        # print("\nnewData", datetime.now())
+        for rown in newData:
+            if "Flag" in rown and rown["Flag"] in ("add"):
+                # print(rown, "| This row added in existData with append")
+                existData.insert(0, rown)
 
     # print("existData", datetime.now())
     for r, rowe in reversed(list(enumerate(existData))):
