@@ -333,12 +333,12 @@ def run_every_5_seconds():
         if "Flag" in rowe:
             if rowe["Flag"] in ("add", "delete"):
                 print("scheduler |", rowe)
-                producer = KafkaProducer(
-                    bootstrap_servers=["0.0.0.0:9092"],
-                    client_id="agents-scheduled-producer",
-                    value_serializer=lambda v: json.dumps(v).encode("utf-8")
-                    )
-                producer.send("agentsCompact", value=rowe)
+                # producer = KafkaProducer(
+                #     bootstrap_servers=["0.0.0.0:9092"],
+                #     client_id="agents-scheduled-producer",
+                #     value_serializer=lambda v: json.dumps(v).encode("utf-8")
+                #     )
+                # producer.send("agentsCompact", value=rowe)
 
                 if rowe["Flag"] == "delete":
                     del existData[r]
