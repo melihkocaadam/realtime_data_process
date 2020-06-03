@@ -1,7 +1,11 @@
 var hostName = window.location.hostname;
 
-var addData = function(agent_name) {
+var addData = function(agentData) {
 
+    var agent_name = agentData["agent"];
+    var status = agentData["status"];
+    var sequence = agentData["sequence"];
+    var time = seqToTime(sequence);
     var nested_html = ''
     + '<div class="main d-flex border rounded" style="padding: 5px;" id="agent-'+agent_name+'">'
     + '  <div class="col-md-auto-3" style="padding: 5px;">'
@@ -20,10 +24,10 @@ var addData = function(agent_name) {
     + '  </div>'
     + '  <div class="col-md-auto-2" style="padding: 5px;">'
     + '	<div class="row-md-auto-1">'
-    + '	  <i class="fas fa-clock fa_timer" id="timer-'+agent_name+'">00:00:00</i>'
+    + '	  <i class="fas fa-clock fa_timer" id="timer-'+agent_name+'">'+time+'</i>'
     + '	</div>'
     + '	<div class="row-md-auto-1 ">'
-    + '	  <i class="fas fa-info-circle" id="state-'+agent_name+'">Logout</i>'
+    + '	  <i class="fas fa-info-circle" id="state-'+agent_name+'">'+status+'</i>'
     + '	</div>'
     + '  </div>'
     + '  <div class="col-md-auto-1 d-flex justify-content-center" style="padding: 5px;">'
