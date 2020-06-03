@@ -83,26 +83,37 @@ function addAgent(agent_name) {
     } else {
         var needed_body = addData(agent_name);
         $('.inner_body').append(needed_body);
-
-        addLocalStorage(agent_name);
+        var now = new Date();
+        var sequence = now.getTime();
+        var data = JSON.parse('{"agent": "'+ agent_name +'", "status": "Logout", "sequence": ' + sequence.toString() + '}');
+        addLocalStorage(data);
     }
 }
 
-function addLocalStorage(agent_name) {
-    var list = JSON.parse(localStorage.getItem('agentList')) || [];
-    var exist = list.includes(agent_name);
-    if (!exist) {
-        list.push(agent_name);
-        localStorage.setItem('agentList', JSON.stringify(list));
+function addLocalStorage(data) {
+    var getExistAgents = JSON.parse(localStorage.getItem('agentList')) || [];
+
+    if (getExistAgents != undefined || getExistAgents != '') {
+        for (var i = 0; i < getExistAgents.length; i++) {
+            if (getExistAgents[i]["agent"] == data["agent"]) {
+                getExistAgents.splice(i, 1);
+            }
+        }
+        getExistAgents.push(data);
+        localStorage.setItem('agentList', JSON.stringify(getExistAgents));
     }
 }
 
 function deleteLocalStorage(agent_name) {
-    var list = JSON.parse(localStorage.getItem('agentList')) || [];
-    var index = list.indexOf(agent_name);
-    if (index > -1) {
-        list.splice(index, 1);
-        localStorage.setItem('agentList', JSON.stringify(list));
+    var getExistAgents = JSON.parse(localStorage.getItem('agentList')) || [];
+
+    if (getExistAgents != undefined || getExistAgents != '') {
+        for (var i = 0; i < getExistAgents.length; i++) {
+            if (getExistAgents[i]["agent"] == agent_name) {
+                getExistAgents.splice(i, 1);
+            }
+        }
+        localStorage.setItem('agentList', JSON.stringify(getExistAgents));
     }
 }
 
@@ -155,6 +166,8 @@ function secToTime(value) {
 function loginClick(agent_name){
     var btn_name = $("#btn-login-"+agent_name).text();
     var data;
+    var now = new Date();
+    var sequence = now.getTime();
     if (btn_name == "Login") {
         $('#state-'+agent_name).text("Avail");
         $("#btn-avail-"+agent_name).prop('disabled', false);
@@ -162,9 +175,9 @@ function loginClick(agent_name){
         $("#btn-acw-"+agent_name).prop('disabled', false);
         $("#btn-aux-"+agent_name).prop('disabled', false);
         $("#btn-login-"+agent_name).text("Logout");
-        data = JSON.parse('{"agent": "'+ agent_name +'", "status": "Login"}');
+        data = JSON.parse('{"agent": "'+ agent_name +'", "status": "Login", "sequence": ' + sequence.toString() + '}');
         postAgentStatus(data);
-        data = JSON.parse('{"agent": "'+ agent_name +'", "status": "Avail"}');
+        data = JSON.parse('{"agent": "'+ agent_name +'", "status": "Avail", "sequence": ' + sequence.toString() + '}');
         postAgentStatus(data);
     } else {
         $('#state-'+agent_name).text("Logout");
@@ -173,39 +186,51 @@ function loginClick(agent_name){
         $("#btn-acw-"+agent_name).prop('disabled', true);
         $("#btn-aux-"+agent_name).prop('disabled', true);
         $("#btn-login-"+agent_name).text("Login");
-        data = JSON.parse('{"agent": "'+ agent_name +'", "status": "Logout"}');
+        data = JSON.parse('{"agent": "'+ agent_name +'", "status": "Logout", "sequence": ' + sequence.toString() + '}');
         postAgentStatus(data);
     }
-    
+    addLocalStorage(data);
     timerReset(agent_name);
 }
 
 function availClick(agent_name){
     $('#state-'+agent_name).text("Avail");
     timerReset(agent_name);
-    var data = JSON.parse('{"agent": "'+ agent_name +'", "status": "Avail"}');
+    var now = new Date();
+    var sequence = now.getTime();
+    var data = JSON.parse('{"agent": "'+ agent_name +'", "status": "Avail", "sequence": ' + sequence.toString() + '}');
     postAgentStatus(data);
+    addLocalStorage(data);
 }
 
 function callClick(agent_name){
     $('#state-'+agent_name).text("On Call");
     timerReset(agent_name);
-    var data = JSON.parse('{"agent": "'+ agent_name +'", "status": "Call"}');
+    var now = new Date();
+    var sequence = now.getTime();
+    var data = JSON.parse('{"agent": "'+ agent_name +'", "status": "Call", "sequence": ' + sequence.toString() + '}');
     postAgentStatus(data);
+    addLocalStorage(data);
 }
 
 function acwClick(agent_name){
     $('#state-'+agent_name).text("ACW");
     timerReset(agent_name);
-    var data = JSON.parse('{"agent": "'+ agent_name +'", "status": "ACW"}');
+    var now = new Date();
+    var sequence = now.getTime();
+    var data = JSON.parse('{"agent": "'+ agent_name +'", "status": "ACW", "sequence": ' + sequence.toString() + '}');
     postAgentStatus(data);
+    addLocalStorage(data);
 }
 
 function auxClick(agent_name){
     $('#state-'+agent_name).text("AUX");
     timerReset(agent_name);
-    var data = JSON.parse('{"agent": "'+ agent_name +'", "status": "AUX"}');
+    var now = new Date();
+    var sequence = now.getTime();
+    var data = JSON.parse('{"agent": "'+ agent_name +'", "status": "AUX", "sequence": ' + sequence.toString() + '}');
     postAgentStatus(data);
+    addLocalStorage(data);
 }
 
 function postAgentStatus(jsonData){

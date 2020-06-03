@@ -209,7 +209,6 @@ def changeLogTopics():
 def sendAgentStatus():
     jsonData = request.get_json()
     jsonData["activityDate"] = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")
-    jsonData["sequence"] = int(datetime.now().timestamp() * 1000)
     keyVal = jsonData["agent"].encode()
     
     producer = KafkaProducer(
