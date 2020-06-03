@@ -260,24 +260,26 @@ def getCallsData():
 def getAgentsData():
     url = "http://0.0.0.0:9888/druid/v2/sql"
     headers = {"Content-Type": "application/json"}
-    param = {'query':"""SELECT mtbl.agent as "Agents"
-                            ,atbl.status as "Status"
-                            --,TIMESTAMPDIFF(SECOND, atbl.__time, CURRENT_TIMESTAMP) as "Duration"
-                            --,atbl.__time as "Last Update"
-                            ,mtbl.max_seq as "Sequence"
-                        FROM (
-                            SELECT agent
-                                ,max(sequence) as max_seq
-                            FROM "agents"
-                            WHERE sequence > 1590019200000
-                            GROUP BY agent
-                            ) as mtbl
-                        LEFT JOIN "agents" atbl
-                            ON atbl.agent = mtbl.agent
-                            and atbl.sequence = mtbl.max_seq
-                        WHERE 1=1
-                            --and COALESCE(atbl.status, '') not in ('Logout')
-                            --and COALESCE(atbl.__time, '2000-01-01') > '2020-05-21'"""}
+    param = {'query':"""with maxTable as (
+                        SELECT agent,
+                            max(sequence) as maxSequence
+                        FROM "agents"
+                        GROUP BY agent),
+                        nextTable as (
+                        SELECT a.agent as Agents,
+                            a.__time as activityTime as AvtivityTime,
+                            a.sequence as Sequence,
+                            b.sequence as NextSequence,
+                            a.status as Status
+                        FROM "agents" as a
+                        LEFT JOIN "agents" as b
+                            ON a.agent = b.agent
+                            AND a.sequence = b.prevSequence
+                        WHERE a.prevSequence > 0)
+
+                        SELECT *,
+                            (COALESCE(NextSequence, TIME_EXTRACT(CURRENT_TIMESTAMP, 'EPOCH') * 1000) - sequence) / 1000 as Duration
+                        FROM nextTable"""}
     result = None
 
     try:
