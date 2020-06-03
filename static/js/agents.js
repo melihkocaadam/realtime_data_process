@@ -5,7 +5,7 @@ var addData = function(agentData) {
     var agent_name = agentData["agent"];
     var status = agentData["status"];
     var sequence = agentData["sequence"];
-    var time = seqToTime(sequence);
+    var time = secToTime(sequence);
     var nested_html = ''
     + '<div class="main d-flex border rounded" style="padding: 5px;" id="agent-'+agent_name+'">'
     + '  <div class="col-md-auto-3" style="padding: 5px;">'
@@ -55,6 +55,8 @@ $(document).ready(function(){
 $(function(){
     $('#addAgent').click(function(){
         var agent_name = $('#agentName').val();
+        var now = new Date();
+        var sequence = now.getTime();
         data = JSON.parse('{"agent": "'+ agent_name +'", "status": "Logout", "sequence": ' + sequence.toString() + '}');
         addAgent(data);
         $("#agentName").val("");
@@ -77,19 +79,8 @@ function removeFunction(agent_name) {
     deleteLocalStorage(agent_name);
 }
 
-function seqToTime(seq) {
-    var date = new Date(seq);
-    var hours = date.getHours();
-    var minutes = "0" + date.getMinutes();
-    var seconds = "0" + date.getSeconds();
-    var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
-
-    return formattedTime;
-}
-
 function addAgent(agentData) {
     var agent_name = agentData["agent"];
-    var status = agentData["status"];
     var exist_agent = $('#agent-'+agent_name).length;
     
     if (agent_name.length < 3) {
