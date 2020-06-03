@@ -135,7 +135,7 @@ def streamTopics():
         consumer = KafkaConsumer(
             client_id=clientid,
             group_id=clientid,
-            bootstrap_servers=['127.0.0.1:9092'],
+            bootstrap_servers=['0.0.0.0:9092'],
             enable_auto_commit=False
             )
 
@@ -183,7 +183,7 @@ def changeLogTopics():
     consumer = KafkaConsumer(
         client_id=clientid,
         group_id=clientid,
-        bootstrap_servers=['127.0.0.1:9092'],
+        bootstrap_servers=['0.0.0.0:9092'],
         enable_auto_commit=False
         )
 
@@ -213,7 +213,7 @@ def sendAgentStatus():
     keyVal = jsonData["agent"].encode()
     
     producer = KafkaProducer(
-    bootstrap_servers=["127.0.0.1:9092"],
+    bootstrap_servers=["0.0.0.0:9092"],
     client_id="agents-webpage-producer",
     value_serializer=lambda v: json.dumps(v).encode("utf-8")
     )
@@ -226,7 +226,7 @@ def sendAgentStatus():
 #######################
 @app.route("/getCallsData")
 def getCallsData():
-    url = "http://127.0.0.1:9888/druid/v2/sql"
+    url = "http://0.0.0.0:9888/druid/v2/sql"
     headers = {"Content-Type": "application/json"}
     param = {'query': """SELECT 'Total' as "Agent"
                             ,sum(duration) as "Sum of Duration"
@@ -259,7 +259,7 @@ def getCallsData():
 
 @app.route("/getAgentsData")
 def getAgentsData():
-    url = "http://127.0.0.1:9888/druid/v2/sql"
+    url = "http://0.0.0.0:9888/druid/v2/sql"
     headers = {"Content-Type": "application/json"}
     param = {'query':"""SELECT mtbl.agent as "Agents"
                             ,atbl.status as "Status"
@@ -296,7 +296,7 @@ existData = []
 def run_every_5_seconds():
     global existData
     data = getAgentsData()
-    
+
     if data is None:
         newData = {}
     else:
@@ -334,7 +334,7 @@ def run_every_5_seconds():
             if rowe["Flag"] in ("add", "delete"):
                 print("scheduler |", rowe)
                 producer = KafkaProducer(
-                    bootstrap_servers=["127.0.0.1:9092"],
+                    bootstrap_servers=["0.0.0.0:9092"],
                     client_id="agents-scheduled-producer",
                     value_serializer=lambda v: json.dumps(v).encode("utf-8")
                     )
@@ -360,6 +360,6 @@ if __name__ == "__main__":
     t = Thread(target=run_schedule)
     t.start()
     print("*** webapp beginning ***")
-    socketio.run(app=app, debug=False, host="127.0.0.1", port=5000)
-    # app.run(debug=False, host="127.0.0.1", port=5000)
+    socketio.run(app=app, debug=False, host="0.0.0.0", port=5000)
+    # app.run(debug=False, host="0.0.0.0", port=5000)
     print("*** webapp stoped ***")
