@@ -300,11 +300,13 @@ def run_every_5_seconds():
 
     if data is None:
         newData = {}
+        print("SQL query result is none")
     else:
         newData = json.loads(data)
 
     if len(existData) == 0:
         existData = newData
+        print("Exist data is empty, first cycle")
     else:
         for i, erow in enumerate(existData): # mevcut datanın satırlarında dön
             for j, nrow in enumerate(newData): # yeni datanın her bir satırı ile karşılaştır
