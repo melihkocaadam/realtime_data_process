@@ -278,14 +278,13 @@ def getAgentsData():
                         WHERE a.prevSequence > 0),
                         resultTable as (
                         SELECT *,
-                            (COALESCE(NextSequence, TIME_EXTRACT(CURRENT_TIMESTAMP, 'EPOCH') * 1000) - Sequence) / 1000 as Duration
+                            (COALESCE(NextSequence, Sequence) - Sequence) / 1000 as Duration
                         FROM nextTable)
 
                         SELECT rt1.Agents,
                             rt1.ActivityTime,
                             rt1.Sequence,
                             rt1.Status,
-                            rt1.Duration,
                             sum(rt2.Duration) as SumDurationInSameStatus
                         FROM maxTable as mt
                         LEFT JOIN resultTable as rt1
@@ -296,8 +295,7 @@ def getAgentsData():
                         GROUP BY rt1.Agents,
                                 rt1.ActivityTime,
                                 rt1.Sequence,
-                                rt1.Status,
-                                rt1.Duration"""}
+                                rt1.Status"""}
     result = None
 
     try:
