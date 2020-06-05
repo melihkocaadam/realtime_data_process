@@ -108,7 +108,7 @@ def socketMessage():
 
 @app.route("/socketReport")
 def socketReport():
-    print(request.remote_user)
+    print(request.user_agent)
     return render_template("socketReport.html")
 
 ################################
