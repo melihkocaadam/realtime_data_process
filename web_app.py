@@ -109,9 +109,9 @@ def socketMessage():
 @app.route("/socketReport")
 def socketReport():
     print("***client info***",
-            datetime.now().strftime("%H:%M:%S"), "/n",
-            request.remote_addr, "/n",
-            request.remote_user, "/n",
+            datetime.now().strftime("%H:%M:%S"), "\n",
+            request.remote_addr, "\n",
+            request.remote_user, "\n",
             request.user_agent)
     return render_template("socketReport.html")
 
