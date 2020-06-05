@@ -264,6 +264,7 @@ def getAgentsData():
                         SELECT agent,
                             max(sequence) as maxSequence
                         FROM "agents"
+                        WHERE __time > CURRENT_DATE
                         GROUP BY agent),
                         nextTable as (
                         SELECT a.agent Agents,
@@ -275,7 +276,8 @@ def getAgentsData():
                         LEFT JOIN "agents" as b
                             ON a.agent = b.agent
                             AND a.sequence = b.prevSequence
-                        WHERE a.prevSequence > 0),
+                        WHERE a.prevSequence > 0
+                        AND a.__time > CURRENT_DATE),
                         resultTable as (
                         SELECT *,
                             (COALESCE(NextSequence, Sequence) - Sequence) / 1000 as Duration
