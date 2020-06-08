@@ -50,4 +50,17 @@
     <script src="{{ url_for('static', filename='js/socketReport.js') }}"></script>
     <script type = "text/javascript" src="{{ url_for('static', filename='webdatarocks1.3.1/webdatarocks.toolbar.min.js') }}"></script>
     <script type = "text/javascript" src="{{ url_for('static', filename='webdatarocks1.3.1/webdatarocks.js') }}"></script>
+    <script>
+        function insertPivot(dataArray) {
+            var pivot = new WebDataRocks({
+                container: "#wdr-component",
+                toolbar: true,
+                report: {
+                    dataSource: {
+                        data: dataArray
+                    }
+                }
+            });
+        }
+    </script>
 </html>
