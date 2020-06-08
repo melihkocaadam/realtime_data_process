@@ -95,3 +95,67 @@ function seqToTime(seq) {
 
     return formattedTime;
 }
+
+// Pivot table data insert
+var pivot = new WebDataRocks({
+    container: "wdr-component",
+    toolbar: true,
+    report: {
+        dataSource: {
+            data: getJSONData()
+        },
+        formats: [{
+            name: "calories",
+            maxDecimalPlaces: 2,
+            maxSymbols: 20,
+            textAlign: "right"
+        }],
+        slice: {
+            rows: [{
+                uniqueName: "Food"
+            }],
+            columns: [{
+                uniqueName: "[Measures]"
+            }],
+            measures: [{
+                uniqueName: "Calories",
+                aggregation: "average",
+                format: "calories"
+            }]
+        }
+    }
+});
+function getJSONData() {
+    return [{
+            "Category": {
+                type: "level",
+                hierarchy: "Food"
+            },
+            "Item": {
+                type: "level",
+                hierarchy: "Food",
+                level: "Dish",
+                parent: "Category"
+            },
+            "Serving Size": {
+                type: "level",
+                hierarchy: "Food",
+                level: "Size",
+                parent: "Dish"
+            },
+            "Calories": {
+                type: "number"
+            },
+            "Calories from Fat": {
+                type: "number"
+            }
+        },
+        {
+            "Category": "Breakfast",
+            "Item": "Frittata",
+            "Serving Size": "4.8 oz (136 g)",
+            "Calories": 300,
+            "Calories from Fat": 120
+        }
+];
+}
