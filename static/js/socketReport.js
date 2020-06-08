@@ -36,7 +36,7 @@ realTimeSocket.on("reportData", function(data) {
     console.log(data);
     dataProcess(data);
     createHTML(allData);
-    pivot.refresh();
+    webdatarocks.refresh();
 });
 
 function dataProcess(dataRow) {
