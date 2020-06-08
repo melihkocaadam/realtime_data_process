@@ -50,4 +50,15 @@
     <script src="{{ url_for('static', filename='js/socketReport.js') }}"></script>
     <script src="{{ url_for('static', filename='webdatarocks1.3.1/webdatarocks.toolbar.min.js') }}"></script>
     <script src="{{ url_for('static', filename='webdatarocks1.3.1/webdatarocks.js') }}"></script>
+    <script>
+        var pivot = new WebDataRocks({
+            container: "#wdr-component",
+            toolbar: true,
+            report: {
+                dataSource: {
+                    filename: "https://cdn.webdatarocks.com/data/data.csv"
+                }
+            }
+        });
+    </script>
 </html>
