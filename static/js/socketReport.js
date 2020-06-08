@@ -1,3 +1,5 @@
+import { WebDataRocks } from '../webdatarocks1.3.1/webdatarocks.js';
+
 var allData = [];
 var realTimeSocket = io("/realTime");
 
