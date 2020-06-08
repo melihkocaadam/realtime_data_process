@@ -161,3 +161,13 @@ function seqToTime(seq) {
 //         }
 // ];
 // }
+
+var pivot = new WebDataRocks({
+    container: "#wdr-component",
+    toolbar: true,
+    report: {
+        dataSource: {
+            filename: "https://cdn.webdatarocks.com/data/data.csv"
+        }
+    }
+});
