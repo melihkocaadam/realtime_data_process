@@ -129,7 +129,7 @@ var pivot = new WebDataRocks({
 });
 
 function setPivot() {
-    pivot.refresh();
+    webdatarocks.refresh();
 }
 
 // function getJSONData() {
