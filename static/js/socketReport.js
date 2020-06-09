@@ -8,28 +8,34 @@ var pivot = new WebDataRocks({
     report: {
         dataSource: {
             data: allData
-        },
-        formats: [{
-            name: "calories",
-            maxDecimalPlaces: 2,
-            maxSymbols: 20,
-            textAlign: "right"
-        }],
-        slice: {
-            rows: [{
-                uniqueName: "Food"
-            }],
-            columns: [{
-                uniqueName: "[Measures]"
-            }],
-            measures: [{
-                uniqueName: "Calories",
-                aggregation: "average",
-                format: "calories"
-            }]
         }
+        // ,
+        // formats: [{
+        //     name: "calories",
+        //     maxDecimalPlaces: 2,
+        //     maxSymbols: 20,
+        //     textAlign: "right"
+        // }],
+        // slice: {
+        //     rows: [{
+        //         uniqueName: "Food"
+        //     }],
+        //     columns: [{
+        //         uniqueName: "[Measures]"
+        //     }],
+        //     measures: [{
+        //         uniqueName: "Calories",
+        //         aggregation: "average",
+        //         format: "calories"
+        //     }]
+        // }
     }
 });
+
+function setPivot() {
+    var opt = webdatarocks.getOptions();
+    console.log(opt);
+}
 
 realTimeSocket.on("reportData", function(data) {
     console.log("received data on socket");
