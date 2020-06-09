@@ -281,11 +281,27 @@ def getAgentsData():
                             ON a.agent = b.agent
                             AND a.sequence = b.prevSequence
                         WHERE a.prevSequence > 0
-                        AND a.__time > CURRENT_DATE)
+                        AND a.__time > CURRENT_DATE),
+                        resultTable as (
+                        SELECT Agents
+                            ,Status
+                            ,max(ActivityTime) as LastActivityTime
+                            ,max(Sequence) as LastSequence
+                            ,sum((NextSequence - Sequence) / 1000) as SumDuration
+                        FROM nextTable
+                        GROUP BY Agents
+                                ,Status)
 
-                        SELECT *,
-                            (NextSequence - Sequence) / 1000 as Duration
-                        FROM nextTable"""}
+                        SELECT rt.Agents
+                            ,rt.Status
+                            ,rt.LastActivityTime
+                            ,rt.LastSequence
+                            ,rt.SumDuration
+                            ,CASE WHEN mt.maxSequence > 0 then rt.Status else null end as LastStatus
+                        FROM resultTable as rt
+                        LEFT JOIN maxTable as mt
+                            ON mt.agent = rt.Agents
+                            AND mt.maxSequence = rt.LastSequence"""}
     # param = {'query':"""with maxTable as (
     #                     SELECT agent,
     #                         max(sequence) as maxSequence
