@@ -159,7 +159,7 @@ function redraw() {
   });
   pivot.on("aftergriddraw", function() {
     pivot.off("aftergriddraw");
-    document.querySelector("#wrap").style.width = 100 * (col + 2) + 'px';
-    document.querySelector("#wrap").style.height = 30 * ++row + 27 + 'px';
+    document.querySelector("#wdr-component").style.width = 100 * (col + 2) + 'px';
+    document.querySelector("#wdr-component").style.height = 30 * ++row + 27 + 'px';
   });
 }
