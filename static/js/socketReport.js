@@ -20,7 +20,7 @@ realTimeSocket.on("reportData", function(data) {
     dataProcess(data);
     createHTML(allData);
     pvtData.dataSource = {data: allData};
-    setPivot();
+    setPivot(pvtData);
 });
 
 function dataProcess(dataRow) {
