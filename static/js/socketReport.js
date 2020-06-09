@@ -1,15 +1,17 @@
 var allData = [];
+var pvtData = {
+    options: {
+        grid: {
+            title: "Agents Report"
+        }
+    }
+};
 var realTimeSocket = io("/realTime");
 
 // Pivot table datacrate instance
 var pivot = new WebDataRocks({
     container: "wdr-component",
-    toolbar: true,
-    report: {
-        dataSource: {
-            data: allData
-        }
-    }
+    toolbar: true
 });
 
 realTimeSocket.on("reportData", function(data) {
@@ -17,6 +19,7 @@ realTimeSocket.on("reportData", function(data) {
     console.log(data);
     dataProcess(data);
     createHTML(allData);
+    pvtData.dataSource.data = allData;
     setPivot();
 });
 
@@ -109,11 +112,7 @@ function seqToTime(seq) {
 }
 
 // Pivot table functions
-function setPivot() {
-    webdatarocks.setReport({
-        dataSource: {
-            data: allData
-        }
-    });
+function setPivot(allPivotData) {
+    webdatarocks.setReport(allPivotData);
     webdatarocks.refresh();
 }
