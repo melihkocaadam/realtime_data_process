@@ -1,9 +1,12 @@
-var allData = [];
+var allData = getDruidData("getAgentsData");
 var pvtData = {
     options: {
         grid: {
             title: "Agents Report"
         }
+    },
+    dataSource: {
+        data: allData
     }
 };
 var realTimeSocket = io("/realTime");
@@ -13,7 +16,7 @@ var pivot = new WebDataRocks({
     container: "wdr-component",
     toolbar: true
 });
-pvtData = pivot.setReport(pvtData);
+pivot.setReport(pvtData);
 
 realTimeSocket.on("reportData", function(data) {
     console.log("received data on socket");
@@ -119,4 +122,25 @@ function setPivot(allPivotData) {
     pivot.setReport(allPivotData);
     pivot.refresh();
     pvtData = pivot.getReport();
+}
+
+function getDruidData(endPoint) {
+    var Url = "http://" + hostName + ":5000/"+endPoint;
+    var result = {};
+
+    $.ajax({
+        type: "GET",
+        url: Url,
+        dataType: "json",
+        async: false,
+        success: function(resp){
+            result = resp;
+        }
+        ,
+        error: function(error){
+            console.log(error);
+        }
+    });
+
+    return result;
 }
