@@ -119,14 +119,6 @@ function seqToTime(seq) {
     return formattedTime;
 }
 
-// Pivot table functions
-function setPivot(allPivotData) {
-    console.log(allPivotData);
-    pivot.setReport(allPivotData);
-    pivot.refresh();
-    pvtData = pivot.getReport();
-}
-
 function getDruidData(endPoint) {
     var Url = "http://" + hostName + ":5000/"+endPoint;
     var result = {};
@@ -146,4 +138,28 @@ function getDruidData(endPoint) {
     });
 
     return result;
+}
+
+// Pivot table functions
+function setPivot(allPivotData) {
+    console.log(allPivotData);
+    pivot.setReport(allPivotData);
+    pivot.refresh();
+    pvtData = pivot.getReport();
+}
+
+pivot.on("reportchange", 'redraw');
+pivot.on("reportcomplete", 'redraw');
+
+function redraw() {
+  let col = 0, row = 0;
+  pivot.customizeCell(function(cellBuilder, cellData) {
+    if (cellData.columnIndex > col) col = cellData.columnIndex;
+    if (cellData.rowIndex > row) row = cellData.rowIndex;
+  });
+  pivot.on("aftergriddraw", function() {
+    pivot.off("aftergriddraw");
+    document.querySelector("#wrap").style.width = 100 * (col + 2) + 'px';
+    document.querySelector("#wrap").style.height = 30 * ++row + 27 + 'px';
+  });
 }
