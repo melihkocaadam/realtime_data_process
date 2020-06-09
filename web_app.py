@@ -295,7 +295,7 @@ def getAgentsData():
                         SELECT rt.Agents
                             ,rt.Status
                             ,rt.LastActivityTime
-                            ,rt.LastSequence
+                            ,rt.LastSequence as Sequence
                             ,rt.SumDuration
                             ,CASE WHEN mt.maxSequence > 0 then rt.Status else null end as LastStatus
                         FROM resultTable as rt
