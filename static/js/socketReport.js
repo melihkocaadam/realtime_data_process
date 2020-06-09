@@ -17,7 +17,7 @@ realTimeSocket.on("reportData", function(data) {
     console.log(data);
     dataProcess(data);
     createHTML(allData);
-    pivot.updateData(allData);
+    setPivot();
 });
 
 function dataProcess(dataRow) {
@@ -110,49 +110,10 @@ function seqToTime(seq) {
 
 // Pivot table functions
 function setPivot() {
-    webdatarocks.setOptions({
-        grid:{
-          title: "Agents Report"
+    webdatarocks.setReport({
+        dataSource: {
+            data: allData
         }
-      });
+    });
     webdatarocks.refresh();
-}
-
-function getAllData() {
-    return allData;
-}
-
-function getJSONData() {
-    return [{
-            "Category": {
-                type: "level",
-                hierarchy: "Food"
-            },
-            "Item": {
-                type: "level",
-                hierarchy: "Food",
-                level: "Dish",
-                parent: "Category"
-            },
-            "Serving Size": {
-                type: "level",
-                hierarchy: "Food",
-                level: "Size",
-                parent: "Dish"
-            },
-            "Calories": {
-                type: "number"
-            },
-            "Calories from Fat": {
-                type: "number"
-            }
-        },
-        {
-            "Category": "Breakfast",
-            "Item": "Frittata",
-            "Serving Size": "4.8 oz (136 g)",
-            "Calories": 300,
-            "Calories from Fat": 120
-        }
-];
 }
