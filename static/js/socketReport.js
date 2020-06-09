@@ -110,6 +110,11 @@ function seqToTime(seq) {
 
 // Pivot table functions
 function setPivot() {
+    webdatarocks.setOption({
+        grid:{
+          title: "Sales Report"
+        }
+      });
     webdatarocks.refresh();
 }
 
