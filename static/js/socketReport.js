@@ -103,7 +103,7 @@ var pivot = new WebDataRocks({
     toolbar: true,
     report: {
         dataSource: {
-            data: getJSONData()
+            data: getAllData()
         }
         // ,
         // formats: [{
@@ -129,6 +129,10 @@ var pivot = new WebDataRocks({
 });
 
 function setPivot() {
+    webdatarocks.refresh();
+}
+
+function getAllData() {
     return allData;
 }
 
