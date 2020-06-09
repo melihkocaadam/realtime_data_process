@@ -1,6 +1,17 @@
 var allData = [];
 var realTimeSocket = io("/realTime");
 
+// Pivot table datacrate instance
+var pivot = new WebDataRocks({
+    container: "wdr-component",
+    toolbar: true,
+    report: {
+        dataSource: {
+            data: getAllData()
+        }
+    }
+});
+
 realTimeSocket.on("reportData", function(data) {
     console.log("received data on socket");
     console.log(data);
@@ -97,37 +108,7 @@ function seqToTime(seq) {
     return formattedTime;
 }
 
-// Pivot table data insert
-var pivot = new WebDataRocks({
-    container: "wdr-component",
-    toolbar: true,
-    report: {
-        dataSource: {
-            data: getAllData()
-        }
-        // ,
-        // formats: [{
-        //     name: "calories",
-        //     maxDecimalPlaces: 2,
-        //     maxSymbols: 20,
-        //     textAlign: "right"
-        // }],
-        // slice: {
-        //     rows: [{
-        //         uniqueName: "Food"
-        //     }],
-        //     columns: [{
-        //         uniqueName: "[Measures]"
-        //     }],
-        //     measures: [{
-        //         uniqueName: "Calories",
-        //         aggregation: "average",
-        //         format: "calories"
-        //     }]
-        // }
-    }
-});
-
+// Pivot table functions
 function setPivot() {
     webdatarocks.refresh();
 }
