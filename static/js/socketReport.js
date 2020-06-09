@@ -1,3 +1,4 @@
+var hostName = window.location.hostname;
 var allData = getDruidData("getAgentsData");
 var pvtData = {
     options: {
