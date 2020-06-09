@@ -15,6 +15,8 @@ var realTimeSocket = io("/realTime");
 // Pivot table datacrate instance
 var pivot = new WebDataRocks({
     container: "wdr-component",
+    width: "100%",
+    height: "100%",
     toolbar: true
 });
 pivot.setReport(pvtData);
