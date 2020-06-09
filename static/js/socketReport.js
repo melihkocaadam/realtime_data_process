@@ -101,11 +101,35 @@ function seqToTime(seq) {
 var pivot = new WebDataRocks({
     container: "wdr-component",
     toolbar: true,
-    report: allData
+    report: {
+        dataSource: {
+            data: setPivot()
+        }
+        // ,
+        // formats: [{
+        //     name: "calories",
+        //     maxDecimalPlaces: 2,
+        //     maxSymbols: 20,
+        //     textAlign: "right"
+        // }],
+        // slice: {
+        //     rows: [{
+        //         uniqueName: "Food"
+        //     }],
+        //     columns: [{
+        //         uniqueName: "[Measures]"
+        //     }],
+        //     measures: [{
+        //         uniqueName: "Calories",
+        //         aggregation: "average",
+        //         format: "calories"
+        //     }]
+        // }
+    }
 });
 
 function setPivot() {
-    webdatarocks.refresh();
+    return allData;
 }
 
 // function getJSONData() {
