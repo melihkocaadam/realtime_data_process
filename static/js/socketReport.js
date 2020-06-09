@@ -7,7 +7,7 @@ var pivot = new WebDataRocks({
     toolbar: true,
     report: {
         dataSource: {
-            data: getAllData()
+            data: allData
         }
     }
 });
