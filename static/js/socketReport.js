@@ -24,31 +24,31 @@ realTimeSocket.on("reportData", function(data) {
 });
 
 function dataProcess(dataRow) {
-    console.log("enter data processor");
+    // console.log("enter data processor");
     for (var j = 0; j < allData.length; j++) {
         
         if (dataRow != null && dataRow["Agents"] == allData[j]["Agents"] && dataRow["Sequence"] == allData[j]["Sequence"]) {
             if (dataRow["Flag"] == "delete") {
                 allData.splice(j, 1);
                 dataRow = null;
-                console.log("enter delete");
+                // console.log("enter delete");
             } else if (dataRow["Flag"] == "add") {
                 allData.push(dataRow);
                 dataRow = null;
-                console.log("enter add");
+                // console.log("enter add");
             } else {
-                console.log("incorrect flag command");
+                // console.log("incorrect flag command");
             }
         }
     }
     if (dataRow != null && dataRow["Flag"] == "add") {
         allData.push(dataRow);
-        console.log("enter new row");
+        // console.log("enter new row");
     }
 }
 
 function createHTML(jsonData) {
-    console.log("into createHTML function");
+    // console.log("into createHTML function");
     jsonData.reverse();
     var col = [];
     for (var i = 0; i < jsonData.length; i++) {
@@ -113,6 +113,7 @@ function seqToTime(seq) {
 
 // Pivot table functions
 function setPivot(allPivotData) {
+    console.log(allPivotData);
     pivot.setReport(allPivotData);
     pivot.refresh();
     pvtData = pivot.getReport();
