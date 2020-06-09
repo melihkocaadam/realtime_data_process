@@ -101,31 +101,7 @@ function seqToTime(seq) {
 var pivot = new WebDataRocks({
     container: "wdr-component",
     toolbar: true,
-    report: {
-        dataSource: {
-            data: allData
-        }
-        // ,
-        // formats: [{
-        //     name: "calories",
-        //     maxDecimalPlaces: 2,
-        //     maxSymbols: 20,
-        //     textAlign: "right"
-        // }],
-        // slice: {
-        //     rows: [{
-        //         uniqueName: "Food"
-        //     }],
-        //     columns: [{
-        //         uniqueName: "[Measures]"
-        //     }],
-        //     measures: [{
-        //         uniqueName: "Calories",
-        //         aggregation: "average",
-        //         format: "calories"
-        //     }]
-        // }
-    }
+    report: allData
 });
 
 function setPivot() {
