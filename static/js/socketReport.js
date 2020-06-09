@@ -13,6 +13,7 @@ var pivot = new WebDataRocks({
     container: "wdr-component",
     toolbar: true
 });
+pvtData = pivot.setReport(pvtData);
 
 realTimeSocket.on("reportData", function(data) {
     console.log("received data on socket");
