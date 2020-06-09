@@ -115,4 +115,5 @@ function seqToTime(seq) {
 function setPivot(allPivotData) {
     webdatarocks.setReport(allPivotData);
     webdatarocks.refresh();
+    pvtData = webdatarocks.getReport();
 }
