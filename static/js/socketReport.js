@@ -160,6 +160,6 @@ function redraw() {
   pivot.on("aftergriddraw", function() {
     pivot.off("aftergriddraw");
     document.querySelector("#wdr-component").style.width = 100 * (col + 2) + 'px';
-    document.querySelector("#wdr-component").style.height = 30 * ++row + 27 + 'px';
+    document.querySelector("#wdr-component").style.height = 100 * ++row + 27 + 'px';
   });
 }
