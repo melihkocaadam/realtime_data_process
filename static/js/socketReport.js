@@ -1,11 +1,6 @@
 var allData = [];
 var realTimeSocket = io("/realTime");
 
-function setPivot() {
-    var opt = webdatarocks.getOptions();
-    console.log(opt);
-}
-
 realTimeSocket.on("reportData", function(data) {
     console.log("received data on socket");
     console.log(data);
@@ -132,6 +127,10 @@ var pivot = new WebDataRocks({
         // }
     }
 });
+
+function setPivot() {
+    pivot.refresh();
+}
 
 // function getJSONData() {
 //     return [{
