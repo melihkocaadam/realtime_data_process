@@ -231,39 +231,6 @@ def sendAgentStatus():
 def getCallsData():
     url = "http://0.0.0.0:9888/druid/v2/sql"
     headers = {"Content-Type": "application/json"}
-    param = {'query': """SELECT 'Total' as "Agent"
-                            ,sum(duration) as "Sum of Duration"
-                            ,sum(hold_time) as "Sum of Hold Time"
-                            ,sum(ring_time) as "Sum of Ring Time"
-                            ,sum(talk_time) as "Sum of Talk Time"
-                            ,sum(acw) as "Sum of ACW Time"
-                            ,count(*) as "Count of Calls"
-                            ,count(DISTINCT campaign_id) as "Count of Unique Camp"
-                        FROM "calls"
-                        UNION ALL
-                        SELECT *
-                        FROM (
-                        SELECT agent as "Agent"
-                            ,sum(duration) as "Sum of Duration"
-                            ,sum(hold_time) as "Sum of Hold Time"
-                            ,sum(ring_time) as "Sum of Ring Time"
-                            ,sum(talk_time) as "Sum of Talk Time"
-                            ,sum(acw) as "Sum of ACW Time"
-                            ,count(*) as "Count of Calls"
-                            ,count(DISTINCT campaign_id) as "Count of Unique Camp"
-                        FROM "calls"
-                        GROUP BY agent
-                        ORDER BY 6
-                        ) as tbl"""}
-    r = requests.post(url, data=json.dumps(param), headers=headers)
-    result = r.text
-    
-    return result
-
-@app.route("/getAgentsData")
-def getAgentsData():
-    url = "http://0.0.0.0:9888/druid/v2/sql"
-    headers = {"Content-Type": "application/json"}
     param = {'query':"""with maxTable as (
                         SELECT agent,
                             max(sequence) as maxSequence
@@ -274,7 +241,7 @@ def getAgentsData():
                         SELECT a.agent Agents,
                             a.__time as ActivityTime,
                             a.sequence as Sequence,
-                            COALESCE(b.sequence, TIMESTAMP_TO_MILLIS(CURRENT_TIMESTAMP)) as NextSequence,
+                            b.sequence as NextSequence,
                             a.status as Status
                         FROM "agents" as a
                         LEFT JOIN "agents" as b
@@ -283,63 +250,25 @@ def getAgentsData():
                         WHERE a.prevSequence > 0
                         AND a.__time > CURRENT_DATE),
                         resultTable as (
-                        SELECT Agents
-                            ,Status
-                            ,max(ActivityTime) as LastActivityTime
-                            ,max(Sequence) as LastSequence
-                            ,sum((NextSequence - Sequence) / 1000) as SumDuration
-                        FROM nextTable
-                        GROUP BY Agents
-                                ,Status)
+                        SELECT *,
+                            (COALESCE(NextSequence, Sequence) - Sequence) / 1000 as Duration
+                        FROM nextTable)
 
-                        SELECT rt.Agents
-                            ,rt.Status
-                            ,rt.LastActivityTime
-                            ,rt.LastSequence as Sequence
-                            ,rt.SumDuration
-                            ,CASE WHEN mt.maxSequence > 0 then rt.Status else null end as LastStatus
-                        FROM resultTable as rt
-                        LEFT JOIN maxTable as mt
-                            ON mt.agent = rt.Agents
-                            AND mt.maxSequence = rt.LastSequence"""}
-    # param = {'query':"""with maxTable as (
-    #                     SELECT agent,
-    #                         max(sequence) as maxSequence
-    #                     FROM "agents"
-    #                     WHERE __time > CURRENT_DATE
-    #                     GROUP BY agent),
-    #                     nextTable as (
-    #                     SELECT a.agent Agents,
-    #                         a.__time as ActivityTime,
-    #                         a.sequence as Sequence,
-    #                         b.sequence as NextSequence,
-    #                         a.status as Status
-    #                     FROM "agents" as a
-    #                     LEFT JOIN "agents" as b
-    #                         ON a.agent = b.agent
-    #                         AND a.sequence = b.prevSequence
-    #                     WHERE a.prevSequence > 0
-    #                     AND a.__time > CURRENT_DATE),
-    #                     resultTable as (
-    #                     SELECT *,
-    #                         (COALESCE(NextSequence, Sequence) - Sequence) / 1000 as Duration
-    #                     FROM nextTable)
-
-    #                     SELECT rt1.Agents,
-    #                         rt1.ActivityTime,
-    #                         rt1.Sequence,
-    #                         rt1.Status,
-    #                         sum(rt2.Duration) as SumDurationInSameStatus
-    #                     FROM maxTable as mt
-    #                     LEFT JOIN resultTable as rt1
-    #                         ON rt1.Sequence = mt.maxSequence
-    #                     LEFT JOIN resultTable as rt2
-    #                         ON rt2.Agents = rt1.Agents
-    #                         AND rt2.Status = rt1.Status
-    #                     GROUP BY rt1.Agents,
-    #                             rt1.ActivityTime,
-    #                             rt1.Sequence,
-    #                             rt1.Status"""}
+                        SELECT rt1.Agents,
+                            rt1.ActivityTime,
+                            rt1.Sequence,
+                            rt1.Status,
+                            sum(rt2.Duration) as SumDurationInSameStatus
+                        FROM maxTable as mt
+                        LEFT JOIN resultTable as rt1
+                            ON rt1.Sequence = mt.maxSequence
+                        LEFT JOIN resultTable as rt2
+                            ON rt2.Agents = rt1.Agents
+                            AND rt2.Status = rt1.Status
+                        GROUP BY rt1.Agents,
+                                rt1.ActivityTime,
+                                rt1.Sequence,
+                                rt1.Status"""}
     result = None
 
     try:
