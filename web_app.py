@@ -231,6 +231,39 @@ def sendAgentStatus():
 def getCallsData():
     url = "http://0.0.0.0:9888/druid/v2/sql"
     headers = {"Content-Type": "application/json"}
+    param = {'query': """SELECT 'Total' as "Agent"
+                            ,sum(duration) as "Sum of Duration"
+                            ,sum(hold_time) as "Sum of Hold Time"
+                            ,sum(ring_time) as "Sum of Ring Time"
+                            ,sum(talk_time) as "Sum of Talk Time"
+                            ,sum(acw) as "Sum of ACW Time"
+                            ,count(*) as "Count of Calls"
+                            ,count(DISTINCT campaign_id) as "Count of Unique Camp"
+                        FROM "calls"
+                        UNION ALL
+                        SELECT *
+                        FROM (
+                        SELECT agent as "Agent"
+                            ,sum(duration) as "Sum of Duration"
+                            ,sum(hold_time) as "Sum of Hold Time"
+                            ,sum(ring_time) as "Sum of Ring Time"
+                            ,sum(talk_time) as "Sum of Talk Time"
+                            ,sum(acw) as "Sum of ACW Time"
+                            ,count(*) as "Count of Calls"
+                            ,count(DISTINCT campaign_id) as "Count of Unique Camp"
+                        FROM "calls"
+                        GROUP BY agent
+                        ORDER BY 6
+                        ) as tbl"""}
+    r = requests.post(url, data=json.dumps(param), headers=headers)
+    result = r.text
+    
+    return result
+
+@app.route("/getAgentsData")
+def getAgentsData():
+    url = "http://0.0.0.0:9888/druid/v2/sql"
+    headers = {"Content-Type": "application/json"}
     param = {'query':"""with maxTable as (
                         SELECT agent,
                             max(sequence) as maxSequence
