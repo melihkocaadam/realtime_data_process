@@ -1,4 +1,5 @@
 var hostName = window.location.hostname;
+var dimensions = ["Agents", "Status", "Sequence", "IsLastAction"]
 var allData = getDruidData("getAgentsData");
 var pvtData = {
     options: {
@@ -33,25 +34,30 @@ realTimeSocket.on("reportData", function(data) {
 
 function dataProcess(dataRow) {
     // console.log("enter data processor");
-    for (var j = 0; j < allData.length; j++) {
-        
-        if (dataRow != null && dataRow["Agents"] == allData[j]["Agents"] && dataRow["Sequence"] == allData[j]["Sequence"]) {
-            if (dataRow["Flag"] == "delete") {
-                allData.splice(j, 1);
-                dataRow = null;
-                // console.log("enter delete");
-            } else if (dataRow["Flag"] == "add") {
-                allData.push(dataRow);
-                dataRow = null;
-                // console.log("enter add");
-            } else {
-                // console.log("incorrect flag command");
+    if (dataRow == null || dataRow == undefined) {
+        return null;
+    }
+    var dimLength = dimensions.length;
+
+    if (dataRow["Flag"] == "add") {
+        allData.push(dataRow);
+        dataRow = null;
+    } else {
+        for (let j = 0; j < allData.length; j++) {
+            var trueCount = 0;
+    
+            for (let i = 0; i < dimLength; i++) {
+                var dim = dimensions[i];
+    
+                if (dataRow[dim] == allData[j][dim]) {
+                    trueCount++;
+                }
+                if (trueCount == dimLength) {
+                    allData.splice(j, 1);
+                }
+                
             }
         }
-    }
-    if (dataRow != null && dataRow["Flag"] == "add") {
-        allData.push(dataRow);
-        // console.log("enter new row");
     }
 }
 
