@@ -270,6 +270,7 @@ def run_every_5_seconds():
         for ern, existRow in enumerate(existData): # mevcut datanın satırlarında dön
             existData[ern]["Flag"] = "delete" # mevcut datanın her bir satırındaki eski Flag'e delete yaz
             for nrn, newRow in enumerate(newData): # yeni datanın satırlarında dön
+                newData[nrn]["Flag"] = "delete" # yeni data delete değerli bir Flay ekle. mevcut data ile kıyaslamada sorun olmasın diye
                 diffDict = {k: existRow[k] for k in existRow if k not in newRow or existRow[k] != newRow[k]}
                 print(diffDict)
                 if diffDict == {}: # fark kümesi boşsa yani satır birbiri ile aynı ise
