@@ -1,5 +1,4 @@
 var hostName = window.location.hostname;
-var dimensions = ["Agents", "Status", "Sequence", "IsLastAction"]
 var allData = getDruidData("getAgentsData");
 var pvtData = {
     options: {
@@ -37,25 +36,28 @@ function dataProcess(dataRow) {
     if (dataRow == null || dataRow == undefined) {
         return null;
     }
-    var dimLength = dimensions.length;
 
     if (dataRow["Flag"] == "add") {
         allData.push(dataRow);
-        dataRow = null;
     } else {
         for (let j = 0; j < allData.length; j++) {
-            var trueCount = 0;
-    
-            for (let i = 0; i < dimLength; i++) {
-                var dim = dimensions[i];
-    
-                if (dataRow[dim] == allData[j][dim]) {
-                    trueCount++;
+            var existRow = allData[j];
+            var diffVal = {};
+            for (var ekey in existRow) {
+                var found = false;
+                for (var nkey in dataRow) {
+                    if (dataRow.nkey == existRow.ekey) {
+                        found = true;
+                        break;
+                    }
                 }
-                if (trueCount == dimLength) {
-                    allData.splice(j, 1);
+                if (found) {
+                    diffVal.ekey = existRow.ekey;
                 }
-                
+            }
+
+            if (diffVal != {}) {
+                allData.splice(j, 1);
             }
         }
     }
