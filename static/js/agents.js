@@ -177,7 +177,7 @@ function loginClick(agent_name){
         $("#btn-acw-"+agent_name).prop('disabled', false);
         $("#btn-aux-"+agent_name).prop('disabled', false);
         $("#btn-login-"+agent_name).text("Logout");
-        data = JSON.parse('{"agent": "'+ agent_name +'", "status": "Login", "sequence": ' + sequence.toString() + '}');
+        data = JSON.parse('{"agent": "'+ agent_name +'", "status": "Login", "sequence": ' + sequence.toString() + ', "prevSequence": ' + (sequence+100).toString() + '}');
         postAgentStatus(data);
         data = JSON.parse('{"agent": "'+ agent_name +'", "status": "Avail", "sequence": ' + (sequence+100).toString() + '}');
         postAgentStatus(data);
