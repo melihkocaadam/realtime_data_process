@@ -244,7 +244,7 @@ function postAgentStatus(jsonData){
 
     if (getExistAgents != undefined || getExistAgents != '') {
         getExistAgents.forEach(function(agentRow) {
-            if (agentRow["agent"] == jsonData["agent"]) {
+            if (agentRow["agent"] == jsonData["agent"] && !("prevSequence" in jsonData)) {
                 prevSequence = agentRow["sequence"];
             }
         });
