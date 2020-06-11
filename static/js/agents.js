@@ -246,7 +246,7 @@ function postAgentStatus(jsonData){
                 jsonData["prevSequence"] = agentRow["sequence"];
             }
             else {
-                jsonData["prevSequence"] = jsonData["sequence"]
+                jsonData["prevSequence"] = jsonData["sequence"] - 1000
             }
         });
     }
