@@ -17,7 +17,7 @@ sources = {
                             ON a.agent = b.agent
                             AND a.sequence = b.prevSequence
                         WHERE a.prevSequence > 0
-                        AND a.__time > CURRENT_DATE),
+                        AND a.__time > '2020-06-11 17:45'),
                         resultTable as (
                         SELECT *,
                             (COALESCE(NextSequence, TIMESTAMP_TO_MILLIS(CURRENT_TIMESTAMP)) - Sequence) / 1000 as Duration
