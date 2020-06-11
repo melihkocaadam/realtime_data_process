@@ -276,10 +276,6 @@ def run_every_5_seconds():
                     existData[ern]["Flag"] = "save" # mevcut datanın bu satırına sakla işareti ekle
                     del newData[nrn] # yeni datanın bu satırını tekrar kontrol etmemek için sil
 
-        for newRow in newData: # yeni datanın satırlarında dön
-            newRow["Flag"] = "add" # her bir satıra add flag ekle
-            existData.append(newRow) # kalan satırları mevcut dataya ekle
-
         # for i, erow in enumerate(existData): # mevcut datanın satırlarında dön
         #     for j, nrow in enumerate(newData): # yeni datanın her bir satırı ile karşılaştır
         #         if erow["Agents"] == nrow["Agents"]: # Agent isimleri eşleşiyor ise,
@@ -302,6 +298,10 @@ def run_every_5_seconds():
         #     if "Flag" in rown and rown["Flag"] in ("add"):
         #         # print(rown, "| This row added in existData with append")
         #         existData.insert(0, rown)
+
+    for newRow in newData: # yeni datanın satırlarında dön
+        newRow["Flag"] = "add" # her bir satıra add flag ekle
+        existData.append(newRow) # kalan satırları mevcut dataya ekle
 
     # print("existData", datetime.now())
     for r, rowe in reversed(list(enumerate(existData))):
