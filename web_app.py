@@ -265,7 +265,6 @@ def run_every_5_seconds():
     newData = json.loads(data)
 
     if len(existData) == 0:
-        existData = newData
         print("Exist data is empty, first cycle")
     else:
         for ern, existRow in enumerate(existData): # mevcut datanın satırlarında dön
