@@ -245,9 +245,6 @@ function postAgentStatus(jsonData){
             if (agentRow["agent"] == jsonData["agent"] && !("prevSequence" in jsonData)) {
                 jsonData["prevSequence"] = agentRow["sequence"];
             }
-            else {
-                jsonData["prevSequence"] = jsonData["sequence"] - 1000
-            }
         });
     }
 
