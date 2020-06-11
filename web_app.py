@@ -3,7 +3,7 @@ from kafka import KafkaProducer, KafkaConsumer, TopicPartition
 from flask_socketio import SocketIO, send, emit
 from datetime import datetime
 from threading import Thread
-import json, requests, os, time, schedule, gevent
+import json, requests, os, time, schedule, gevent, config
 
 async_mode = "gevent"
 app = Flask(__name__)
@@ -229,32 +229,10 @@ def sendAgentStatus():
 #######################
 @app.route("/getCallsData")
 def getCallsData():
+    callsQuery = config.sources["calls"]["query"]
     url = "http://0.0.0.0:9888/druid/v2/sql"
     headers = {"Content-Type": "application/json"}
-    param = {'query': """SELECT 'Total' as "Agent"
-                            ,sum(duration) as "Sum of Duration"
-                            ,sum(hold_time) as "Sum of Hold Time"
-                            ,sum(ring_time) as "Sum of Ring Time"
-                            ,sum(talk_time) as "Sum of Talk Time"
-                            ,sum(acw) as "Sum of ACW Time"
-                            ,count(*) as "Count of Calls"
-                            ,count(DISTINCT campaign_id) as "Count of Unique Camp"
-                        FROM "calls"
-                        UNION ALL
-                        SELECT *
-                        FROM (
-                        SELECT agent as "Agent"
-                            ,sum(duration) as "Sum of Duration"
-                            ,sum(hold_time) as "Sum of Hold Time"
-                            ,sum(ring_time) as "Sum of Ring Time"
-                            ,sum(talk_time) as "Sum of Talk Time"
-                            ,sum(acw) as "Sum of ACW Time"
-                            ,count(*) as "Count of Calls"
-                            ,count(DISTINCT campaign_id) as "Count of Unique Camp"
-                        FROM "calls"
-                        GROUP BY agent
-                        ORDER BY 6
-                        ) as tbl"""}
+    param = {'query': callsQuery}
     r = requests.post(url, data=json.dumps(param), headers=headers)
     result = r.text
     
@@ -262,78 +240,11 @@ def getCallsData():
 
 @app.route("/getAgentsData")
 def getAgentsData():
+    agentsQuery = config.sources["agents"]["query"]
     url = "http://0.0.0.0:9888/druid/v2/sql"
     headers = {"Content-Type": "application/json"}
-    param = {'query':"""with maxTable as (
-                        SELECT agent,
-                            max(sequence) as maxSequence
-                        FROM "agents"
-                        WHERE __time > CURRENT_DATE
-                        GROUP BY agent),
-                        nextTable as (
-                        SELECT a.agent Agents,
-                            a.__time as ActivityTime,
-                            a.sequence as Sequence,
-                            b.sequence as NextSequence,
-                            a.status as Status
-                        FROM "agents" as a
-                        LEFT JOIN "agents" as b
-                            ON a.agent = b.agent
-                            AND a.sequence = b.prevSequence
-                        WHERE a.prevSequence > 0
-                        AND a.__time > CURRENT_DATE),
-                        resultTable as (
-                        SELECT *,
-                            (COALESCE(NextSequence, TIMESTAMP_TO_MILLIS(CURRENT_TIMESTAMP)) - Sequence) / 1000 as Duration
-                        FROM nextTable)
+    param = {'query': agentsQuery}
 
-                        SELECT rt.Agents
-                            ,rt.Status
-                            ,sum(CASE WHEN rt.NextSequence is null THEN 1 ELSE 0 END) as IsLastAction
-                            ,max(rt.ActivityTime) as ActivityTime
-                            ,max(rt.Sequence) as Sequence
-                            ,sum(rt.Duration) as SumDuration
-                        FROM resultTable as rt
-                        GROUP BY rt.Agents
-                            ,rt.Status"""}
-    # param = {'query':"""with maxTable as (
-    #                     SELECT agent,
-    #                         max(sequence) as maxSequence
-    #                     FROM "agents"
-    #                     WHERE __time > CURRENT_DATE
-    #                     GROUP BY agent),
-    #                     nextTable as (
-    #                     SELECT a.agent Agents,
-    #                         a.__time as ActivityTime,
-    #                         a.sequence as Sequence,
-    #                         b.sequence as NextSequence,
-    #                         a.status as Status
-    #                     FROM "agents" as a
-    #                     LEFT JOIN "agents" as b
-    #                         ON a.agent = b.agent
-    #                         AND a.sequence = b.prevSequence
-    #                     WHERE a.prevSequence > 0
-    #                     AND a.__time > CURRENT_DATE),
-    #                     resultTable as (
-    #                     SELECT *,
-    #                         (COALESCE(NextSequence, Sequence) - Sequence) / 1000 as Duration
-    #                     FROM nextTable)
-
-    #                     SELECT rt1.Agents,
-    #                         rt1.ActivityTime,
-    #                         rt1.Sequence,
-    #                         rt1.Status,
-    #                         sum(rt2.Duration) as SumDurationInSameStatus
-    #                     FROM maxTable as mt
-    #                     LEFT JOIN resultTable as rt1
-    #                         ON rt1.Sequence = mt.maxSequence
-    #                     LEFT JOIN resultTable as rt2
-    #                         ON rt2.Agents = rt1.Agents
-    #                         AND rt2.Status = rt1.Status
-    #                     GROUP BY rt1.Agents,
-    #                             rt1.ActivityTime,
-    #                             rt1.Sequence,
-    #                             rt1.Status"""}
     result = None
 
     try:
@@ -351,45 +262,53 @@ existData = []
 def run_every_5_seconds():
     global existData
     data = getAgentsData()
-
-    if data is None:
-        newData = {}
-        print("SQL query result is none")
-    else:
-        newData = json.loads(data)
+    newData = json.loads(data)
 
     if len(existData) == 0:
         existData = newData
         print("Exist data is empty, first cycle")
     else:
-        for i, erow in enumerate(existData): # mevcut datanın satırlarında dön
-            for j, nrow in enumerate(newData): # yeni datanın her bir satırı ile karşılaştır
-                if erow["Agents"] == nrow["Agents"]: # Agent isimleri eşleşiyor ise,
-                    if erow["Sequence"] >= nrow["Sequence"]: # yeni datanın sequence'ı mevcuttan küçükse
-                        existData[i]["Flag"] = "save" # mevcut dataya save flag ekle
-                        newData[j]["Flag"] = "delete" # yeni datayı sil
-                    else:                           # eğer yeni datanın sequence'ı mevcuttan büyükse
-                        existData[i]["Flag"] = "delete" # mevcut dataya delete flag ekle
-                        newData[j]["Flag"] = "add" # yeni dataya add flag ekle
+        for ern, existRow in enumerate(existData): # mevcut datanın satırlarında dön
+            existData[ern]["Flag"] = "delete" # mevcut datanın her bir satırındaki eski Flag'e delete yaz
+            for nrn, newRow in enumerate(newData): # yeni datanın satırlarında dön
+                diffDict = {k: existRow[k] for k in existRow if k not in newRow or existRow[k] != newRow[k]}
+                if diffDict == {}: # fark kümesi boşsa yani satır birbiri ile aynı ise
+                    existData[ern]["Flag"] = "save" # mevcut datanın bu satırına sakla işareti ekle
+                    del newData[nrn] # yeni datanın bu satırını tekrar kontrol etmemek için sil
+
+        for newRow in newData: # yeni datanın satırlarında dön
+            newRow["Flag"] = "add" # her bir satıra add flag ekle
+            existData.append(newRow) # kalan satırları mevcut dataya ekle
+
+        # for i, erow in enumerate(existData): # mevcut datanın satırlarında dön
+        #     for j, nrow in enumerate(newData): # yeni datanın her bir satırı ile karşılaştır
+        #         if erow["Agents"] == nrow["Agents"]: # Agent isimleri eşleşiyor ise,
+        #             if erow["Sequence"] >= nrow["Sequence"]: # yeni datanın sequence'ı mevcuttan küçükse
+        #                 existData[i]["Flag"] = "save" # mevcut dataya save flag ekle
+        #                 newData[j]["Flag"] = "delete" # yeni datayı sil
+        #             else:                           # eğer yeni datanın sequence'ı mevcuttan büyükse
+        #                 existData[i]["Flag"] = "delete" # mevcut dataya delete flag ekle
+        #                 newData[j]["Flag"] = "add" # yeni dataya add flag ekle
             
-            if "Flag" not in erow: # bir satır için yeni datanın tüm satırları döndüğünde flag yok ise,
-                existData[i]["Flag"] = "delete" # mevcut dataya delete flag ekle
+        #     if "Flag" not in erow: # bir satır için yeni datanın tüm satırları döndüğünde flag yok ise,
+        #         existData[i]["Flag"] = "delete" # mevcut dataya delete flag ekle
 
-        for k, row in enumerate(newData): # yeni datanın satırlarında dön
-            if "Flag" not in row: # eğer flag etiketi olmamayan bir satır varsa
-                newData[k]["Flag"] = "add" # yeni dataya add flag ekle
+        # for k, row in enumerate(newData): # yeni datanın satırlarında dön
+        #     if "Flag" not in row: # eğer flag etiketi olmamayan bir satır varsa
+        #         newData[k]["Flag"] = "add" # yeni dataya add flag ekle
 
-        # print("\nnewData", datetime.now())
-        for rown in newData:
-            if "Flag" in rown and rown["Flag"] in ("add"):
-                # print(rown, "| This row added in existData with append")
-                existData.insert(0, rown)
+        # # print("\nnewData", datetime.now())
+        # for rown in newData:
+        #     if "Flag" in rown and rown["Flag"] in ("add"):
+        #         # print(rown, "| This row added in existData with append")
+        #         existData.insert(0, rown)
 
     # print("existData", datetime.now())
     for r, rowe in reversed(list(enumerate(existData))):
         if "Flag" in rowe:
+            print("scheduler |", rowe)
             if rowe["Flag"] in ("add", "delete"):
-                print("scheduler |", rowe)
+                # print("scheduler |", rowe)
                 # producer = KafkaProducer(
                 #     bootstrap_servers=["0.0.0.0:9092"],
                 #     client_id="agents-scheduled-producer",
