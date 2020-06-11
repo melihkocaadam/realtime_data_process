@@ -305,20 +305,15 @@ def run_every_5_seconds():
     # print("existData", datetime.now())
     for r, rowe in reversed(list(enumerate(existData))):
         if "Flag" in rowe:
-            print("scheduler |", rowe)
             if rowe["Flag"] in ("add", "delete"):
-                # print("scheduler |", rowe)
-                # producer = KafkaProducer(
-                #     bootstrap_servers=["0.0.0.0:9092"],
-                #     client_id="agents-scheduled-producer",
-                #     value_serializer=lambda v: json.dumps(v).encode("utf-8")
-                #     )
-                # producer.send("agentsCompact", value=rowe)
-
+                print("scheduler |", rowe)
+                socketio.emit('reportData', rowe, namespace=rtNsp) # websocket mesaj gönderimi için
                 if rowe["Flag"] == "delete":
                     del existData[r]
-
-                socketio.emit('reportData', rowe, namespace=rtNsp) # websocket mesaj gönderimi için
+            else:
+                print("Flag add veya deleye değil")
+        else:
+            print("Flag yok")
 
 schedule.every(5).seconds.do(run_every_5_seconds)
 
