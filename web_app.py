@@ -272,7 +272,6 @@ def run_every_5_seconds():
             for nrn, newRow in enumerate(newData): # yeni datanın satırlarında dön
                 newData[nrn]["Flag"] = "delete" # yeni data delete değerli bir Flay ekle. mevcut data ile kıyaslamada sorun olmasın diye
                 diffDict = {k: existRow[k] for k in existRow if k not in newRow or existRow[k] != newRow[k]}
-                print(diffDict)
                 if diffDict == {}: # fark kümesi boşsa yani satır birbiri ile aynı ise
                     existData[ern]["Flag"] = "save" # mevcut datanın bu satırına sakla işareti ekle
                     del newData[nrn] # yeni datanın bu satırını tekrar kontrol etmemek için sil
@@ -312,10 +311,6 @@ def run_every_5_seconds():
                 socketio.emit('reportData', rowe, namespace=rtNsp) # websocket mesaj gönderimi için
                 if rowe["Flag"] == "delete":
                     del existData[r]
-            else:
-                print("Flag add veya deleye değil")
-        else:
-            print("Flag yok")
 
 schedule.every(5).seconds.do(run_every_5_seconds)
 
