@@ -1,3 +1,4 @@
+# variables must contain dictionary type only
 sources = {
     "agents": {
         "query": """with maxTable as (
