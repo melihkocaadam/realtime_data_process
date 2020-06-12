@@ -29,7 +29,7 @@ def appConfig():
         configs = config.sources
         print("get config", configs)
         result["configs"] = config
-        return result
+        return json.dumps(result)
     else:
         getJson = request.get_json
         print("set config", getJson)
