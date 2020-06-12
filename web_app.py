@@ -247,7 +247,8 @@ def sendAgentStatus():
 #######################
 @app.route("/getCallsData")
 def getCallsData():
-    callsQuery = config.sources["calls"]["query"]
+    callsConfig = config.getConfigRow("table", "calls")
+    callsQuery = callsConfig["query"]
     url = "http://0.0.0.0:9888/druid/v2/sql"
     headers = {"Content-Type": "application/json"}
     param = {'query': callsQuery}
@@ -258,7 +259,8 @@ def getCallsData():
 
 @app.route("/getAgentsData")
 def getAgentsData():
-    agentsQuery = config.sources["agents"]["query"]
+    agentsConfig = config.getConfigRow("table", "agents")
+    agentsQuery = agentssConfig["query"]
     url = "http://0.0.0.0:9888/druid/v2/sql"
     headers = {"Content-Type": "application/json"}
     param = {'query': agentsQuery}

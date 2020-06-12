@@ -1,3 +1,11 @@
+def getConfigRow(key, value):
+    try:
+        for row in sources:
+            if row[key] == value:
+                return row
+    except Exception as e:
+        return e
+
 # variables must contain dictionary type only
 sources = [
     {
@@ -34,7 +42,7 @@ sources = [
                         FROM resultTable as rt
                         GROUP BY rt.Agents
                             ,rt.Status""",
-        "dimensions": {"dim1": "Agents", "dim2": "Status"},
+        "dimensions": {"dim1": "Agents", "dim2": "Status"}
     },
     {
         "table": "calls",
@@ -61,8 +69,8 @@ sources = [
                     FROM "calls"
                     GROUP BY agent
                     ORDER BY 6
-                    ) as tbl""",
-    },
+                    ) as tbl"""
+    }
 ]
 
 
