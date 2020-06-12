@@ -77,7 +77,9 @@ function makeTableFromJson(jsonData, containerId) {
         } else if (jQuery.type(jsonData) == "object") {
             for (var key in jsonData) {
                 textContent = textContent + '<td column-id="'+ key +'" td_attr="key"><div class="font-weight-bold" contenteditable="false">'+ key +'</div></td>';
+                textContent = textContent + '<td column-id="'+ key +'" td_attr="value">';
                 crateTrTd(jsonData[key]);
+                textContent = textContent + '</td>';
             }
         } else {
             textContent = textContent + '<td column-id="val" td_attr="value"><div contenteditable="true">'+ jsonData +'</div></td>';
