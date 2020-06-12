@@ -73,6 +73,7 @@ function jsonToTable(jsonData) {
         for (var i = 0; i < jsonData.length; i++) {
             textContent = textContent + '<tr row-id="'+ String(i) +'">';
             jsonToTable(jsonData[i]);
+            textContent = textContent + '</tr>';
         }
     } else if (jQuery.type(jsonData) == "object") {
         console.log("dict");
