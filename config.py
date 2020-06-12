@@ -1,6 +1,7 @@
 # variables must contain dictionary type only
-sources = {
-    "agents": {
+sources = [
+    {
+        "table": "agents",
         "query": """with maxTable as (
                         SELECT agent,
                             max(sequence) as maxSequence
@@ -33,12 +34,10 @@ sources = {
                         FROM resultTable as rt
                         GROUP BY rt.Agents
                             ,rt.Status""",
-        "dimensions": {
-            "dim1": "Agents",
-            "dim2": "Status"
-        }
+        "dimensions": {"dim1": "Agents", "dim2": "Status"},
     },
-    "calls" : {
+    {
+        "table": "calls",
         "query": """SELECT 'Total' as "Agent"
                         ,sum(duration) as "Sum of Duration"
                         ,sum(hold_time) as "Sum of Hold Time"
@@ -62,10 +61,9 @@ sources = {
                     FROM "calls"
                     GROUP BY agent
                     ORDER BY 6
-                    ) as tbl"""
-    }
-}
-
+                    ) as tbl""",
+    },
+]
 
 
 
