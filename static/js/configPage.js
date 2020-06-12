@@ -69,17 +69,20 @@ function setConfig(jsonData){
 
 function jsonToTable(jsonData, htmlContent) {
     if (jQuery.type(jsonData) == "array") {
+        console.log("array");
         for (var i = 0; i < jsonData.length; i++) {
             htmlContent = htmlContent + '<tr row-id="'+ String(i) +'"';
             jsonToTable(jsonData[i], htmlContent);
         }
     } else if (jQuery.type(jsonData) == "object") {
+        console.log("dict");
         for (var key in jsonData) {
             htmlContent = htmlContent + '<td column-id="'+ key +'" td_attr="key"><div class="font-weight-bold" contenteditable="false">'+ key +'</div></td>';
             // htmlContent = htmlContent + jQuery.parseHTML('<td column-id="'+ key +'" td_attr="value"><div contenteditable="true">'+ jsonData[key] +'</div></td>');
             jsonToTable(jsonData[key], htmlContent);
         }
     } else {
+        console.log("value");
         htmlContent = htmlContent + '<td column-id="val" td_attr="value"><div contenteditable="true">'+ jsonData +'</div></td>';
     }
 
