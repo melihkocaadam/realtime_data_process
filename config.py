@@ -1,15 +1,6 @@
-def getConfigRow(key, value):
-    try:
-        for row in sources:
-            if row[key] == value:
-                return row
-    except Exception as e:
-        return e
-
 # variables must contain dictionary type only
-sources = [
-    {
-        "table": "agents",
+configs = {
+    "agents": {
         "query": """with maxTable as (
                         SELECT agent,
                             max(sequence) as maxSequence
@@ -42,10 +33,9 @@ sources = [
                         FROM resultTable as rt
                         GROUP BY rt.Agents
                             ,rt.Status""",
-        "dimensions": {"dim1": "Agents", "dim2": "Status"}
+        "dimensions": ["Agents", "Status"]
     },
-    {
-        "table": "calls",
+    "calls": {
         "query": """SELECT 'Total' as "Agent"
                         ,sum(duration) as "Sum of Duration"
                         ,sum(hold_time) as "Sum of Hold Time"
@@ -69,11 +59,10 @@ sources = [
                     FROM "calls"
                     GROUP BY agent
                     ORDER BY 6
-                    ) as tbl"""
+                    ) as tbl""",
+        "dimensions": ["Agents", "Status"]
     }
-]
-
-
+}
 
 # 'query':"""with maxTable as (
 #             SELECT agent,
