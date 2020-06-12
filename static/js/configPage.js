@@ -77,12 +77,13 @@ function jsonToTable(jsonData, htmlContent) {
     } else if (jQuery.type(jsonData) == "object") {
         console.log("dict");
         for (var key in jsonData) {
+            console.log(key);
             htmlContent = htmlContent + '<td column-id="'+ key +'" td_attr="key"><div class="font-weight-bold" contenteditable="false">'+ key +'</div></td>';
             // htmlContent = htmlContent + jQuery.parseHTML('<td column-id="'+ key +'" td_attr="value"><div contenteditable="true">'+ jsonData[key] +'</div></td>');
             jsonToTable(jsonData[key], htmlContent);
         }
     } else {
-        console.log("value");
+        console.log("value" + String(jsonData));
         htmlContent = htmlContent + '<td column-id="val" td_attr="value"><div contenteditable="true">'+ jsonData +'</div></td>';
     }
 
