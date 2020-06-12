@@ -66,26 +66,24 @@ function setConfig(jsonData){
         }
     });
 }
-
-function jsonToTable(jsonData, htmlContent) {
+var textContent = '';
+function jsonToTable(jsonData) {
     if (jQuery.type(jsonData) == "array") {
         console.log("array");
         for (var i = 0; i < jsonData.length; i++) {
-            htmlContent = htmlContent + '<tr row-id="'+ String(i) +'"';
-            jsonToTable(jsonData[i], htmlContent);
+            textContent = textContent + '<tr row-id="'+ String(i) +'"';
+            jsonToTable(jsonData[i]);
         }
     } else if (jQuery.type(jsonData) == "object") {
         console.log("dict");
         for (var key in jsonData) {
             console.log(key);
-            htmlContent = htmlContent + '<td column-id="'+ key +'" td_attr="key"><div class="font-weight-bold" contenteditable="false">'+ key +'</div></td>';
+            textContent = textContent + '<td column-id="'+ key +'" td_attr="key"><div class="font-weight-bold" contenteditable="false">'+ key +'</div></td>';
             // htmlContent = htmlContent + jQuery.parseHTML('<td column-id="'+ key +'" td_attr="value"><div contenteditable="true">'+ jsonData[key] +'</div></td>');
-            jsonToTable(jsonData[key], htmlContent);
+            jsonToTable(jsonData[key]);
         }
     } else {
         console.log("value" + String(jsonData));
-        htmlContent = htmlContent + '<td column-id="val" td_attr="value"><div contenteditable="true">'+ jsonData +'</div></td>';
+        textContent = textContent + '<td column-id="val" td_attr="value"><div contenteditable="true">'+ jsonData +'</div></td>';
     }
-
-    return htmlContent;
 }
