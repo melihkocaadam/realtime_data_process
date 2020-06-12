@@ -32,10 +32,10 @@ sources = {
                         FROM resultTable as rt
                         GROUP BY rt.Agents
                             ,rt.Status""",
-        "dimensions": [
-            "Agents",
-            "Status"
-        ]
+        "dimensions": {
+            "dim1": "Agents",
+            "dim2": "Status"
+        }
     },
     "calls" : {
         "query": """SELECT 'Total' as "Agent"
