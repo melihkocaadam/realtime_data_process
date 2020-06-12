@@ -4,7 +4,7 @@ var configHtml;
 var table_container_id = "table_container";
 
 $(document).ready(function () {
-    jsonEditorInit(table_container_id, json_input_container_id, json_output_container_id, json_to_table_btn_id, table_to_json_btn_id);
+    // jsonEditorInit(table_container_id, json_input_container_id, json_output_container_id, json_to_table_btn_id, table_to_json_btn_id);
     renderTable();
 });
 
