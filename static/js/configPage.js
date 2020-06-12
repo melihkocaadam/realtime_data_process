@@ -26,9 +26,7 @@ $(function(){
 
 function renderTable() {
     configJson = getConfig();
-    console.log(configJson);
     configHtml = makeTable(configJson);
-    console.log(configHtml);
     $('#' + table_container_id ).html(configHtml);
 }
 
