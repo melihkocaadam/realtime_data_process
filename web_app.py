@@ -260,7 +260,7 @@ def getCallsData():
 @app.route("/getAgentsData")
 def getAgentsData():
     agentsConfig = config.getConfigRow("table", "agents")
-    agentsQuery = agentssConfig["query"]
+    agentsQuery = agentsConfig["query"]
     url = "http://0.0.0.0:9888/druid/v2/sql"
     headers = {"Content-Type": "application/json"}
     param = {'query': agentsQuery}
