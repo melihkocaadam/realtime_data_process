@@ -43,7 +43,7 @@ function getConfig(){
         dataType: "json",
         async: false,
         success: function(resp){
-            result = resp["configs"];
+            result = resp;
         },
         error: function(error){
             console.log(error);
