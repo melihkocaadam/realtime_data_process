@@ -1,7 +1,8 @@
 # variables must contain dictionary type only
-configs = {
-    "agents": {
-        "query": """with maxTable as (
+configs = [
+    {
+        "agents": {
+            "query": """with maxTable as (
                         SELECT agent,
                             max(sequence) as maxSequence
                         FROM "agents"
@@ -33,10 +34,12 @@ configs = {
                         FROM resultTable as rt
                         GROUP BY rt.Agents
                             ,rt.Status""",
-        "dimensions": ["Agents", "Status"]
+            "dimensions": ["Agents", "Status"],
+        }
     },
-    "calls": {
-        "query": """SELECT 'Total' as "Agent"
+    {
+        "calls": {
+            "query": """SELECT 'Total' as "Agent"
                         ,sum(duration) as "Sum of Duration"
                         ,sum(hold_time) as "Sum of Hold Time"
                         ,sum(ring_time) as "Sum of Ring Time"
@@ -60,9 +63,10 @@ configs = {
                     GROUP BY agent
                     ORDER BY 6
                     ) as tbl""",
-        "dimensions": ["Agents", "Status"]
-    }
-}
+            "dimensions": ["Agents", "Status"],
+        }
+    },
+]
 
 # 'query':"""with maxTable as (
 #             SELECT agent,
