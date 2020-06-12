@@ -22,6 +22,16 @@ def serve_static(filename):
     # print(os.path.join(root_dir, 'realtime_data_process/static', filename))
     return send_from_directory(os.path.join(root_dir, 'realtime_data_process/static'), filename)
 
+@app.route("/appConfig", methods=['GET', 'POST'])
+def appConfig():
+    if request.method == 'GET':
+        return config.sources
+    elif request.method == 'POST':
+        config.sources = request.json
+    else:
+        return "Bad Request"
+
+
 ######################
 ### Socket Methods ###
 ######################
@@ -113,6 +123,11 @@ def socketReport():
             request.remote_addr, "\n",
             request.user_agent)
     return render_template("socketReport.html")
+
+@app.route("/configPage")
+def configPage():
+    return render_template("configPage.html")
+
 
 ################################
 ### Kafka Consumer Endpoints ###

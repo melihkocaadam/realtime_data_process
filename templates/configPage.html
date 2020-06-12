@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>App Config</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='image/favicon.ico') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.7.1/jquery.contextMenu.min.css">
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <style>
+      div{
+        font-size: 1.5rem;
+      }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='js/jsoneditor.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/configPAge.js') }}"></script>
+</head>
+<body>
+  <div class="container">
+
+      <div class="row p-3 justify-content-center">
+        <div class="row justify-content-center">
+          <div class="input-group-prepend" style="padding: 5px;">
+            <button class="btn rounded btn-outline-success" type="button" id="apply">Apply</button>
+          </div>
+        </div>
+      </div><br>
+
+      <div class="row p-3 justify-content-center inner_body" id="table_container">
+      </div>
+
+  </div>
+</body>
+</html>
