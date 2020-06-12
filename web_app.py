@@ -32,6 +32,7 @@ def appConfig():
         getJson = request.get_json
         print("set config", getJson)
         config.sources = getJson
+        return "Config Saved"
     else:
         return "Bad Request"
 
