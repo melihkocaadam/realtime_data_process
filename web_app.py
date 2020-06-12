@@ -28,13 +28,11 @@ def appConfig():
         configs = config.sources
         print("get config", configs)
         return configs
-    elif request.method == 'POST':
+    else:
         getJson = request.get_json
         print("set config", getJson)
         config.sources = getJson
         return "Config Saved"
-    else:
-        return "Bad Request"
 
 
 ######################
