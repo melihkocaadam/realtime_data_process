@@ -25,10 +25,12 @@ def serve_static(filename):
 @app.route("/appConfig", methods=['GET', 'POST'])
 def appConfig():
     if request.method == 'GET':
-        return config.sources
+        configs = config.sources
+        print("get config", configs)
+        return configs
     elif request.method == 'POST':
         getJson = request.get_json
-        print(getJson)
+        print("set config", getJson)
         config.sources = getJson
     else:
         return "Bad Request"
