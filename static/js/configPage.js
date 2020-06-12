@@ -66,24 +66,31 @@ function setConfig(jsonData){
         }
     });
 }
-var textContent = '';
-function jsonToTable(jsonData) {
-    if (jQuery.type(jsonData) == "array") {
-        console.log("array");
-        for (var i = 0; i < jsonData.length; i++) {
-            textContent = textContent + '<tr row-id="'+ String(i) +'">';
-            jsonToTable(jsonData[i]);
-            textContent = textContent + '</tr>';
+
+function makeTableFromJson(jsonData) {
+    var textContent = '';
+    function crateTrTd(jsonData) {
+        if (jQuery.type(jsonData) == "array") {
+            console.log("array");
+            for (var i = 0; i < jsonData.length; i++) {
+                textContent = textContent + '<tr row-id="'+ String(i) +'">';
+                crateTrTd(jsonData[i]);
+                textContent = textContent + '</tr>';
+            }
+        } else if (jQuery.type(jsonData) == "object") {
+            console.log("dict");
+            for (var key in jsonData) {
+                console.log(key);
+                textContent = textContent + '<td column-id="'+ key +'" td_attr="key"><div class="font-weight-bold" contenteditable="false">'+ key +'</div></td>';
+                crateTrTd(jsonData[key]);
+            }
+        } else {
+            console.log("value" + String(jsonData));
+            textContent = textContent + '<td column-id="val" td_attr="value"><div contenteditable="true">'+ jsonData +'</div></td>';
         }
-    } else if (jQuery.type(jsonData) == "object") {
-        console.log("dict");
-        for (var key in jsonData) {
-            console.log(key);
-            textContent = textContent + '<td column-id="'+ key +'" td_attr="key"><div class="font-weight-bold" contenteditable="false">'+ key +'</div></td>';
-            jsonToTable(jsonData[key]);
-        }
-    } else {
-        console.log("value" + String(jsonData));
-        textContent = textContent + '<td column-id="val" td_attr="value"><div contenteditable="true">'+ jsonData +'</div></td>';
     }
+
+    crateTrTd(jsonData);
+    return jQuery.parseHTML(textContent);
 }
+
