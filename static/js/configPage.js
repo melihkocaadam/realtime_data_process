@@ -22,10 +22,8 @@ $(function(){
 
 function renderTable() {
     configJson = getConfig();
-    configHtml = makeTable(configJson);
+    configHtml = makeTableFromJson(configJson);
     $('#' + table_container_id ).html(configHtml);
-    $('.json_table').addClass('table table-bordered table-striped table-hover table-sm');
-    $('.json_table thead').addClass('thead-dark');
 }
 
 function saveJson() {
@@ -67,7 +65,7 @@ function setConfig(jsonData){
     });
 }
 
-function makeTableFromJson(jsonData) {
+function makeTableFromJson(jsonData, containerId) {
     var textContent = '';
     function crateTrTd(jsonData) {
         if (jQuery.type(jsonData) == "array") {
@@ -90,6 +88,6 @@ function makeTableFromJson(jsonData) {
     textContent = '<tbody id="table_body">' + textContent + '</tbody>';
     textContent = '<table class="json_table table table-bordered table-striped table-hover table-sm" id="json_table"' + textContent + '</table>';
     
-    $('#' + table_container_id ).html(jQuery.parseHTML(textContent));
+    return jQuery.parseHTML(textContent);
 }
 
