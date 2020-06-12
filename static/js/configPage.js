@@ -82,7 +82,7 @@ function makeTableFromJson(jsonData, containerId) {
                 textContent = textContent + '</td>';
             }
         } else {
-            textContent = textContent + '<td column-id="val" td_attr="value"><div contenteditable="true">'+ jsonData +'</div></td>';
+            textContent = textContent + '<div contenteditable="true">'+ jsonData +'</div>';
         }
     }
 
