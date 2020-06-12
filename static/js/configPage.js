@@ -1,13 +1,43 @@
 var hostName = window.location.hostname;
-var tableJson = {};
+var configJson;
+var configHtml;
+var table_container_id = "table_container";
+var json_input_container_id = "-";
+var json_output_container_id = "-";
+var json_to_table_btn_id = "-";
+var table_to_json_btn_id = "-";
 
 $(document).ready(function () {
-    getConfig();
-    jsonEditorInit('table_container', 'Textarea1', 'result_container', 'json_to_table_btn', 'table_to_json_btn');
+    jsonEditorInit(table_container_id, json_input_container_id, json_output_container_id, json_to_table_btn_id, table_to_json_btn_id);
+    renderTable();
 });
+
+$(function(){
+    $('#apply').click(function(){
+        saveJson();
+    })
+})
+
+$(function(){
+    $('#refresh').click(function(){
+        renderTable();
+    })
+})
+
+function renderTable() {
+    configJson = getConfig();
+    configHtml = makeTable(configJson);
+    $('#' + table_container_id ).html(makeTable(json_arr));
+}
+
+function saveJson() {
+    configJson = makeJson();
+    setConfig(configJson);
+}
 
 function getConfig(){
     var Url = "http://" + hostName + ":5000/appConfig";
+    var result;
 
     $.ajax({
         type: "GET",
@@ -15,22 +45,24 @@ function getConfig(){
         dataType: "json",
         async: false,
         success: function(resp){
-            tableJson = resp;
+            result = resp;
         },
         error: function(error){
             console.log(error);
         }
     });
+
+    return result;
 }
 
-function setConfig(){
+function setConfig(jsonData){
     var Url = "http://" + hostName + ":5000/appConfig";
 
     $.ajax({
         type: "POST",
         url: Url,
         dataType: "json",
-        data: tableJson,
+        data: jsonData,
         error: function(error){
             console.log(error);
         }
