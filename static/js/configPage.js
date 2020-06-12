@@ -89,7 +89,7 @@ function makeTableFromJson(jsonData) {
     crateTrTd(jsonData);
     textContent = '<tbody id="table_body">' + textContent + '</tbody>';
     textContent = '<table class="json_table table table-bordered table-striped table-hover table-sm" id="json_table"' + textContent + '</table>';
-    console.log(textContent);
-    return jQuery.parseHTML(textContent);
+    
+    $('#' + table_container_id ).html(jQuery.parseHTML(textContent));
 }
 
