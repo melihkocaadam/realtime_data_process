@@ -27,7 +27,9 @@ def appConfig():
     if request.method == 'GET':
         return config.sources
     elif request.method == 'POST':
-        config.sources = request.json
+        getJson = request.get_json
+        print(getJson)
+        config.sources = getJson
     else:
         return "Bad Request"
 
