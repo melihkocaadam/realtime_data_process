@@ -91,6 +91,7 @@ function makeTableFromJson(jsonData) {
     }
 
     crateTrTd(jsonData);
+    console.log(textContent);
     return jQuery.parseHTML(textContent);
 }
 
