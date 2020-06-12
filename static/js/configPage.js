@@ -70,7 +70,7 @@ function setConfig(jsonData){
 function jsonToTable(jsonData, htmlContent) {
     if (jQuery.type(jsonData) == "array") {
         for (var i = 0; i < jsonData.length; i++) {
-            htmlContent = htmlContent + jQuery.parseHTML('<tr row-id="'+ str(i) +'"');
+            htmlContent = htmlContent + jQuery.parseHTML('<tr row-id="'+ String(i) +'"');
             jsonToTable(jsonData[i], htmlContent);
         }
     } else if (jQuery.type(jsonData) == "object") {
