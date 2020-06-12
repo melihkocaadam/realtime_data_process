@@ -27,8 +27,8 @@ $(function(){
 function renderTable() {
     configJson = getConfig();
     configHtml = makeTable(configJson);
-    $('.json_table').addClass('table table-bordered table-striped table-hover table-sm');
-    $('.json_table thead').addClass('thead-dark');
+    configHtml('.json_table').addClass('table table-bordered table-striped table-hover table-sm');
+    configHtml('.json_table thead').addClass('thead-dark');
     $('#' + table_container_id ).html(configHtml);
 }
 
