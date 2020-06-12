@@ -71,7 +71,7 @@ function jsonToTable(jsonData) {
     if (jQuery.type(jsonData) == "array") {
         console.log("array");
         for (var i = 0; i < jsonData.length; i++) {
-            textContent = textContent + '<tr row-id="'+ String(i) +'"';
+            textContent = textContent + '<tr row-id="'+ String(i) +'">';
             jsonToTable(jsonData[i]);
         }
     } else if (jQuery.type(jsonData) == "object") {
@@ -79,7 +79,6 @@ function jsonToTable(jsonData) {
         for (var key in jsonData) {
             console.log(key);
             textContent = textContent + '<td column-id="'+ key +'" td_attr="key"><div class="font-weight-bold" contenteditable="false">'+ key +'</div></td>';
-            // htmlContent = htmlContent + jQuery.parseHTML('<td column-id="'+ key +'" td_attr="value"><div contenteditable="true">'+ jsonData[key] +'</div></td>');
             jsonToTable(jsonData[key]);
         }
     } else {
